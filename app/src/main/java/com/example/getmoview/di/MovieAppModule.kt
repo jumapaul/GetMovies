@@ -3,9 +3,11 @@ package com.example.getmoview.di
 import android.app.Application
 import androidx.room.Room
 import com.example.getmoview.common.Constants.DATABASE_NAME
+import com.example.getmoview.data.MovieRepositoryImpl
 import com.example.getmoview.data.local.MovieDatabase
 import com.example.getmoview.data.remote.MovieApi
 import com.example.getmoview.data.remote.MovieApiImpl
+import com.example.getmoview.domain.MovieRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,7 +38,7 @@ object MovieAppModule {
     // Injecting the ktor client
     @Singleton
     @Provides
-    fun provideMovieDatabase(): MovieApi{
+    fun provideKtorClient(): MovieApi{
         return MovieApiImpl(
             client = HttpClient(Android){
                 install(Logging){
@@ -47,5 +49,11 @@ object MovieAppModule {
                 }
             }
         )
+    }
+
+    @Singleton
+    @Provides
+    fun provideRepository(api: MovieApi, db: MovieDatabase): MovieRepository{
+        return MovieRepositoryImpl(db.getMovieDao, api)
     }
 }

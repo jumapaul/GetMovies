@@ -8,4 +8,5 @@ object Constants {
 
     //Database name
     const val DATABASE_NAME = "movie.db"
+    const val API_KEY = "6c77eaa627c0764fbdb5b04cc07c1555"
 }

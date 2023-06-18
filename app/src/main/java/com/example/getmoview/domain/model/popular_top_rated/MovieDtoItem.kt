@@ -1,4 +1,4 @@
-package com.example.getmoview.domain.model
+package com.example.getmoview.domain.model.popular_top_rated
 
 import com.example.getmoview.data.local.entity.MovieEntity
 import com.example.getmoview.data.local.entity.MovieType

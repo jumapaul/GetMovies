@@ -4,7 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Upsert
 import com.example.getmoview.data.local.entity.MovieEntity
+import com.example.getmoview.data.local.entity.TrendingMoviesEntity
 
 @Dao
 interface MovieDao {
@@ -17,4 +19,13 @@ interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addMovie(movie: List<MovieEntity>)
+
+    @Query("SELECT * FROM TRENDING")
+    fun getAllTrendingMovies(): List<TrendingMoviesEntity>
+
+    @Query("select * from trending where id =:id")
+    suspend fun getTrendingById(id: Int): TrendingMoviesEntity
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addTrendingMovies(trendingMoviesEntity: List<TrendingMoviesEntity>)
 }
