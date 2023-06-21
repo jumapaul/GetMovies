@@ -2,7 +2,8 @@ package com.example.getmoview.domain.model.popular_top_rated
 
 import com.example.getmoview.data.local.entity.MovieEntity
 import com.example.getmoview.data.local.entity.MovieType
-
+import kotlinx.serialization.Serializable
+@Serializable
 data class MovieDtoItem(
     val adult: Boolean,
     val backdrop_path: String,

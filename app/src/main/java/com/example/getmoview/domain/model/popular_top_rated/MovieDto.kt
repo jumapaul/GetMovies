@@ -1,5 +1,11 @@
 package com.example.getmoview.domain.model.popular_top_rated
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class MovieDto(
-    val results: ArrayList<MovieDtoItem>
+    val page: Int,
+    val results: List<MovieDtoItem>,
+    val total_pages: Int,
+    val total_results: Int
 )
