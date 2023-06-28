@@ -1,6 +1,6 @@
 package com.example.getmoview.use_case
 
-import com.example.getmoview.common.Constants.API_KEY
+import android.util.Log
 import com.example.getmoview.common.Resources
 import com.example.getmoview.data.local.entity.MovieEntity
 import com.example.getmoview.data.local.entity.MovieType
@@ -20,7 +20,9 @@ class PopularMoviesUseCase @Inject constructor(
     suspend operator fun invoke(): Flow<Resources<List<MovieEntity>>> = flow {
         try {
            val apiData = api.getPopularMovies()
-            repository.saveMovie(apiData, MovieType.POPULAR)
+
+            Log.d("---------->", "invoke: $apiData")
+            repository.savePopularAndTopRated(apiData, MovieType.POPULAR)
 
             emit(
                 Resources.Success(data = repository.getLocalPopularMovies())

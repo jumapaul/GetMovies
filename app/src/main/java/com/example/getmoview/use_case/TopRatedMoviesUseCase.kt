@@ -19,7 +19,7 @@ class TopRatedMoviesUseCase @Inject constructor(
     suspend operator fun invoke(): Flow<Resources<List<MovieEntity>>> = flow {
         try {
             val api = api.getTopRatedMovies()
-            repository.saveMovie(api, movieType = MovieType.TOP_RATED)
+            repository.savePopularAndTopRated(api, movieType = MovieType.TOP_RATED)
 
             emit(
                 Resources.Success(data = repository.getLocalTopRated())

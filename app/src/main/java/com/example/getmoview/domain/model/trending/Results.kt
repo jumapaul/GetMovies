@@ -2,7 +2,7 @@ package com.example.getmoview.domain.model.trending
 
 import com.example.getmoview.data.local.entity.TrendingMoviesEntity
 
-data class TrendingResults(
+data class Results(
     val adult: Boolean,
     val backdrop_path: String,
     val first_air_date: String,
@@ -28,10 +28,8 @@ data class TrendingResults(
             adult,
             backdrop_path,
             first_air_date,
-            //genre_ids,
             media_type,
             name,
-           // origin_country,
             original_language,
             original_name,
             original_title,

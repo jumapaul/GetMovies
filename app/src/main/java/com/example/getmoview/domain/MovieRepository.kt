@@ -5,7 +5,7 @@ import com.example.getmoview.data.local.entity.MovieType
 import com.example.getmoview.data.local.entity.TrendingMoviesEntity
 import com.example.getmoview.domain.model.popular_top_rated.MovieDto
 import com.example.getmoview.domain.model.popular_top_rated.MovieDtoItem
-import com.example.getmoview.domain.model.trending.TrendingResults
+import com.example.getmoview.domain.model.trending.Trending
 
 interface MovieRepository {
 
@@ -18,7 +18,7 @@ interface MovieRepository {
 
     suspend fun getLocalTopRated(): List<MovieEntity>
 
-    suspend fun saveMovie(movieDto: List<MovieDtoItem>, movieType: MovieType)
+    suspend fun savePopularAndTopRated(movieDto: MovieDto, movieType: MovieType)
 
-    suspend fun saveTrendingMovies()
+    suspend fun saveTrendingMovies(trending: Trending)
 }

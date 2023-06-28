@@ -1,5 +1,6 @@
-package com.example.getmoview.ui.screens.home
+package com.example.getmoview.ui.screens.movie
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -17,19 +18,20 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class MovieViewModel @Inject constructor(
     private val popularMoviesUseCase: PopularMoviesUseCase,
     private val topRatedMoviesUseCase: TopRatedMoviesUseCase,
     private val trendingUseCase: TrendingUseCase
 ) : ViewModel() {
 
     // Popular movies and top rated
-    private val _movieState = mutableStateOf(UiState())
-    val movieState: State<UiState> = _movieState
+    private val _popularAndTopRatedMovieState = mutableStateOf(UiState())
+    val popularAndTopRatedMovies: State<UiState> = _popularAndTopRatedMovieState
 
     // Trending
     private val _trendingMovieState = mutableStateOf(TrendingUiState())
     val trendingMovieState: State<TrendingUiState> = _trendingMovieState
+
 
 
     init {
@@ -40,18 +42,19 @@ class HomeViewModel @Inject constructor(
 
     private fun getPopularMovies() = viewModelScope.launch {
         popularMoviesUseCase().onEach { result ->
+
             when (result) {
                 is Resources.Success -> {
-                    _movieState.value = UiState(movies = result.data ?: emptyList())
+                    _popularAndTopRatedMovieState.value = UiState(movies = result.data ?: emptyList())
                 }
 
                 is Resources.Error -> {
-                    _movieState.value =
+                    _popularAndTopRatedMovieState.value =
                         UiState(error = result.message ?: "Unexpected error occurred")
                 }
 
                 is Resources.IsLoading -> {
-                    _movieState.value = UiState(isLoading = true)
+                    _popularAndTopRatedMovieState.value = UiState(isLoading = true)
                 }
             }
         }.launchIn(viewModelScope)
@@ -61,16 +64,17 @@ class HomeViewModel @Inject constructor(
         topRatedMoviesUseCase().onEach { result ->
             when (result) {
                 is Resources.Success -> {
-                    _movieState.value = UiState(movies = result.data ?: emptyList())
+                    _popularAndTopRatedMovieState.value = UiState(movies = result.data ?: emptyList())
+
                 }
 
                 is Resources.Error -> {
-                    _movieState.value =
+                    _popularAndTopRatedMovieState.value =
                         UiState(error = result.message ?: "Unexpected error occurred")
                 }
 
                 is Resources.IsLoading -> {
-                    _movieState.value = UiState(isLoading = true)
+                    _popularAndTopRatedMovieState.value = UiState(isLoading = true)
                 }
             }
         }.launchIn(viewModelScope)
@@ -79,9 +83,12 @@ class HomeViewModel @Inject constructor(
     private fun getTrendingMovies() = viewModelScope.launch {
         trendingUseCase().onEach { results ->
             when (results) {
+
                 is Resources.Success -> {
                     _trendingMovieState.value =
                         TrendingUiState(movies = results.data ?: emptyList())
+
+                    Log.d("============>", "getTrendingMovies: ${results.data}")
                 }
 
                 is Resources.Error -> {

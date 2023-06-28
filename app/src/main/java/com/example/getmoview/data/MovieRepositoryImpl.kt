@@ -1,12 +1,14 @@
 package com.example.getmoview.data
 
+import android.util.Log
 import com.example.getmoview.data.local.MovieDao
 import com.example.getmoview.data.local.entity.MovieEntity
 import com.example.getmoview.data.local.entity.MovieType
 import com.example.getmoview.data.local.entity.TrendingMoviesEntity
 import com.example.getmoview.data.remote.MovieApi
 import com.example.getmoview.domain.MovieRepository
-import com.example.getmoview.domain.model.popular_top_rated.MovieDtoItem
+import com.example.getmoview.domain.model.popular_top_rated.MovieDto
+import com.example.getmoview.domain.model.trending.Trending
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -36,17 +38,15 @@ class MovieRepositoryImpl(
         }
     }
 
-    override suspend fun saveMovie(movieDto: List<MovieDtoItem>, movieType: MovieType) {
+    override suspend fun savePopularAndTopRated(movieDto: MovieDto, movieType: MovieType) {
         withContext(Dispatchers.IO) {
-            dao.addMovie(movieDto.map { it.toMovieEntity(movieType) })
+            dao.addMovie(movieDto.results.map { it.toMovieEntity(movieType) })
         }
     }
-
-    override suspend fun saveTrendingMovies() {
-        val data = api.getTrendingMovies()
-
+    override suspend fun saveTrendingMovies(trending: Trending) {
         withContext(Dispatchers.IO){
-            dao.addTrendingMovies(data.map { it.toTrendingEntity() })
+
+            dao.addTrendingMovies(trending.results.map { it.toTrendingEntity() })
         }
     }
 }
