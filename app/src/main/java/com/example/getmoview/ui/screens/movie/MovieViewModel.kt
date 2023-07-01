@@ -25,13 +25,15 @@ class MovieViewModel @Inject constructor(
 ) : ViewModel() {
 
     // Popular movies and top rated
-    private val _popularAndTopRatedMovieState = mutableStateOf(UiState())
-    val popularAndTopRatedMovies: State<UiState> = _popularAndTopRatedMovieState
+    private val _popularMovieState = mutableStateOf(UiState())
+    val popularMovies: State<UiState> = _popularMovieState
+
+    private val _topRatedMovieState = mutableStateOf(UiState())
+    val topRatedMovies: State<UiState> = _topRatedMovieState
 
     // Trending
     private val _trendingMovieState = mutableStateOf(TrendingUiState())
     val trendingMovieState: State<TrendingUiState> = _trendingMovieState
-
 
 
     init {
@@ -45,16 +47,16 @@ class MovieViewModel @Inject constructor(
 
             when (result) {
                 is Resources.Success -> {
-                    _popularAndTopRatedMovieState.value = UiState(movies = result.data ?: emptyList())
+                    _popularMovieState.value = UiState(movies = result.data ?: emptyList())
                 }
 
                 is Resources.Error -> {
-                    _popularAndTopRatedMovieState.value =
+                    _popularMovieState.value =
                         UiState(error = result.message ?: "Unexpected error occurred")
                 }
 
                 is Resources.IsLoading -> {
-                    _popularAndTopRatedMovieState.value = UiState(isLoading = true)
+                    _popularMovieState.value = UiState(isLoading = true)
                 }
             }
         }.launchIn(viewModelScope)
@@ -64,17 +66,17 @@ class MovieViewModel @Inject constructor(
         topRatedMoviesUseCase().onEach { result ->
             when (result) {
                 is Resources.Success -> {
-                    _popularAndTopRatedMovieState.value = UiState(movies = result.data ?: emptyList())
+                    _topRatedMovieState.value = UiState(movies = result.data ?: emptyList())
 
                 }
 
                 is Resources.Error -> {
-                    _popularAndTopRatedMovieState.value =
+                    _topRatedMovieState.value =
                         UiState(error = result.message ?: "Unexpected error occurred")
                 }
 
                 is Resources.IsLoading -> {
-                    _popularAndTopRatedMovieState.value = UiState(isLoading = true)
+                    _topRatedMovieState.value = UiState(isLoading = true)
                 }
             }
         }.launchIn(viewModelScope)
@@ -87,8 +89,6 @@ class MovieViewModel @Inject constructor(
                 is Resources.Success -> {
                     _trendingMovieState.value =
                         TrendingUiState(movies = results.data ?: emptyList())
-
-                    Log.d("============>", "getTrendingMovies: ${results.data}")
                 }
 
                 is Resources.Error -> {

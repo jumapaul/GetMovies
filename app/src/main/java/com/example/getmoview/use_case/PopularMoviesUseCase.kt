@@ -15,20 +15,21 @@ import kotlinx.coroutines.flow.flow
 class PopularMoviesUseCase @Inject constructor(
     private val repository: MovieRepository,
     private val api: MovieApi
-    ){
+) {
 
     suspend operator fun invoke(): Flow<Resources<List<MovieEntity>>> = flow {
         try {
-           val apiData = api.getPopularMovies()
+            val apiData = api.getPopularMovies()
 
-            Log.d("---------->", "invoke: $apiData")
+            Log.d("-------------->", "invoke: ${apiData.results.size}")
+
             repository.savePopularAndTopRated(apiData, MovieType.POPULAR)
 
             emit(
                 Resources.Success(data = repository.getLocalPopularMovies())
             )
 
-        }catch (e: RedirectResponseException){
+        } catch (e: RedirectResponseException) {
             emit(
                 Resources.Error(
                     data = repository.getLocalPopularMovies(),
@@ -36,7 +37,7 @@ class PopularMoviesUseCase @Inject constructor(
                 )
             )
 
-        }catch (e: ClientRequestException){
+        } catch (e: ClientRequestException) {
             emit(
                 Resources.Error(
                     data = repository.getLocalPopularMovies(),
