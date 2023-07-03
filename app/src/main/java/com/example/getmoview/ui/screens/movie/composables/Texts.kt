@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 fun HeaderTexts(text: String) {
     Text(
         text = text, modifier = Modifier.padding(top = 20.dp),
-        style = MaterialTheme.typography.labelLarge,
+        style = MaterialTheme.typography.titleLarge,
         color = Color.Black
     )
 }
