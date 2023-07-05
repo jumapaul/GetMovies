@@ -1,8 +1,6 @@
 package com.example.getmoview.ui.screens.movie.composables
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,12 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -33,7 +30,9 @@ import coil.request.ImageRequest
 fun MovieItem(
     posterPath: String,
     title: String,
-    date: String
+    date: String,
+    percentage: Float,
+    fontSize: TextUnit
 ) {
     Box(
         modifier = Modifier
@@ -50,19 +49,32 @@ fun MovieItem(
             )
         }
 
-        Column(verticalArrangement = Arrangement.Bottom, horizontalAlignment = Alignment.Start,
-        modifier = Modifier.padding(top = 100.dp)
-            ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = 5.dp, top = 5.dp),
+            contentAlignment = Alignment.TopStart
+        ) {
+            CircularProgressBar(percentage = percentage, fontSize = fontSize)
+        }
+        Column(
+            verticalArrangement = Arrangement.Bottom, horizontalAlignment = Alignment.Start,
+            modifier = Modifier.padding(top = 100.dp)
+        ) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 5.dp, top = 5.dp)
+                fontSize = 20.sp,
+                modifier = Modifier.padding(start = 5.dp, top = 5.dp),
+                color = Color.White
             )
             Text(
                 text = date,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(start = 5.dp, top = 5.dp))
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.padding(start = 5.dp, top = 5.dp),
+                color = Color.White
+            )
         }
     }
 }

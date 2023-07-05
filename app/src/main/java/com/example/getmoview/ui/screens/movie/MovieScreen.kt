@@ -40,7 +40,8 @@ fun MovieScreen(
 
             SearchBar(searchTerm = searchTerm)
 
-            HeaderTexts(text = "Popular Movies")
+            HeaderTexts(text = "Popular Movies",
+                )
 
             PopularAndTopRatedMoviesCard(state = popularMovies)
 

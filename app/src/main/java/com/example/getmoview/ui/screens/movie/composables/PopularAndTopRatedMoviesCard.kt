@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.getmoview.ui.screens.TrendingUiState
 import com.example.getmoview.ui.screens.UiState
 
@@ -43,7 +44,9 @@ fun PopularAndTopRatedMoviesCard(state: UiState) {
                 MovieItem(
                     posterPath = movies.poster_path,
                     title = movies.title,
-                    date = movies.release_date
+                    date = movies.release_date,
+                    percentage = movies.vote_average.toFloat(),
+                    fontSize = 15.sp
                 )
             }
         }
@@ -77,7 +80,9 @@ fun TrendingMoviesCard(state: TrendingUiState) {
                     MovieItem(
                         posterPath = movies.poster_path,
                         title = movies.title.orEmpty(),
-                        date = movies.release_date.orEmpty()
+                        date = movies.release_date.orEmpty(),
+                        percentage = movies.vote_average.toFloat(),
+                        fontSize = 15.sp
                     )
                 }
             }

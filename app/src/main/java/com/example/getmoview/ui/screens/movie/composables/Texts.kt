@@ -1,8 +1,10 @@
 package com.example.getmoview.ui.screens.movie.composables
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -13,6 +15,6 @@ fun HeaderTexts(text: String) {
     Text(
         text = text, modifier = Modifier.padding(top = 20.dp),
         style = MaterialTheme.typography.titleLarge,
-        color = Color.Black
+        color = if (isSystemInDarkTheme()) Color.White else Color.Black
     )
 }

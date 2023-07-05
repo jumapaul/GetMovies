@@ -1,6 +1,7 @@
 package com.example.getmoview.ui.screens.movie.composables
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -46,7 +47,7 @@ fun SearchBar(
             Box(modifier = Modifier.padding(start = 8.dp, top = 15.dp)) {
                 Text(
                     text = label.value,
-                    color = Color.Black,
+                    color = if (isSystemInDarkTheme()) Color.White else Color.Black,
                     fontSize = 16.sp
                 )
 
