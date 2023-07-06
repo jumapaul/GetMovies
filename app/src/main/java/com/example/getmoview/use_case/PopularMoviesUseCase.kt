@@ -21,8 +21,6 @@ class PopularMoviesUseCase @Inject constructor(
         try {
             val apiData = api.getPopularMovies()
 
-            Log.d("-------------->", "invoke: ${apiData.results.size}")
-
             repository.savePopularAndTopRated(apiData, MovieType.POPULAR)
 
             emit(

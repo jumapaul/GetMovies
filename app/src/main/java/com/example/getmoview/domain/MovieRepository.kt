@@ -5,7 +5,9 @@ import com.example.getmoview.data.local.entity.MovieType
 import com.example.getmoview.data.local.entity.TrendingMoviesEntity
 import com.example.getmoview.domain.model.popular_top_rated.MovieDto
 import com.example.getmoview.domain.model.popular_top_rated.MovieDtoItem
+import com.example.getmoview.domain.model.popular_top_rated.SearchedDto
 import com.example.getmoview.domain.model.trending.Trending
+import retrofit2.Response
 
 interface MovieRepository {
 
@@ -21,4 +23,6 @@ interface MovieRepository {
     suspend fun savePopularAndTopRated(movieDto: MovieDto, movieType: MovieType)
 
     suspend fun saveTrendingMovies(trending: Trending)
+
+    suspend fun search(query: String, pageNumber: Int):SearchedDto
 }

@@ -1,27 +1,33 @@
 package com.example.getmoview.ui.screens.movie
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.getmoview.common.Resources
+import com.example.getmoview.domain.MovieRepository
+import com.example.getmoview.domain.model.popular_top_rated.MovieDtoItem
+import com.example.getmoview.ui.screens.SearchedUiState
 import com.example.getmoview.ui.screens.TrendingUiState
 import com.example.getmoview.ui.screens.UiState
 import com.example.getmoview.use_case.PopularMoviesUseCase
+import com.example.getmoview.use_case.SearchUseCase
 import com.example.getmoview.use_case.TopRatedMoviesUseCase
 import com.example.getmoview.use_case.TrendingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
     private val popularMoviesUseCase: PopularMoviesUseCase,
     private val topRatedMoviesUseCase: TopRatedMoviesUseCase,
-    private val trendingUseCase: TrendingUseCase
+    private val trendingUseCase: TrendingUseCase,
+    private val searchUseCase: SearchUseCase,
 ) : ViewModel() {
 
     // Popular movies and top rated
@@ -34,6 +40,14 @@ class MovieViewModel @Inject constructor(
     // Trending
     private val _trendingMovieState = mutableStateOf(TrendingUiState())
     val trendingMovieState: State<TrendingUiState> = _trendingMovieState
+
+    //    // Searched
+    private val _searchedMovies = mutableStateOf(SearchedUiState())
+    val searchedNews: State<SearchedUiState> = _searchedMovies
+
+    // Search news
+//    val searchNews: MutableLiveData<Resources<MovieDtoItem>> = MutableLiveData()
+    private val searchPage = 1
 
 
     init {
@@ -101,5 +115,31 @@ class MovieViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    fun getSearchedMovies(searchedNews: String) = viewModelScope.launch {
+        searchUseCase(searchedNews, searchPage).onEach { results ->
+            when (results) {
+                is Resources.Success -> {
+                    _searchedMovies.value = SearchedUiState(movies = (results.data ?: emptyList()))
+                }
+
+                is Resources.Error -> {
+                    _searchedMovies.value =
+                        SearchedUiState(error = results.message ?: "Unexpected error occurred")
+                }
+
+                is Resources.IsLoading -> {
+                    _searchedMovies.value = SearchedUiState(isLoading = true)
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private val _moviesNotFound = mutableStateOf(false)
+    val moviesNotFound: State<Boolean> = _moviesNotFound
+
+    fun moviesNotFound(notFound: Boolean){
+        _moviesNotFound.value = notFound
     }
 }

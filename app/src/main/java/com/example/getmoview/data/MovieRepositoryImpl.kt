@@ -8,9 +8,12 @@ import com.example.getmoview.data.local.entity.TrendingMoviesEntity
 import com.example.getmoview.data.remote.MovieApi
 import com.example.getmoview.domain.MovieRepository
 import com.example.getmoview.domain.model.popular_top_rated.MovieDto
+import com.example.getmoview.domain.model.popular_top_rated.MovieDtoItem
+import com.example.getmoview.domain.model.popular_top_rated.SearchedDto
 import com.example.getmoview.domain.model.trending.Trending
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.Response
 
 class MovieRepositoryImpl(
     private val dao: MovieDao,
@@ -47,6 +50,12 @@ class MovieRepositoryImpl(
         withContext(Dispatchers.IO){
 
             dao.addTrendingMovies(trending.results.map { it.toTrendingEntity() })
+        }
+    }
+
+    override suspend fun search(query: String, pageNumber: Int): SearchedDto {
+        return withContext(Dispatchers.IO){
+            api.searchMovie(query, pageNumber)
         }
     }
 }
