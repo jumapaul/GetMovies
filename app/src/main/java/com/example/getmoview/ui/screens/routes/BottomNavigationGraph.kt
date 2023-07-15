@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import com.example.getmoview.ui.screens.account.AccountScreen
 import com.example.getmoview.ui.screens.favorite.FavoriteScreen
 import com.example.getmoview.ui.screens.movie.MovieScreen
+import com.example.getmoview.ui.screens.movie_detail.MovieDetailScreen
 
 @Composable
 fun BottomNavigationGraph(navHostController: NavHostController, modifier: Modifier) {
@@ -17,7 +18,7 @@ fun BottomNavigationGraph(navHostController: NavHostController, modifier: Modifi
     ) {
 
         composable(BottomNavigationRoutes.MovieScreen.routes) {
-            MovieScreen()
+            MovieScreen(navHostController)
         }
 
         composable(BottomNavigationRoutes.FavoriteScreen.routes) {
@@ -26,6 +27,14 @@ fun BottomNavigationGraph(navHostController: NavHostController, modifier: Modifi
 
         composable(BottomNavigationRoutes.AccountScreen.routes) {
             AccountScreen()
+        }
+
+        composable(BottomNavigationRoutes.MovieDetails.routes + "/{popularAndTopRated}") {
+            MovieDetailScreen()
+        }
+
+        composable(BottomNavigationRoutes.TrendingMovieDetails.routes + "/{trending}") {
+            MovieDetailScreen()
         }
     }
 }

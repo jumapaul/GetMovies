@@ -2,12 +2,9 @@ package com.example.getmoview.ui.screens.movie
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.getmoview.common.Resources
-import com.example.getmoview.domain.MovieRepository
-import com.example.getmoview.domain.model.popular_top_rated.MovieDtoItem
 import com.example.getmoview.ui.screens.SearchedUiState
 import com.example.getmoview.ui.screens.TrendingUiState
 import com.example.getmoview.ui.screens.UiState
@@ -19,7 +16,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
@@ -43,7 +39,7 @@ class MovieViewModel @Inject constructor(
 
     //    // Searched
     private val _searchedMovies = mutableStateOf(SearchedUiState())
-    val searchedNews: State<SearchedUiState> = _searchedMovies
+    val searchedMovies: State<SearchedUiState> = _searchedMovies
 
     // Search news
 //    val searchNews: MutableLiveData<Resources<MovieDtoItem>> = MutableLiveData()
@@ -117,8 +113,8 @@ class MovieViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun getSearchedMovies(searchedNews: String) = viewModelScope.launch {
-        searchUseCase(searchedNews, searchPage).onEach { results ->
+    fun getSearchedMovies(searchedMovies: String) = viewModelScope.launch {
+        searchUseCase(searchedMovies, searchPage).onEach { results ->
             when (results) {
                 is Resources.Success -> {
                     _searchedMovies.value = SearchedUiState(movies = (results.data ?: emptyList()))

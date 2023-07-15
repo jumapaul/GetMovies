@@ -37,12 +37,14 @@ fun BottomNavigator(navController: NavController) {
                 }
             },
                 icon = {
-                    Icon(
-                        painter = painterResource(id = items.icon),
-                        contentDescription = null
-                    )
+                    items.icon?.let { painterResource(id = it) }?.let {
+                        Icon(
+                            painter = it,
+                            contentDescription = null
+                        )
+                    }
                 },
-                label = {Text(text = items.title)},
+                label = { items.title?.let { Text(text = it) } },
                 alwaysShowLabel = true
             )
         }

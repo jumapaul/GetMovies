@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun SearchBar(
-//    onSearchTextChanged: (String) -> Unit,
     searchTerm: MutableState<String>,
     modifier: Modifier = Modifier
 ) {
@@ -58,7 +57,6 @@ fun SearchBar(
                         searchTerm.value = it
                         if (searchTerm.value !== "") label.value = "" else label.value =
                             searchDefaultLabel
-//                        onSearchTextChanged(it)
                     },
                     cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
                     singleLine = true,

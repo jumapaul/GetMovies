@@ -46,16 +46,28 @@ class MovieRepositoryImpl(
             dao.addMovie(movieDto.results.map { it.toMovieEntity(movieType) })
         }
     }
-    override suspend fun saveTrendingMovies(trending: Trending) {
-        withContext(Dispatchers.IO){
 
+    override suspend fun saveTrendingMovies(trending: Trending) {
+        withContext(Dispatchers.IO) {
             dao.addTrendingMovies(trending.results.map { it.toTrendingEntity() })
         }
     }
 
     override suspend fun search(query: String, pageNumber: Int): SearchedDto {
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             api.searchMovie(query, pageNumber)
+        }
+    }
+
+    override suspend fun getPopularAndTopRatedMovieById(id: Int): MovieEntity {
+        return withContext(Dispatchers.IO) {
+            dao.getMovieById(id)
+        }
+    }
+
+    override suspend fun getTrendingMovieById(id: Int): TrendingMoviesEntity {
+        return withContext(Dispatchers.IO){
+            dao.getTrendingById(id)
         }
     }
 }

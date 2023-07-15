@@ -1,32 +1,32 @@
 package com.example.getmoview.ui.screens.movie.composables
 
-import androidx.compose.foundation.background
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.getmoview.ui.screens.TrendingUiState
 import com.example.getmoview.ui.screens.UiState
+import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
 
 @Composable
-fun PopularAndTopRatedMoviesCard(state: UiState) {
+fun PopularAndTopRatedMoviesCard(
+    state: UiState,
+    navController: NavController
+
+) {
 
     Box(
         modifier = Modifier
@@ -41,12 +41,16 @@ fun PopularAndTopRatedMoviesCard(state: UiState) {
         ) {
 
             items(state.movies) { movies ->
-                MovieItem(
+                PopularAndTopRatedMovieItem(
                     posterPath = movies.poster_path,
                     title = movies.title,
                     date = movies.release_date,
                     percentage = movies.vote_average.toFloat(),
-                    fontSize = 15.sp
+                    fontSize = 15.sp,
+                    onItemClick = {
+                        navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${movies.id}")
+                    },
+                    movieEntity = movies
                 )
             }
         }
@@ -62,7 +66,11 @@ fun PopularAndTopRatedMoviesCard(state: UiState) {
 }
 
 @Composable
-fun TrendingMoviesCard(state: TrendingUiState) {
+fun TrendingMoviesCard(
+    state: TrendingUiState,
+    navController: NavController
+
+) {
 
     Box(
         modifier = Modifier
@@ -77,12 +85,17 @@ fun TrendingMoviesCard(state: TrendingUiState) {
         ) {
             items(state.movies) { movies ->
                 Box(modifier = Modifier.fillMaxSize()) {
-                    MovieItem(
+                    TrendingMovieItem(
                         posterPath = movies.poster_path,
                         title = movies.title.orEmpty(),
                         date = movies.release_date.orEmpty(),
                         percentage = movies.vote_average.toFloat(),
-                        fontSize = 15.sp
+                        fontSize = 15.sp,
+                        onItemClick = {
+                            navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${movies.id}")
+                            Log.d("=========>", "TrendingMoviesCard: ${movies.id}")
+                        },
+                        trendingMoviesEntity = movies
                     )
                 }
             }

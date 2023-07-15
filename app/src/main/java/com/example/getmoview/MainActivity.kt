@@ -11,11 +11,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.modifier.modifierLocalMapOf
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.getmoview.ui.screens.movie.MovieScreen
-import com.example.getmoview.ui.screens.movie.MovieViewModel
 import com.example.getmoview.ui.screens.routes.BottomNavigationGraph
 import com.example.getmoview.ui.screens.routes.BottomNavigator
 import com.example.getmoview.ui.theme.GetMoviewTheme
@@ -32,7 +29,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainView()
+                    val navController = rememberNavController()
+                    MainView(navController)
                 }
             }
         }
@@ -40,12 +38,14 @@ class MainActivity : ComponentActivity() {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    private fun MainView() {
-      val navController = rememberNavController()
+    fun MainView(navHostController: NavHostController) {
+        val navController = rememberNavController()
 
-        Scaffold(bottomBar = { BottomNavigator(navController = navController)}) {padding ->
-            BottomNavigationGraph(navHostController = navController, modifier = Modifier.padding(padding))
-
+        Scaffold(bottomBar = { BottomNavigator(navController = navController) }) { padding ->
+            BottomNavigationGraph(
+                navHostController = navController,
+                modifier = Modifier.padding(padding)
+            )
         }
 
     }
