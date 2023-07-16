@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 fun CircularProgressBar(
     percentage: Float,
     fontSize: TextUnit,
-    radius: Dp = 20.dp,
+    radius: Dp,
     color: Color = Color.Black,
     strokeWidth: Dp = 5.dp,
     animationDuration: Int = 1000,
@@ -42,7 +42,8 @@ fun CircularProgressBar(
 
     val currentPercentage = animateFloatAsState(
         targetValue = if (animatedPlayed) percentage else 0f,
-        animationSpec = tween(durationMillis = animationDuration, delayMillis = animationDelay)
+        animationSpec = tween(durationMillis = animationDuration, delayMillis = animationDelay),
+        label = ""
     )
 
     LaunchedEffect(key1 = true) {

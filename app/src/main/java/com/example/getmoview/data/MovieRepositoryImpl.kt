@@ -35,7 +35,6 @@ class MovieRepositoryImpl(
     }
 
     override suspend fun getLocalTopRated(): List<MovieEntity> {
-
         return withContext(Dispatchers.IO) {
             dao.getAllMovies().filter { it.movieType == MovieType.TOP_RATED.name }
         }
@@ -53,9 +52,9 @@ class MovieRepositoryImpl(
         }
     }
 
-    override suspend fun search(query: String, pageNumber: Int): SearchedDto {
+    override suspend fun search(query: String): SearchedDto {
         return withContext(Dispatchers.IO) {
-            api.searchMovie(query, pageNumber)
+            api.searchMovie(query)
         }
     }
 

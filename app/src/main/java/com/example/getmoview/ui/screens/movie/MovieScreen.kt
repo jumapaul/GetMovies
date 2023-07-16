@@ -45,7 +45,7 @@ fun MovieScreen(
             SearchBar(searchTerm = searchTerm)
 
             if (searchTerm.value.isEmpty()) Movies(navController) else SearchedMovieList(
-                state = searchedMovies
+                state = searchedMovies, navController = navController
             )
         }
     }

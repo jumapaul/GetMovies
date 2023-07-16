@@ -10,6 +10,7 @@ import com.example.getmoview.common.Constants.POP_AND_TOP_ID
 import com.example.getmoview.common.Constants.TRENDING_ID
 import com.example.getmoview.common.Resources
 import com.example.getmoview.use_case.PopularAndTopRatedMovieDetailUseCase
+import com.example.getmoview.use_case.SearchUseCase
 import com.example.getmoview.use_case.TrendingMovieDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -20,6 +21,7 @@ import javax.inject.Inject
 class MovieDetailViewModel @Inject constructor(
     private val popularAndTopRatedMovieDetailUseCase: PopularAndTopRatedMovieDetailUseCase,
     private val trendingMovieDetailUseCase: TrendingMovieDetailUseCase,
+    private val searchUseCase: SearchUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -27,6 +29,9 @@ class MovieDetailViewModel @Inject constructor(
         mutableStateOf(PopularAndTopRatedMovieState())
     val popularAndTopRatedMovieState: State<PopularAndTopRatedMovieState> =
         _popularAndTopRatedMovieState
+
+    private val _searchMovieState = mutableStateOf(SearchMovieState())
+    val searchMovieState: State<SearchMovieState> = _searchMovieState
 
     private val _trendingMovieState = mutableStateOf(TrendingMovieState())
     val trendingMovieState: State<TrendingMovieState> = _trendingMovieState
@@ -36,10 +41,10 @@ class MovieDetailViewModel @Inject constructor(
             getPopularAndTopRatedId(movieId.toInt() )
         }
 
-//        savedStateHandle.get<String>(TRENDING_ID)?.let { movieId->
-//            Log.d("---------->", "here: ${movieId.toInt()}")
-//            getTrendingMovieId(movieId.toInt() )
-//        }
+        savedStateHandle.get<String>(TRENDING_ID)?.let { movieId->
+            Log.d("---------->", "here: ${movieId.toInt()}")
+            getTrendingMovieId(movieId.toInt() )
+        }
 
     }
 
@@ -81,7 +86,32 @@ class MovieDetailViewModel @Inject constructor(
                     _trendingMovieState.value =
                         TrendingMovieState(error = result.message ?: "Unexpected error occurred")
                 }
+
             }
-        }
+        }.launchIn(viewModelScope)
     }
+
+    private suspend fun getSearchedMovieId(searchQuery:String) {
+        searchUseCase(searchQuery).onEach { result ->
+            when (result) {
+                is Resources.IsLoading -> {
+                    _searchMovieState.value =
+                        SearchMovieState(isLoading = true)
+                }
+
+                is Resources.Success -> {
+                    _searchMovieState.value =
+                        SearchMovieState(movie = result.data)
+                }
+
+                is Resources.Error -> {
+                    _popularAndTopRatedMovieState.value =
+                        PopularAndTopRatedMovieState(
+                            error = result.message ?: "Unexpected error occurred"
+                        )
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
 }

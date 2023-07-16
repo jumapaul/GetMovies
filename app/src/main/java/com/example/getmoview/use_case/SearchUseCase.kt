@@ -15,11 +15,10 @@ class SearchUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(
-        searchQuery: String,
-        page: Int
+        searchQuery: String
     ): Flow<Resources<List<SearchedItem>>> = flow {
         try {
-            val apiData = repository.search(searchQuery, page)
+            val apiData = repository.search(searchQuery)
 
             emit(
                 Resources.Success(data = apiData.results)

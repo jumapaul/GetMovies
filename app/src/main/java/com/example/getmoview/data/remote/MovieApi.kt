@@ -22,6 +22,5 @@ interface MovieApi {
     @GET("search/movie")
     suspend fun searchMovie(
         @Query("query") searchTerm: String,
-        @Query("page") pageNumber: Int = 1
     ): SearchedDto
 }

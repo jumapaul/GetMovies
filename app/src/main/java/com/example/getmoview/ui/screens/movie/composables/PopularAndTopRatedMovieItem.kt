@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,7 +40,8 @@ fun PopularAndTopRatedMovieItem(
     percentage: Float,
     fontSize: TextUnit,
     onItemClick: (MovieEntity) -> Unit,
-    movieEntity: MovieEntity
+    movieEntity: MovieEntity,
+    radius: Dp
 ) {
     Box(
         modifier = Modifier
@@ -53,7 +55,8 @@ fun PopularAndTopRatedMovieItem(
             title = title,
             date = date,
             percentage = percentage,
-            fontSize = fontSize
+            fontSize = fontSize,
+            radius = radius
         )
     }
 }
@@ -66,8 +69,9 @@ fun TrendingMovieItem(
     percentage: Float,
     fontSize: TextUnit,
     onItemClick: (TrendingMoviesEntity) -> Unit,
-    trendingMoviesEntity: TrendingMoviesEntity
-){
+    trendingMoviesEntity: TrendingMoviesEntity,
+    radius: Dp
+) {
     Box(
         modifier = Modifier
             .fillMaxHeight()
@@ -80,7 +84,8 @@ fun TrendingMovieItem(
             title = title,
             date = date,
             percentage = percentage,
-            fontSize = fontSize
+            fontSize = fontSize,
+            radius = radius
         )
     }
 }
@@ -93,8 +98,9 @@ fun SearchedMovieItem(
     percentage: Float,
     fontSize: TextUnit,
     onItemClick: (SearchedItem) -> Unit,
-    searchedItem: SearchedItem
-){
+    searchedItem: SearchedItem,
+    radius: Dp
+) {
     Box(
         modifier = Modifier
             .fillMaxHeight()
@@ -107,7 +113,8 @@ fun SearchedMovieItem(
             title = title,
             date = date,
             percentage = percentage,
-            fontSize = fontSize
+            fontSize = fontSize,
+            radius = radius
         )
     }
 }
@@ -119,20 +126,10 @@ fun MovieItems(
     date: String,
     percentage: Float,
     fontSize: TextUnit,
+    radius: Dp
 ) {
     Card(modifier = Modifier.fillMaxSize(), shape = RoundedCornerShape(10.dp)) {
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(
-                    if (posterPath.isNotEmpty()) {
-                        "https://image.tmdb.org/t/p/w500$posterPath"
-                    } else {
-                        R.drawable.empty
-                    }
-                ).crossfade(true).build(),
-            contentDescription = null,
-            contentScale = ContentScale.Crop
-        )
+        MovieRequester(posterPath = posterPath)
     }
 
     Box(
@@ -141,7 +138,7 @@ fun MovieItems(
             .padding(start = 5.dp, top = 5.dp),
         contentAlignment = Alignment.TopStart
     ) {
-        CircularProgressBar(percentage = percentage, fontSize = fontSize)
+        CircularProgressBar(percentage = percentage, radius = radius, fontSize = fontSize)
     }
 
     Box(

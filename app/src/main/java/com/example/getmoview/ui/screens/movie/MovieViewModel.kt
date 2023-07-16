@@ -37,12 +37,10 @@ class MovieViewModel @Inject constructor(
     private val _trendingMovieState = mutableStateOf(TrendingUiState())
     val trendingMovieState: State<TrendingUiState> = _trendingMovieState
 
-    //    // Searched
+        // Searched
     private val _searchedMovies = mutableStateOf(SearchedUiState())
     val searchedMovies: State<SearchedUiState> = _searchedMovies
 
-    // Search news
-//    val searchNews: MutableLiveData<Resources<MovieDtoItem>> = MutableLiveData()
     private val searchPage = 1
 
 
@@ -114,7 +112,7 @@ class MovieViewModel @Inject constructor(
     }
 
     fun getSearchedMovies(searchedMovies: String) = viewModelScope.launch {
-        searchUseCase(searchedMovies, searchPage).onEach { results ->
+        searchUseCase(searchedMovies).onEach { results ->
             when (results) {
                 is Resources.Success -> {
                     _searchedMovies.value = SearchedUiState(movies = (results.data ?: emptyList()))

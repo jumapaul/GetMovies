@@ -22,7 +22,7 @@ interface MovieRepository {
 
     suspend fun saveTrendingMovies(trending: Trending)
 
-    suspend fun search(query: String, pageNumber: Int):SearchedDto
+    suspend fun search(query: String):SearchedDto
 
     suspend fun getPopularAndTopRatedMovieById(id: Int): MovieEntity
 

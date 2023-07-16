@@ -50,7 +50,8 @@ fun PopularAndTopRatedMoviesCard(
                     onItemClick = {
                         navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${movies.id}")
                     },
-                    movieEntity = movies
+                    movieEntity = movies,
+                    radius = 20.dp
                 )
             }
         }
@@ -95,7 +96,8 @@ fun TrendingMoviesCard(
                             navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${movies.id}")
                             Log.d("=========>", "TrendingMoviesCard: ${movies.id}")
                         },
-                        trendingMoviesEntity = movies
+                        trendingMoviesEntity = movies,
+                        radius = 20.dp
                     )
                 }
             }
