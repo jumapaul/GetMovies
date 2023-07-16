@@ -33,18 +33,19 @@ fun BottomNavigator(navController: NavController, bottomBarState: MutableState<B
                 val currentRoute = navBackStackEntry?.destination?.route
 
                 items.forEach { items ->
-                    BottomNavigationItem(selected = currentRoute == items.routes, onClick = {
-                        navController.navigate(items.routes) {
-                            navController.graph.startDestinationRoute?.let { route ->
-                                popUpTo(route) {
-                                    saveState = true
+                    BottomNavigationItem(
+                        selected = currentRoute == items.routes, onClick = {
+                            navController.navigate(items.routes) {
+                                navController.graph.startDestinationRoute?.let { route ->
+                                    popUpTo(route) {
+                                        saveState = true
+                                    }
                                 }
-                            }
 
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    },
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        },
                         icon = {
                             items.icon?.let { painterResource(id = it) }?.let {
                                 Icon(

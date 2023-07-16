@@ -31,11 +31,9 @@ class MainActivity : ComponentActivity() {
             GetMoviewTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
-                    val navController = rememberNavController()
-                    MainView(navController)
+                    MainView()
                 }
             }
         }
@@ -43,26 +41,31 @@ class MainActivity : ComponentActivity() {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun MainView(navHostController: NavHostController) {
+    fun MainView() {
         val navController = rememberNavController()
-
         val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
         val navBackStackEntry by navController.currentBackStackEntryAsState()
 
         when (navBackStackEntry?.destination?.route) {
-            BottomNavigationRoutes.MovieDetails.routes -> {
-                // Show BottomBar and TopBar
+            BottomNavigationRoutes.MovieDetails.routes + "/{popularAndTopRated}" -> {
                 bottomBarState.value = false
             }
-            else->{
+
+            else -> {
                 bottomBarState.value = true
             }
         }
 
-        Scaffold(bottomBar = { BottomNavigator(navController = navController, bottomBarState) }) { padding ->
+        Scaffold(bottomBar = {
+            if (bottomBarState.value) {
+                BottomNavigator(
+                    navController = navController, bottomBarState
+                )
+            }
+        }
+        ) { padding ->
             BottomNavigationGraph(
-                navHostController = navController,
-                modifier = Modifier.padding(padding)
+                navHostController = navController, modifier = Modifier.padding(padding)
             )
         }
 
