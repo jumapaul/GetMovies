@@ -1,30 +1,24 @@
 package com.example.getmoview.domain
 
-import com.example.getmoview.data.local.entity.MovieEntity
-import com.example.getmoview.data.local.entity.MovieType
-import com.example.getmoview.data.local.entity.TrendingMoviesEntity
+import com.example.getmoview.common.Resources
 import com.example.getmoview.domain.model.popular_top_rated.MovieDto
-import com.example.getmoview.domain.model.popular_top_rated.SearchedDto
-import com.example.getmoview.domain.model.trending.Trending
+import com.example.getmoview.domain.model.popular_top_rated.MovieDtoItem
+import com.example.getmoview.domain.model.trending.TrendingDto
 
 interface MovieRepository {
+    // Suspend functions are coroutine that makes it possible for asynchronous programming
+    // Suspend indicates that the method can be paused and resumed later without blocking the threads.
+    // This allow other tasks to proceed concurrently.
+    // Also, by making the function suspend, they can be called fro within coroutine context.
+    suspend fun getPopularMovies(): MovieDto
 
-    // We get the movies from the api, we save to the database before displaying. For data persistance.
-    // So all the display will be data from our database.
+    suspend fun getTrendingMovies(): TrendingDto
 
-    suspend fun getLocalPopularMovies(): List<MovieEntity>
+    suspend fun getTopRatedMovies(): MovieDto
 
-    suspend fun getLocalTrendingMovies(): List<TrendingMoviesEntity>
+    suspend fun search(query: String): MovieDto
 
-    suspend fun getLocalTopRated(): List<MovieEntity>
+    suspend fun getMovieById(id: Int): MovieDtoItem
 
-    suspend fun savePopularAndTopRated(movieDto: MovieDto, movieType: MovieType)
-
-    suspend fun saveTrendingMovies(trending: Trending)
-
-    suspend fun search(query: String):SearchedDto
-
-    suspend fun getPopularAndTopRatedMovieById(id: Int): MovieEntity
-
-    suspend fun getTrendingMovieById(id: Int): TrendingMoviesEntity
+    suspend fun getMovies(page: Int): MovieDto
 }

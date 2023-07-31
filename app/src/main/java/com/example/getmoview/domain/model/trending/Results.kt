@@ -1,7 +1,5 @@
 package com.example.getmoview.domain.model.trending
 
-import com.example.getmoview.data.local.entity.TrendingMoviesEntity
-
 data class Results(
     val adult: Boolean,
     val backdrop_path: String,
@@ -22,26 +20,4 @@ data class Results(
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Int
-) {
-    fun toTrendingEntity(): TrendingMoviesEntity {
-        return TrendingMoviesEntity(
-            adult,
-            backdrop_path,
-            first_air_date,
-            media_type,
-            name,
-            original_language,
-            original_name,
-            original_title,
-            overview,
-            popularity,
-            poster_path,
-            release_date,
-            title,
-            video,
-            vote_average,
-            vote_count,
-            id
-        )
-    }
-}
+)

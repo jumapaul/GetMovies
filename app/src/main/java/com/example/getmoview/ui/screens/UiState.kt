@@ -1,24 +1,19 @@
 package com.example.getmoview.ui.screens
 
-import com.example.getmoview.data.local.entity.MovieEntity
-import com.example.getmoview.data.local.entity.TrendingMoviesEntity
+import androidx.compose.runtime.compositionLocalOf
 import com.example.getmoview.domain.model.popular_top_rated.MovieDtoItem
-import com.example.getmoview.domain.model.popular_top_rated.SearchedItem
+import com.example.getmoview.domain.model.trending.Results
 
 data class UiState(
     val isLoading: Boolean = false,
-    val movies: List<MovieEntity> = emptyList(),
-    val error: String = ""
-)
+    val movies: List<MovieDtoItem> = emptyList(),
+    var page: Int = 1,
+    val endReached: Boolean = false,
+    val error: String? = null,
 
+    )
 data class TrendingUiState(
     val isLoading: Boolean = false,
-    val movies: List<TrendingMoviesEntity> = emptyList(),
-    val error: String = ""
-)
-
-data class SearchedUiState(
-    val isLoading: Boolean = false,
-    val movies: List<SearchedItem> = emptyList(),
+    val movies: List<Results> = emptyList(),
     val error: String = ""
 )

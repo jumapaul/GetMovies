@@ -1,139 +1,121 @@
 package com.example.getmoview.ui.screens.movie
 
+import android.util.Log
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.getmoview.common.Resources
-import com.example.getmoview.ui.screens.SearchedUiState
-import com.example.getmoview.ui.screens.TrendingUiState
+import com.example.getmoview.domain.MovieRepository
+import com.example.getmoview.domain.model.DefaultPaginator
 import com.example.getmoview.ui.screens.UiState
-import com.example.getmoview.use_case.PopularMoviesUseCase
+import com.example.getmoview.use_case.MovieUseCase
 import com.example.getmoview.use_case.SearchUseCase
-import com.example.getmoview.use_case.TopRatedMoviesUseCase
-import com.example.getmoview.use_case.TrendingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
-    private val popularMoviesUseCase: PopularMoviesUseCase,
-    private val topRatedMoviesUseCase: TopRatedMoviesUseCase,
-    private val trendingUseCase: TrendingUseCase,
+    private val movieUseCase: MovieUseCase,
     private val searchUseCase: SearchUseCase,
 ) : ViewModel() {
 
-    // Popular movies and top rated
-    private val _popularMovieState = mutableStateOf(UiState())
-    val popularMovies: State<UiState> = _popularMovieState
+    private val _state = mutableStateOf(UiState())
+    val state: State<UiState> = _state
 
-    private val _topRatedMovieState = mutableStateOf(UiState())
-    val topRatedMovies: State<UiState> = _topRatedMovieState
-
-    // Trending
-    private val _trendingMovieState = mutableStateOf(TrendingUiState())
-    val trendingMovieState: State<TrendingUiState> = _trendingMovieState
-
-        // Searched
-    private val _searchedMovies = mutableStateOf(SearchedUiState())
-    val searchedMovies: State<SearchedUiState> = _searchedMovies
+    // Searched
+//    private val _searchedMovies = mutableStateOf(SearchedUiState())
+//    val searchedMovies: State<SearchedUiState> = _searchedMovies
 
     private val searchPage = 1
 
 
     init {
-        getPopularMovies()
-        getTopRatedMovies()
-        getTrendingMovies()
+//        getMovies()
     }
 
-    private fun getPopularMovies() = viewModelScope.launch {
-        popularMoviesUseCase().onEach { result ->
+    private val paginator = DefaultPaginator(
+        initialKeys = _state.value.page,
+        onLoadUpdate = {
+            _state.value = _state.value.copy(isLoading = it)
+        },
+        onRequest = { nextPage ->
+            movieUseCase(nextPage)
+        },
+        getNextKey = {
+            _state.value.page + 1
+//            Log.d("xxxxxxxx", "page: ${_state.value.page + 1}")
+        },
+        onError = {
+            _state.value.copy(error = it?.localizedMessage)
+        },
+        onSuccess = { movies, newKey ->
+            _state.value = _state.value.copy(
+                movies = _state.value.movies + movies,
+                page = newKey,
+                endReached = movies.isEmpty()
+            )
+        }
+    )
 
-            when (result) {
-                is Resources.Success -> {
-                    _popularMovieState.value = UiState(movies = result.data ?: emptyList())
-                }
+    init {
+        loadMovies()
+    }
 
-                is Resources.Error -> {
-                    _popularMovieState.value =
-                        UiState(error = result.message ?: "Unexpected error occurred")
-                }
-
-                is Resources.IsLoading -> {
-                    _popularMovieState.value = UiState(isLoading = true)
-                }
+    fun loadMovies() {
+        viewModelScope.launch {
+            if (!_state.value.endReached){
+                paginator.loadNextItem()
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
-    private fun getTopRatedMovies() = viewModelScope.launch {
-        topRatedMoviesUseCase().onEach { result ->
-            when (result) {
-                is Resources.Success -> {
-                    _topRatedMovieState.value = UiState(movies = result.data ?: emptyList())
+//    private fun getMovies() {
+//        movieUseCase(moviesPage).onEach { results ->
+//            when (results) {
+//                is Resources.IsLoading -> {
+//                    _movies.value = UiState(isLoading = true)
+//                }
+//
+//                is Resources.Success -> {
+//                    _movies.value = UiState(movies = results.data ?: emptyList())
+//
+//                }
+//
+//                is Resources.Error -> {
+//                    _movies.value = UiState(error = results.message ?: "Unexpected error occurred")
+//                }
+//            }
+//        }.launchIn(viewModelScope)
+//    }
 
-                }
-
-                is Resources.Error -> {
-                    _topRatedMovieState.value =
-                        UiState(error = result.message ?: "Unexpected error occurred")
-                }
-
-                is Resources.IsLoading -> {
-                    _topRatedMovieState.value = UiState(isLoading = true)
-                }
-            }
-        }.launchIn(viewModelScope)
-    }
-
-    private fun getTrendingMovies() = viewModelScope.launch {
-        trendingUseCase().onEach { results ->
-            when (results) {
-
-                is Resources.Success -> {
-                    _trendingMovieState.value =
-                        TrendingUiState(movies = results.data ?: emptyList())
-                }
-
-                is Resources.Error -> {
-                    _trendingMovieState.value =
-                        TrendingUiState(error = results.message ?: "Unexpected error occurred")
-                }
-
-                is Resources.IsLoading -> {
-                    _trendingMovieState.value = TrendingUiState(isLoading = true)
-                }
-            }
-        }.launchIn(viewModelScope)
-    }
-
-    fun getSearchedMovies(searchedMovies: String) = viewModelScope.launch {
-        searchUseCase(searchedMovies).onEach { results ->
-            when (results) {
-                is Resources.Success -> {
-                    _searchedMovies.value = SearchedUiState(movies = (results.data ?: emptyList()))
-                }
-
-                is Resources.Error -> {
-                    _searchedMovies.value =
-                        SearchedUiState(error = results.message ?: "Unexpected error occurred")
-                }
-
-                is Resources.IsLoading -> {
-                    _searchedMovies.value = SearchedUiState(isLoading = true)
-                }
-            }
-        }.launchIn(viewModelScope)
-    }
+//    fun getSearchedMovies(searchedMovies: String){
+//        searchUseCase(searchedMovies).onEach { results ->
+//            when (results) {
+//                is Resources.Success -> {
+//                    _searchedMovies.value = SearchedUiState(movies = (results.data ?: emptyList()))
+//                }
+//
+//                is Resources.Error -> {
+//                    _searchedMovies.value =
+//                        SearchedUiState(error = results.message ?: "Unexpected error occurred")
+//                }
+//
+//                is Resources.IsLoading -> {
+//                    _searchedMovies.value = SearchedUiState(isLoading = true)
+//                }
+//            }
+//        }.launchIn(viewModelScope)
+//    }
 
     private val _moviesNotFound = mutableStateOf(false)
     val moviesNotFound: State<Boolean> = _moviesNotFound
 
-    fun moviesNotFound(notFound: Boolean){
+    fun moviesNotFound(notFound: Boolean) {
         _moviesNotFound.value = notFound
     }
+
 }

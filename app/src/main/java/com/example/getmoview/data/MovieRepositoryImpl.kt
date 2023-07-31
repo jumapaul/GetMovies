@@ -1,72 +1,53 @@
 package com.example.getmoview.data
 
 import android.util.Log
-import com.example.getmoview.data.local.MovieDao
-import com.example.getmoview.data.local.entity.MovieEntity
-import com.example.getmoview.data.local.entity.MovieType
-import com.example.getmoview.data.local.entity.TrendingMoviesEntity
+import com.example.getmoview.common.Resources
 import com.example.getmoview.data.remote.MovieApi
 import com.example.getmoview.domain.MovieRepository
 import com.example.getmoview.domain.model.popular_top_rated.MovieDto
 import com.example.getmoview.domain.model.popular_top_rated.MovieDtoItem
-import com.example.getmoview.domain.model.popular_top_rated.SearchedDto
-import com.example.getmoview.domain.model.trending.Trending
+import com.example.getmoview.domain.model.trending.TrendingDto
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Response
 
 class MovieRepositoryImpl(
-    private val dao: MovieDao,
-    private val api: MovieApi
+    private val api: MovieApi,
 ) : MovieRepository {
-
     // Io dispatchers starts the coroutine tin the IO thread.
     // It is used to perform all the operations such as networking, reading or writing from the database.
-    override suspend fun getLocalPopularMovies(): List<MovieEntity> {
+
+    override suspend fun getPopularMovies(): MovieDto {
+        return api.getPopularMovies()
+    }
+
+    override suspend fun getTrendingMovies(): TrendingDto {
         return withContext(Dispatchers.IO) {
-            dao.getAllMovies().filter { it.movieType == MovieType.POPULAR.name }
+            api.getTrendingMovies()
         }
     }
 
-    override suspend fun getLocalTrendingMovies(): List<TrendingMoviesEntity> {
+    override suspend fun getTopRatedMovies(): MovieDto {
         return withContext(Dispatchers.IO) {
-            dao.getAllTrendingMovies()
+            api.getTopRatedMovies()
         }
     }
 
-    override suspend fun getLocalTopRated(): List<MovieEntity> {
-        return withContext(Dispatchers.IO) {
-            dao.getAllMovies().filter { it.movieType == MovieType.TOP_RATED.name }
-        }
-    }
-
-    override suspend fun savePopularAndTopRated(movieDto: MovieDto, movieType: MovieType) {
-        withContext(Dispatchers.IO) {
-            dao.addMovie(movieDto.results.map { it.toMovieEntity(movieType) })
-        }
-    }
-
-    override suspend fun saveTrendingMovies(trending: Trending) {
-        withContext(Dispatchers.IO) {
-            dao.addTrendingMovies(trending.results.map { it.toTrendingEntity() })
-        }
-    }
-
-    override suspend fun search(query: String): SearchedDto {
+    override suspend fun search(query: String): MovieDto {
         return withContext(Dispatchers.IO) {
             api.searchMovie(query)
         }
     }
 
-    override suspend fun getPopularAndTopRatedMovieById(id: Int): MovieEntity {
+    override suspend fun getMovieById(id: Int): MovieDtoItem {
         return withContext(Dispatchers.IO) {
-            dao.getMovieById(id)
+            api.getMovieById(id)
         }
     }
 
-    override suspend fun getTrendingMovieById(id: Int): TrendingMoviesEntity {
-        return withContext(Dispatchers.IO){
-            dao.getTrendingById(id)
-        }
+    override suspend fun getMovies(page: Int): MovieDto {
+         return  withContext(Dispatchers.IO){
+             api.getMovies(page)
+         }
+
     }
 }

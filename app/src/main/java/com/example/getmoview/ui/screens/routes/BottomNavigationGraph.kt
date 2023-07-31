@@ -32,9 +32,5 @@ fun BottomNavigationGraph(navHostController: NavHostController, modifier: Modifi
         composable(BottomNavigationRoutes.MovieDetails.routes + "/{popularAndTopRated}") {
             MovieDetailScreen(navHostController)
         }
-
-//        composable(BottomNavigationRoutes.TrendingMovieDetails.routes + "/{trending}") {
-//            MovieDetailScreen()
-//        }
     }
 }

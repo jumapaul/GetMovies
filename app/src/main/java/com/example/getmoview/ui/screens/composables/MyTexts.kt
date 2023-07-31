@@ -1,4 +1,4 @@
-package com.example.getmoview.ui.screens.movie.composables
+package com.example.getmoview.ui.screens.composables
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

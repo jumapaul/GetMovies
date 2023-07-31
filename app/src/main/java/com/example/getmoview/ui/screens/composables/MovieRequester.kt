@@ -1,4 +1,4 @@
-package com.example.getmoview.ui.screens.movie.composables
+package com.example.getmoview.ui.screens.composables
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable

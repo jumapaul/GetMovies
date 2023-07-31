@@ -37,10 +37,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImagePainter.State.Empty.painter
 import com.example.getmoview.R
-import com.example.getmoview.ui.screens.movie.composables.Cards
-import com.example.getmoview.ui.screens.movie.composables.CircularProgressBar
-import com.example.getmoview.ui.screens.movie.composables.MovieRequester
-import com.example.getmoview.ui.screens.movie.composables.MyTexts
+import com.example.getmoview.ui.screens.composables.Cards
+import com.example.getmoview.ui.screens.composables.CircularProgressBar
+import com.example.getmoview.ui.screens.composables.GradientBackground
+import com.example.getmoview.ui.screens.composables.MovieRequester
+import com.example.getmoview.ui.screens.composables.MyTexts
 import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
 
 @Composable
@@ -50,17 +51,20 @@ fun MovieDetailScreen(
 ) {
 
     val movie = viewModel.popularAndTopRatedMovieState.value
-    val search = viewModel.searchMovieState.value
-    
 
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        movie.movie?.poster_path?.let { MovieRequester(posterPath = it) }
+//        movie.movie?.poster_path?.let { MovieRequester(posterPath = it) }
+
+        movie.movie?.poster_path?.let {
+                MovieRequester(posterPath = it)
+        }
+
+
 
         Box(
             modifier = Modifier
-                .padding(10.dp)
                 .fillMaxSize()
         ) {
 
@@ -73,6 +77,7 @@ fun MovieDetailScreen(
                     shape = RoundedCornerShape(5.dp),
                     modifier = Modifier
                         .size(25.dp, 25.dp)
+                        .padding(start = 10.dp, top = 10.dp)
                         .clickable {
                             navController.navigate(BottomNavigationRoutes.MovieScreen.routes)
                         }
@@ -84,80 +89,99 @@ fun MovieDetailScreen(
                 }
 
                 Column(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize(),
                     verticalArrangement = Arrangement.Bottom,
                     horizontalAlignment = Alignment.Start
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .padding(top = 50.dp)
-                            .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
+                    Column(
+                        Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight()
+                            .GradientBackground(
+                                listOf(
+                                    Color.Black,
+                                    Color.Gray,
+                                    Color.LightGray,
+                                    Color.Transparent
+                                ), 90f
+                            ),
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.Start
                     ) {
-                        Row(
-                            modifier = Modifier,
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Start
-                        ) {
-                            movie.movie?.vote_average?.toFloat()?.let { movie ->
-                                CircularProgressBar(
-                                    percentage = movie,
-                                    fontSize = 15.sp,
-                                    radius = 30.dp
+
+                        Column(Modifier.padding(10.dp)) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Row(
+                                    modifier = Modifier,
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Start
+                                ) {
+                                        movie.movie?.vote_average?.toFloat()?.let {
+                                            CircularProgressBar(
+                                                percentage = it,
+                                                fontSize = 15.sp,
+                                                radius = 30.dp
+                                            )
+                                        }
+
+                                        MyTexts(
+                                            text = "User\n Score",
+                                            style = MaterialTheme.typography.bodyMedium,
+                                            modifier = Modifier.padding(10.dp)
+                                        )
+                                }
+
+                                FavoriteStar(
+                                    onClick = {
+
+                                    }
+                                )
+                            }
+
+                            movie.movie?.let {
+                                MyTexts(
+                                    text = it.title,
+                                    style = MaterialTheme.typography.headlineLarge,
+                                    modifier = Modifier.padding(top = 15.dp)
                                 )
 
                                 MyTexts(
-                                    text = "User\n Score",
+                                    text = it.release_date,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    modifier = Modifier.padding(top = 5.dp)
+                                )
+                            }
+
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 10.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Cards(text = "Action")
+                                Cards(text = "Adventure")
+                                Cards(text = "Animation")
+                                Cards(text = "Science Fiction")
+                            }
+
+                            movie.movie?.let {
+                                MyTexts(
+                                    text = it.overview,
                                     style = MaterialTheme.typography.bodyMedium,
-                                    modifier = Modifier.padding(10.dp)
+                                    modifier = Modifier
+                                        .padding(top = 20.dp)
+                                        .fillMaxWidth()
+                                        .wrapContentHeight()
                                 )
                             }
                         }
-
-                        FavoriteStar(
-                            onClick = {
-
-                            }
-                        )
-                    }
-
-                    movie.movie?.let {
-                        MyTexts(
-                            text = it.title,
-                            style = MaterialTheme.typography.headlineLarge,
-                            modifier = Modifier.padding(top = 15.dp)
-                        )
-
-                        MyTexts(
-                            text = it.release_date,
-                            style = MaterialTheme.typography.bodySmall,
-                            modifier = Modifier.padding(top = 5.dp)
-                        )
-                    }
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 10.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Cards(text = "Action")
-                        Cards(text = "Adventure")
-                        Cards(text = "Animation")
-                        Cards(text = "Science Fiction")
-                    }
-
-                    movie.movie?.let {
-                        MyTexts(
-                            text = it.overview,
-                            style = MaterialTheme.typography.bodyMedium,
-                            modifier = Modifier
-                                .padding(top = 20.dp)
-                                .fillMaxWidth()
-                                .wrapContentHeight()
-                        )
                     }
                 }
             }
@@ -168,14 +192,15 @@ fun MovieDetailScreen(
 @Composable
 fun FavoriteStar(
     onClick: () -> Unit
-){
+) {
 
     var clicked by remember {
-        mutableStateOf(false) }
+        mutableStateOf(false)
+    }
 
-    val painter: Painter = if (clicked){
+    val painter: Painter = if (clicked) {
         painterResource(id = R.drawable.baseline_star_rate_24)
-    }else{
+    } else {
         painterResource(id = R.drawable.baseline_star_border_24)
     }
 

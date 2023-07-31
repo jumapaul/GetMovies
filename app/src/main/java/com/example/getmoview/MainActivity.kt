@@ -1,9 +1,12 @@
 package com.example.getmoview
 
 import android.os.Bundle
+import androidx.compose.ui.graphics.Color
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -14,7 +17,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.getmoview.ui.screens.routes.BottomNavigationGraph
@@ -31,7 +37,9 @@ class MainActivity : ComponentActivity() {
             GetMoviewTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     MainView()
                 }
@@ -39,9 +47,16 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun MainView() {
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        val windowInsetsController = ViewCompat.getWindowInsetsController(window.decorView)
+        windowInsetsController?.isAppearanceLightNavigationBars = true
+
         val navController = rememberNavController()
         val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
         val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -56,16 +71,20 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        Scaffold(bottomBar = {
-            if (bottomBarState.value) {
-                BottomNavigator(
-                    navController = navController, bottomBarState
-                )
-            }
-        }
+        Scaffold(
+            bottomBar = {
+                if (bottomBarState.value) {
+                    BottomNavigator(
+                        navController = navController, bottomBarState
+                    )
+                }
+            }, modifier = Modifier.padding(top = 20.dp, bottom = 50.dp)
         ) { padding ->
             BottomNavigationGraph(
-                navHostController = navController, modifier = Modifier.padding(padding)
+                navHostController = navController,
+                modifier = Modifier
+                    .padding(padding)
+                    .fillMaxWidth()
             )
         }
 

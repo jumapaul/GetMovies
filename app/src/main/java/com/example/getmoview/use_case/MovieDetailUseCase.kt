@@ -1,26 +1,28 @@
 package com.example.getmoview.use_case
 
-import android.util.Log
 import com.example.getmoview.common.Resources
-import com.example.getmoview.data.local.entity.MovieEntity
 import com.example.getmoview.domain.MovieRepository
+import com.example.getmoview.domain.model.popular_top_rated.MovieDtoItem
+import io.ktor.utils.io.errors.IOException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import retrofit2.HttpException
 import javax.inject.Inject
 
-class PopularAndTopRatedMovieDetailUseCase @Inject constructor(
+class MovieDetailUseCase @Inject constructor(
     private val repository: MovieRepository
 ) {
 
-    operator fun invoke(movieId: Int): Flow<Resources<MovieEntity>> = flow {
+    operator fun invoke(movieId: Int): Flow<Resources<MovieDtoItem>> = flow {
         try {
             emit(Resources.IsLoading())
-            val movie = repository.getPopularAndTopRatedMovieById(movieId)
+            val movie = repository.getMovieById(movieId)
 
-            Log.d("------->", "invoke: $movie")
             emit(Resources.Success(movie))
-        } catch (e: Exception) {
+        } catch (e: HttpException) {
             emit(Resources.Error(data = null, message = "An expected error occurred"))
+        } catch (e: IOException){
+            emit(Resources.Error(data = null, message = "No internet connection"))
         }
     }
 }

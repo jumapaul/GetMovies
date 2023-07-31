@@ -1,4 +1,4 @@
-package com.example.getmoview.ui.screens.movie.composables
+package com.example.getmoview.ui.screens.composables
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -24,16 +24,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import com.example.getmoview.ui.theme.color_cyan
+import com.example.getmoview.ui.theme.color_primary_dark
 
 @Composable
 fun CircularProgressBar(
     percentage: Float,
     fontSize: TextUnit,
     radius: Dp,
-    color: Color = Color.Black,
+    color: Color = color_cyan,
     strokeWidth: Dp = 5.dp,
     animationDuration: Int = 1000,
-    animationDelay: Int = 0
+    animationDelay: Int = 0,
 ) {
 
     var animatedPlayed by remember {

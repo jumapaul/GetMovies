@@ -1,4 +1,4 @@
-package com.example.getmoview.ui.screens.movie.composables
+package com.example.getmoview.ui.screens.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -33,7 +33,7 @@ fun SearchBar(
 
     Box(
         modifier = Modifier.background(
-            MaterialTheme.colorScheme.surface,
+            Color.LightGray,
             RoundedCornerShape(15.dp)
         )
     ) {
@@ -41,10 +41,10 @@ fun SearchBar(
             Icon(
                 imageVector = Icons.Default.Search, contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.padding(15.dp)
+                modifier = Modifier.padding(8.dp)
             )
 
-            Box(modifier = Modifier.padding(start = 8.dp, top = 15.dp)) {
+            Box(modifier = Modifier.padding(start = 8.dp, top = 8.dp)) {
                 Text(
                     text = label.value,
                     color = if (isSystemInDarkTheme()) Color.White else Color.Black,
