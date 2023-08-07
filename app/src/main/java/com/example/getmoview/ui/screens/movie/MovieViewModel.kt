@@ -10,9 +10,12 @@ import com.example.getmoview.common.Resources
 import com.example.getmoview.domain.MovieRepository
 import com.example.getmoview.domain.model.DefaultPaginator
 import com.example.getmoview.ui.screens.UiState
+import com.example.getmoview.ui.screens.movie_detail.SearchMovieState
 import com.example.getmoview.use_case.MovieUseCase
 import com.example.getmoview.use_case.SearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,11 +30,8 @@ class MovieViewModel @Inject constructor(
     val state: State<UiState> = _state
 
     // Searched
-//    private val _searchedMovies = mutableStateOf(SearchedUiState())
-//    val searchedMovies: State<SearchedUiState> = _searchedMovies
-
-    private val searchPage = 1
-
+    private val _searchedMovies = mutableStateOf(SearchMovieState())
+    val searchedMovies: State<SearchMovieState> = _searchedMovies
 
     init {
 //        getMovies()
@@ -41,13 +41,16 @@ class MovieViewModel @Inject constructor(
         initialKeys = _state.value.page,
         onLoadUpdate = {
             _state.value = _state.value.copy(isLoading = it)
+
+            Log.d("===========>", "message: ${_state.value.page}")
         },
         onRequest = { nextPage ->
             movieUseCase(nextPage)
+
+
         },
         getNextKey = {
             _state.value.page + 1
-//            Log.d("xxxxxxxx", "page: ${_state.value.page + 1}")
         },
         onError = {
             _state.value.copy(error = it?.localizedMessage)
@@ -68,6 +71,7 @@ class MovieViewModel @Inject constructor(
     fun loadMovies() {
         viewModelScope.launch {
             if (!_state.value.endReached){
+                delay(2000L)
                 paginator.loadNextItem()
             }
         }
@@ -92,24 +96,28 @@ class MovieViewModel @Inject constructor(
 //        }.launchIn(viewModelScope)
 //    }
 
-//    fun getSearchedMovies(searchedMovies: String){
-//        searchUseCase(searchedMovies).onEach { results ->
-//            when (results) {
-//                is Resources.Success -> {
-//                    _searchedMovies.value = SearchedUiState(movies = (results.data ?: emptyList()))
-//                }
-//
-//                is Resources.Error -> {
-//                    _searchedMovies.value =
-//                        SearchedUiState(error = results.message ?: "Unexpected error occurred")
-//                }
-//
-//                is Resources.IsLoading -> {
-//                    _searchedMovies.value = SearchedUiState(isLoading = true)
-//                }
-//            }
-//        }.launchIn(viewModelScope)
-//    }
+    fun getSearchedMovies(searchedMovies: String){
+        searchUseCase(searchedMovies).onEach { results ->
+            when (results) {
+                is Resources.Success -> {
+                    _searchedMovies.value = SearchMovieState(movie = (results.data ?: emptyList()))
+
+                    if (results.data?.isEmpty() == true){
+                        moviesNotFound(true)
+                    }
+                }
+
+                is Resources.Error -> {
+                    _searchedMovies.value =
+                        SearchMovieState(error = results.message ?: "Unexpected error occurred")
+                }
+
+                is Resources.IsLoading -> {
+                    _searchedMovies.value = SearchMovieState(isLoading = true)
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
 
     private val _moviesNotFound = mutableStateOf(false)
     val moviesNotFound: State<Boolean> = _moviesNotFound

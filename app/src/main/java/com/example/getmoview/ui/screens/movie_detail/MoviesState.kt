@@ -3,7 +3,7 @@ package com.example.getmoview.ui.screens.movie_detail
 import com.example.getmoview.domain.model.popular_top_rated.MovieDtoItem
 import com.example.getmoview.domain.model.trending.Results
 
-data class PopularAndTopRatedMovieState(
+data class MoviesState(
     val isLoading: Boolean = false,
     val movie: MovieDtoItem? = null,
     val error: String = ""

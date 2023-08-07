@@ -27,7 +27,7 @@ fun CategoriesItem(
             text = category, style = MaterialTheme.typography.bodyMedium,
             fontFamily = FontFamily.SansSerif,
             color = if (isSystemInDarkTheme()) Color.White else Color.Black,
-            modifier = Modifier.padding(5.dp)
+            modifier = Modifier.padding(10.dp)
         )
     }
 }

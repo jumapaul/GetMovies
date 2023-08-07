@@ -1,10 +1,8 @@
 package com.example.getmoview.ui.screens.movie
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -28,6 +26,7 @@ import androidx.navigation.NavController
 import com.example.getmoview.ui.screens.composables.CategoriesItem
 import com.example.getmoview.ui.screens.composables.MovieItems
 import com.example.getmoview.ui.screens.composables.SearchBar
+import com.example.getmoview.ui.screens.composables.SearchedMovieList
 import kotlinx.coroutines.delay
 
 @Composable
@@ -36,11 +35,12 @@ fun MovieScreen(
     viewModel: MovieViewModel = hiltViewModel(),
 ) {
 
-//    val searchedMovies = viewModel.searchedMovies.value
+    val searchedMovies = viewModel.searchedMovies.value
     val state = viewModel.state.value
 
+
     Box(modifier = Modifier.fillMaxSize()) {
-        if (state.movies?.isNotEmpty() == true) {
+        if (state.movies.isNotEmpty()) {
             Column(
                 verticalArrangement = Arrangement.Top, horizontalAlignment = Alignment.Start,
                 modifier = Modifier
@@ -54,38 +54,67 @@ fun MovieScreen(
 
                 LaunchedEffect(searchTerm.value) {
                     delay(1000)
-//                viewModel.getSearchedMovies(searchTerm.value)
+                    viewModel.getSearchedMovies(searchTerm.value)
                 }
 
                 SearchBar(searchTerm = searchTerm)
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 10.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(text = "Explore categories", style = MaterialTheme.typography.titleMedium)
-                    Text(text = "See All", modifier = Modifier.padding(5.dp))
-
-                }
-
-                val categories = listOf(
-                    "Movies",
-                    "Popular Movies",
-                    "Trending Movies",
-                    "Top Rated Movies",
-                    "Tv Shows",
-                    "Upcoming Movies"
+                if (searchTerm.value.isEmpty()) Movie() else SearchedMovieList(
+                    state = searchedMovies, navController = navController
                 )
 
+            }
+        }
+
+        if (state.error?.isNotBlank() == true) {
+            Text(
+                text = state.error,
+                color = MaterialTheme.colorScheme.error,
+                //                textAlign = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+            )
+        }
+
+        if (state.isLoading){
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+        }
+
+    }
+}
+
+@Composable
+fun Movie(
+    viewModel: MovieViewModel = hiltViewModel(),
+) {
+
+    val state = viewModel.state.value
+
+    val categories = listOf(
+        "Recent Movies",
+        "Movies category",
+        "Genre",
+        "Year",
+        "Language",
+        "A-Z",
+    )
+
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        if (state.movies.isNotEmpty()) {
+
+            Column(
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier.fillMaxSize()
+            ) {
                 LazyRow(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 10.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Start
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     items(categories) { categories ->
                         CategoriesItem(category = categories)
@@ -110,47 +139,12 @@ fun MovieScreen(
                             )
                         }
                     }
-
-                    item {
-                        if (state.isLoading) {
-                            Row(modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(8.dp),
-                                horizontalArrangement = Arrangement.Center
-                                ) {
-                                CircularProgressIndicator()
-                            }
-                        }
-                    }
                 }
                 )
-
-
-//            if (searchTerm.value.isEmpty()) Movies(navController) else SearchedMovieList(
-//                state = searchedMovies, navController = navController
-//            )
-
-//                Movies(navController = navController)
-
             }
-        }
-
-        if (state.error?.isNotBlank() == true) {
-            Text(
-                text = state.error,
-                color = MaterialTheme.colorScheme.error,
-                //                textAlign = Alignment.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-                    .align(Alignment.Center)
-            )
-        }
-
-        if (state.isLoading) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
     }
 }
+
 
 

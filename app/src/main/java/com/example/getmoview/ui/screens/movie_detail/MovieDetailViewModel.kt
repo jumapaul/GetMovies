@@ -1,6 +1,5 @@
 package com.example.getmoview.ui.screens.movie_detail
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
@@ -23,10 +22,10 @@ class MovieDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _popularAndTopRatedMovieState =
-        mutableStateOf(PopularAndTopRatedMovieState())
-    val popularAndTopRatedMovieState: State<PopularAndTopRatedMovieState> =
-        _popularAndTopRatedMovieState
+    private val _moviesState =
+        mutableStateOf(MoviesState())
+    val moviesState: State<MoviesState> =
+        _moviesState
 
     private val _trendingMovieState = mutableStateOf(TrendingMovieState())
     val trendingMovieState: State<TrendingMovieState> = _trendingMovieState
@@ -46,18 +45,18 @@ class MovieDetailViewModel @Inject constructor(
         movieDetailUseCase(movieId).onEach { result ->
             when (result) {
                 is Resources.IsLoading -> {
-                    _popularAndTopRatedMovieState.value =
-                        PopularAndTopRatedMovieState(isLoading = true)
+                    _moviesState.value =
+                        MoviesState(isLoading = true)
                 }
 
                 is Resources.Success -> {
-                    _popularAndTopRatedMovieState.value =
-                        PopularAndTopRatedMovieState(movie = result.data)
+                    _moviesState.value =
+                        MoviesState(movie = result.data)
                 }
 
                 is Resources.Error -> {
-                    _popularAndTopRatedMovieState.value =
-                        PopularAndTopRatedMovieState(
+                    _moviesState.value =
+                        MoviesState(
                             error = result.message ?: "Unexpected error occurred"
                         )
                 }
