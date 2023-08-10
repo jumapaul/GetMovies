@@ -2,14 +2,12 @@ package com.example.getmoview.ui.screens.movie
 
 import android.util.Log
 import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.getmoview.common.Resources
-import com.example.getmoview.domain.MovieRepository
 import com.example.getmoview.domain.model.DefaultPaginator
-import com.example.getmoview.ui.screens.UiState
+import com.example.getmoview.ui.ui_states.UiState
 import com.example.getmoview.ui.screens.movie_detail.SearchMovieState
 import com.example.getmoview.use_case.MovieUseCase
 import com.example.getmoview.use_case.SearchUseCase

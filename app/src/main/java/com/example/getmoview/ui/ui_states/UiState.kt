@@ -1,4 +1,4 @@
-package com.example.getmoview.ui.screens
+package com.example.getmoview.ui.ui_states
 
 import androidx.compose.runtime.compositionLocalOf
 import com.example.getmoview.domain.model.popular_top_rated.MovieDtoItem

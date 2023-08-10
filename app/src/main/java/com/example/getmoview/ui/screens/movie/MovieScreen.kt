@@ -6,10 +6,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -23,12 +21,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.getmoview.ui.screens.composables.CategoriesItem
 import com.example.getmoview.ui.screens.composables.MovieItems
 import com.example.getmoview.ui.screens.composables.SearchBar
-import com.example.getmoview.ui.screens.composables.SearchedMovieList
+import com.example.getmoview.ui.screens.movie.tab_layout.TabContent
+import com.example.getmoview.ui.screens.movie.tab_layout.TabScreens
+import com.example.getmoview.ui.screens.movie.tab_layout.Tabs
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.delay
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun MovieScreen(
     navController: NavController,
@@ -59,9 +61,22 @@ fun MovieScreen(
 
                 SearchBar(searchTerm = searchTerm)
 
-                if (searchTerm.value.isEmpty()) Movie() else SearchedMovieList(
-                    state = searchedMovies, navController = navController
+//                if (searchTerm.value.isEmpty()) Movie() else SearchedMovieList(
+//                    state = searchedMovies, navController = navController
+//                )
+
+                val screens = listOf(
+                    TabScreens.RecentMovies,
+                    TabScreens.MoviesCategory,
+                    TabScreens.Genre,
+                    TabScreens.Year,
+                    TabScreens.Language,
+                    TabScreens.AtoZ
                 )
+                val pagerState = rememberPagerState(initialPage = 0)
+
+                Tabs(tabs = screens, pagerState = pagerState)
+                TabContent(tabs = screens, pagerState = pagerState)
 
             }
         }
@@ -91,16 +106,6 @@ fun Movie(
 
     val state = viewModel.state.value
 
-    val categories = listOf(
-        "Recent Movies",
-        "Movies category",
-        "Genre",
-        "Year",
-        "Language",
-        "A-Z",
-    )
-
-
     Box(modifier = Modifier.fillMaxSize()) {
         if (state.movies.isNotEmpty()) {
 
@@ -109,18 +114,6 @@ fun Movie(
                 horizontalAlignment = Alignment.Start,
                 modifier = Modifier.fillMaxSize()
             ) {
-                LazyRow(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 10.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    items(categories) { categories ->
-                        CategoriesItem(category = categories)
-                    }
-                }
-
                 LazyVerticalGrid(columns = GridCells.Fixed(2), content = {
                     items(state.movies.size) { movies ->
                         val item = state.movies[movies]
