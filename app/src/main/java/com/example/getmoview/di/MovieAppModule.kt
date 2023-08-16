@@ -1,10 +1,10 @@
 package com.example.getmoview.di
 
 import com.example.getmoview.common.Constants.BASE_URL
-import com.example.getmoview.data.MovieRepositoryImpl
+import com.example.getmoview.data.repositoryImpl.MovieRepositoryImpl
 import com.example.getmoview.data.remote.MovieApi
 import com.example.getmoview.data.remote.TokenInterceptor
-import com.example.getmoview.domain.MovieRepository
+import com.example.getmoview.domain.repository.MovieRepository
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module

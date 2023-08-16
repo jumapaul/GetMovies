@@ -68,7 +68,7 @@ class MovieViewModel @Inject constructor(
 
     fun loadMovies() {
         viewModelScope.launch {
-            if (!_state.value.endReached){
+            if (!_state.value.endReached) {
                 delay(2000L)
                 paginator.loadNextItem()
             }
@@ -94,13 +94,13 @@ class MovieViewModel @Inject constructor(
 //        }.launchIn(viewModelScope)
 //    }
 
-    fun getSearchedMovies(searchedMovies: String){
+    fun getSearchedMovies(searchedMovies: String) {
         searchUseCase(searchedMovies).onEach { results ->
             when (results) {
                 is Resources.Success -> {
                     _searchedMovies.value = SearchMovieState(movie = (results.data ?: emptyList()))
 
-                    if (results.data?.isEmpty() == true){
+                    if (results.data?.isEmpty() == true) {
                         moviesNotFound(true)
                     }
                 }

@@ -1,6 +1,7 @@
-package com.example.getmoview.domain
+package com.example.getmoview.domain.repository
 
 import com.example.getmoview.common.Resources
+import com.example.getmoview.domain.model.genre.GenreDto
 import com.example.getmoview.domain.model.popular_top_rated.MovieDto
 import com.example.getmoview.domain.model.popular_top_rated.MovieDtoItem
 import com.example.getmoview.domain.model.trending.TrendingDto
@@ -21,4 +22,6 @@ interface MovieRepository {
     suspend fun getMovieById(id: Int): MovieDtoItem
 
     suspend fun getMovies(page: Int): MovieDto
+
+    suspend fun getGenres(): GenreDto
 }

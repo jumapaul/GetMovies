@@ -1,6 +1,7 @@
 package com.example.getmoview.data.remote
 
 import com.example.getmoview.common.Resources
+import com.example.getmoview.domain.model.genre.GenreDto
 import com.example.getmoview.domain.model.popular_top_rated.MovieDto
 import com.example.getmoview.domain.model.popular_top_rated.MovieDtoItem
 import com.example.getmoview.domain.model.trending.TrendingDto
@@ -32,4 +33,10 @@ interface MovieApi {
     suspend fun getMovieById(
         @Path("movie_id") movieId: Int
     ): MovieDtoItem
+
+    @GET("genre/movie/list")
+    suspend fun getMoviesGenre(): GenreDto
+
+    @GET("configuration/languages")
+    suspend fun getLanguage(): GenreDto
 }

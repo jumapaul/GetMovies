@@ -1,6 +1,6 @@
 package com.example.getmoview.ui.ui_states
 
-import androidx.compose.runtime.compositionLocalOf
+import com.example.getmoview.domain.model.genre.Genre
 import com.example.getmoview.domain.model.popular_top_rated.MovieDtoItem
 import com.example.getmoview.domain.model.trending.Results
 
@@ -15,5 +15,12 @@ data class UiState(
 data class TrendingUiState(
     val isLoading: Boolean = false,
     val movies: List<Results> = emptyList(),
-    val error: String = ""
+    val error: String? = null
 )
+
+data class GenreUiState(
+    val isLoading: Boolean = false,
+    val genre: List<Genre> = emptyList(),
+    val error: String? = null
+)
+

@@ -1,11 +1,15 @@
 package com.example.getmoview.ui.screens.movie.tab_layout
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.LeadingIconTab
@@ -29,25 +33,28 @@ fun Tabs(tabs: List<TabScreens>, pagerState: PagerState) {
 
     val scope = rememberCoroutineScope()
 
-    TabRow(
-        selectedTabIndex = pagerState.currentPage,
+    TabRow(selectedTabIndex = pagerState.currentPage,
         Modifier.background(color = Color.White),
         indicator = { tabsPositions ->
             Modifier.pagerTabIndicatorOffset(pagerState = pagerState, tabPositions = tabsPositions)
-        }
-    ) {
+        }) {
 
-        LazyRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .background(Color.White),
+        LazyRow(modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .background(color = if (isSystemInDarkTheme()) Color.Black else Color.White),
+            verticalAlignment = Alignment.CenterVertically,
             content = {
                 items(tabs.size) { index ->
                     Box(
-                        modifier = Modifier.padding(end = 3.dp, top = 5.dp)
-                            .wrapContentSize()
-                            .background(color = Color.Gray, RoundedCornerShape(5.dp)),
+                        modifier = Modifier
+                            .padding(5.dp)
+                            .wrapContentWidth()
+                            .height(30.dp)
+                            .background(
+                                color = if (isSystemInDarkTheme()) Color.White else Color.Gray,
+                                RoundedCornerShape(5.dp)
+                            ),
                         contentAlignment = Alignment.Center,
                     ) {
                         LeadingIconTab(
@@ -57,7 +64,12 @@ fun Tabs(tabs: List<TabScreens>, pagerState: PagerState) {
                                     pagerState.animateScrollToPage(index)
                                 }
                             },
-                            text = { Text(text = tabs[index].title) },
+                            text = {
+                                Text(
+                                    text = tabs[index].title,
+                                    color = if (isSystemInDarkTheme()) Color.Black else Color.White
+                                )
+                            },
                             icon = { /*TODO*/ },
                             selectedContentColor = Color.Green,
                             unselectedContentColor = Color.Yellow,
@@ -65,8 +77,7 @@ fun Tabs(tabs: List<TabScreens>, pagerState: PagerState) {
                         )
                     }
                 }
-            }
-        )
+            })
     }
 
 }

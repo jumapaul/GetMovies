@@ -1,8 +1,7 @@
 package com.example.getmoview.use_case
 
 import com.example.getmoview.common.Resources
-import com.example.getmoview.data.remote.MovieApi
-import com.example.getmoview.domain.MovieRepository
+import com.example.getmoview.domain.repository.MovieRepository
 import com.example.getmoview.domain.model.popular_top_rated.MovieDtoItem
 import io.ktor.utils.io.errors.IOException
 import kotlinx.coroutines.flow.Flow

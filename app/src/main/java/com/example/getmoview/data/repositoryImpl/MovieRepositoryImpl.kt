@@ -1,9 +1,9 @@
-package com.example.getmoview.data
+package com.example.getmoview.data.repositoryImpl
 
 import android.util.Log
-import com.example.getmoview.common.Resources
 import com.example.getmoview.data.remote.MovieApi
-import com.example.getmoview.domain.MovieRepository
+import com.example.getmoview.domain.model.genre.GenreDto
+import com.example.getmoview.domain.repository.MovieRepository
 import com.example.getmoview.domain.model.popular_top_rated.MovieDto
 import com.example.getmoview.domain.model.popular_top_rated.MovieDtoItem
 import com.example.getmoview.domain.model.trending.TrendingDto
@@ -48,6 +48,11 @@ class MovieRepositoryImpl(
          return  withContext(Dispatchers.IO){
              api.getMovies(page)
          }
+    }
 
+    override suspend fun getGenres(): GenreDto {
+        return withContext(Dispatchers.IO){
+            api.getMoviesGenre()
+        }
     }
 }
