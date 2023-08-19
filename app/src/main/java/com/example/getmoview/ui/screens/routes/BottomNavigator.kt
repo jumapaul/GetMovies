@@ -20,7 +20,8 @@ fun BottomNavigator(navController: NavController, bottomBarState: MutableState<B
     val items = listOf(
         BottomNavigationRoutes.MovieScreen,
         BottomNavigationRoutes.FavoriteScreen,
-        BottomNavigationRoutes.AccountScreen
+        BottomNavigationRoutes.WatchListScreen,
+        BottomNavigationRoutes.AccountScreen,
     )
 
     AnimatedVisibility(

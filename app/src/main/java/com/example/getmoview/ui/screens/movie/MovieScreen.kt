@@ -1,5 +1,8 @@
 package com.example.getmoview.ui.screens.movie
 
+import android.content.Context
+import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,15 +20,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.getmoview.ui.screens.composables.MovieItems
 import com.example.getmoview.ui.screens.composables.SearchBar
+import com.example.getmoview.ui.screens.composables.SearchedMovieList
 import com.example.getmoview.ui.screens.movie.tab_layout.TabContent
 import com.example.getmoview.ui.screens.movie.tab_layout.TabScreens
 import com.example.getmoview.ui.screens.movie.tab_layout.Tabs
+import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.delay
@@ -61,9 +67,9 @@ fun MovieScreen(
 
                 SearchBar(searchTerm = searchTerm)
 
-//                if (searchTerm.value.isEmpty()) Movie() else SearchedMovieList(
-//                    state = searchedMovies, navController = navController
-//                )
+                if (searchTerm.value.isEmpty()) Movie(navController) else SearchedMovieList(
+                    state = searchedMovies, navController = navController
+                )
 
                 val screens = listOf(
                     TabScreens.RecentMovies,
@@ -76,7 +82,7 @@ fun MovieScreen(
                 val pagerState = rememberPagerState(initialPage = 0)
 
                 Tabs(tabs = screens, pagerState = pagerState)
-                TabContent(tabs = screens, pagerState = pagerState)
+                TabContent(tabs = screens, pagerState = pagerState, navController)
 
             }
         }
@@ -92,7 +98,7 @@ fun MovieScreen(
             )
         }
 
-        if (state.isLoading){
+        if (state.isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
 
@@ -101,6 +107,7 @@ fun MovieScreen(
 
 @Composable
 fun Movie(
+    navController: NavController,
     viewModel: MovieViewModel = hiltViewModel(),
 ) {
 
@@ -121,7 +128,11 @@ fun Movie(
                             viewModel.loadMovies()
                         }
 
-                        Box(modifier = Modifier.padding(5.dp)) {
+                        Box(modifier = Modifier
+                            .padding(5.dp)
+                            .clickable {
+                                navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${item.id}")
+                            }) {
                             MovieItems(
                                 posterPath = item.poster_path,
                                 title = item.title,

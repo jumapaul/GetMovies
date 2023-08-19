@@ -1,7 +1,6 @@
 package com.example.getmoview.common
 
 object Constants {
-    const val API_KEY = "6c77eaa627c0764fbdb5b04cc07c1555"
     const val BASE_URL = "https://api.themoviedb.org/3/"
 
     //Database name

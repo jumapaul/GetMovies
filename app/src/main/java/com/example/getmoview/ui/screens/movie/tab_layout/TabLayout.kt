@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
@@ -84,8 +85,8 @@ fun Tabs(tabs: List<TabScreens>, pagerState: PagerState) {
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun TabContent(tabs: List<TabScreens>, pagerState: PagerState) {
+fun TabContent(tabs: List<TabScreens>, pagerState: PagerState, navController: NavController) {
     HorizontalPager(count = tabs.size, state = pagerState) { page ->
-        tabs[page].screens()
+        tabs[page].screens(navController)
     }
 }

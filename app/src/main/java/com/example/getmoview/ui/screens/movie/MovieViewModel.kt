@@ -39,8 +39,6 @@ class MovieViewModel @Inject constructor(
         initialKeys = _state.value.page,
         onLoadUpdate = {
             _state.value = _state.value.copy(isLoading = it)
-
-            Log.d("===========>", "message: ${_state.value.page}")
         },
         onRequest = { nextPage ->
             movieUseCase(nextPage)

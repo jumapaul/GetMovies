@@ -22,20 +22,18 @@ class MovieDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _moviesState =
-        mutableStateOf(MoviesState())
-    val moviesState: State<MoviesState> =
-        _moviesState
+    private val _moviesState = mutableStateOf(MoviesState())
+    val moviesState: State<MoviesState> = _moviesState
 
     private val _trendingMovieState = mutableStateOf(TrendingMovieState())
     val trendingMovieState: State<TrendingMovieState> = _trendingMovieState
 
     init {
         savedStateHandle.get<String>(POP_AND_TOP_ID)?.let { movieId ->
-            getPopularAndTopRatedId(movieId.toInt() )
+            getPopularAndTopRatedId(movieId.toInt())
         }
 
-        savedStateHandle.get<String>(TRENDING_ID)?.let { movieId->
+        savedStateHandle.get<String>(TRENDING_ID)?.let { movieId ->
 //            getTrendingMovieId(movieId.toInt() )
         }
 
@@ -59,6 +57,9 @@ class MovieDetailViewModel @Inject constructor(
                         MoviesState(
                             error = result.message ?: "Unexpected error occurred"
                         )
+                }
+                else ->{
+
                 }
             }
         }.launchIn(viewModelScope)

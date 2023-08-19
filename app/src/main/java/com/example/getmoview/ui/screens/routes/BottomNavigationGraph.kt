@@ -9,6 +9,7 @@ import com.example.getmoview.ui.screens.account.AccountScreen
 import com.example.getmoview.ui.screens.favorite.FavoriteScreen
 import com.example.getmoview.ui.screens.movie.MovieScreen
 import com.example.getmoview.ui.screens.movie_detail.MovieDetailScreen
+import com.example.getmoview.ui.screens.watchlist_screen.WatchListScreen
 
 @Composable
 fun BottomNavigationGraph(navHostController: NavHostController, modifier: Modifier) {
@@ -27,6 +28,10 @@ fun BottomNavigationGraph(navHostController: NavHostController, modifier: Modifi
 
         composable(BottomNavigationRoutes.AccountScreen.routes) {
             AccountScreen()
+        }
+
+        composable(BottomNavigationRoutes.WatchListScreen.routes){
+            WatchListScreen()
         }
 
         composable(BottomNavigationRoutes.MovieDetails.routes + "/{popularAndTopRated}") {

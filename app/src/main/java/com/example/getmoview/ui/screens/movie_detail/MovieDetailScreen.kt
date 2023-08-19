@@ -51,15 +51,11 @@ fun MovieDetailScreen(
     ) {
 //        movie.movie?.poster_path?.let { MovieRequester(posterPath = it) }
 
-        movie.movie?.poster_path?.let {
-                MovieRequester(posterPath = it)
-        }
-
+        movie.movie?.poster_path?.let { MovieRequester(posterPath = it) }
 
 
         Box(
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         ) {
 
             Column(
@@ -83,8 +79,7 @@ fun MovieDetailScreen(
                 }
 
                 Column(
-                    modifier = Modifier
-                        .fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.Bottom,
                     horizontalAlignment = Alignment.Start
                 ) {
@@ -106,8 +101,7 @@ fun MovieDetailScreen(
 
                         Column(Modifier.padding(10.dp)) {
                             Row(
-                                modifier = Modifier
-                                    .fillMaxWidth(),
+                                modifier = Modifier.fillMaxWidth(),
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {

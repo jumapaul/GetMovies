@@ -1,6 +1,5 @@
 package com.example.getmoview.data.remote
-
-import com.example.getmoview.common.Constants.API_KEY
+import com.example.getmoview.BuildConfig.API_KEY
 import okhttp3.Interceptor
 import okhttp3.Response
 

@@ -51,11 +51,10 @@ fun SearchedMovieItem(
             date = date,
             percentage = percentage,
             fontSize = fontSize,
-            radius = radius
+            radius = radius,
         )
     }
 }
-
 @Composable
 fun MovieItems(
     posterPath: String,
@@ -63,7 +62,7 @@ fun MovieItems(
     date: String,
     percentage: Float,
     fontSize: TextUnit,
-    radius: Dp
+    radius: Dp,
 ) {
 
     Box(
