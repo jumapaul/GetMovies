@@ -36,8 +36,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.getmoview.ui.screens.composables.ExpandButton
-import com.example.getmoview.ui.screens.composables.ListingItem
+import com.example.getmoview.ui.composables.ExpandButton
+import com.example.getmoview.ui.composables.ListingItem
 
 @Composable
 fun GenreScreen(

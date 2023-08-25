@@ -15,8 +15,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.example.getmoview.ui.screens.composables.ExpandButton
-import com.example.getmoview.ui.screens.composables.ListingItem
+import com.example.getmoview.ui.composables.ExpandButton
+import com.example.getmoview.ui.composables.ListingItem
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable

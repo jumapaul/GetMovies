@@ -1,4 +1,4 @@
-package com.example.getmoview.ui.screens.composables
+package com.example.getmoview.ui.composables
 
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton

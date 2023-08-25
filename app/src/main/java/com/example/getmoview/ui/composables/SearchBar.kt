@@ -1,6 +1,7 @@
-package com.example.getmoview.ui.screens.composables
+package com.example.getmoview.ui.composables
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -14,14 +15,21 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
 
 @Composable
 fun SearchBar(
@@ -30,6 +38,12 @@ fun SearchBar(
 ) {
     val searchDefaultLabel = "Search"
     val label = remember { mutableStateOf(searchDefaultLabel) }
+
+    val focusRequester = remember {FocusRequester()}
+
+    LaunchedEffect(key1 = Unit){
+        focusRequester.requestFocus()
+    }
 
     Box(
         modifier = Modifier.background(
@@ -60,14 +74,44 @@ fun SearchBar(
                     },
                     cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
                     singleLine = true,
+                    enabled = true,
                     modifier = modifier
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .focusRequester(focusRequester),
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
                         color = MaterialTheme.colorScheme.onSurface
                     )
                 )
 
             }
+        }
+    }
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+fun StaticSearchBar(
+    navController: NavController
+) {
+    Box(
+        modifier = Modifier
+            .background(
+                Color.LightGray,
+                RoundedCornerShape(15.dp)
+            )
+            .fillMaxWidth()
+            .clickable {
+                navController.navigate(BottomNavigationRoutes.SearchScreen.routes)
+            }
+    ) {
+        Row(modifier = Modifier.padding(10.dp)) {
+            Icon(imageVector = Icons.Default.Search, contentDescription = null, tint = Color.Black)
+
+            Text(
+                text = "Search Movie",
+                modifier = Modifier.padding(start = 10.dp),
+                color = Color.Black
+            )
         }
     }
 }

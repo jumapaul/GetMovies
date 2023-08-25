@@ -1,4 +1,4 @@
-package com.example.getmoview.ui.screens.composables
+package com.example.getmoview.ui.composables
 
 import android.util.Log
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -15,12 +15,13 @@ import com.example.getmoview.R
 import com.example.getmoview.ui.screens.movie.MovieViewModel
 import com.example.getmoview.ui.screens.movie_detail.SearchMovieState
 import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
+import com.example.getmoview.ui.screens.search.SearchViewModel
 import kotlinx.coroutines.delay
 
 @Composable
 fun SearchedMovieList(
     state: SearchMovieState,
-    viewModel: MovieViewModel = hiltViewModel(),
+    viewModel: SearchViewModel = hiltViewModel(),
     navController: NavController
 ) {
 

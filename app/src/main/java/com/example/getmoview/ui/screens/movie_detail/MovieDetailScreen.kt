@@ -31,11 +31,11 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.getmoview.R
-import com.example.getmoview.ui.screens.composables.Cards
-import com.example.getmoview.ui.screens.composables.CircularProgressBar
-import com.example.getmoview.ui.screens.composables.GradientBackground
-import com.example.getmoview.ui.screens.composables.MovieRequester
-import com.example.getmoview.ui.screens.composables.MyTexts
+import com.example.getmoview.ui.composables.Cards
+import com.example.getmoview.ui.composables.CircularProgressBar
+import com.example.getmoview.ui.composables.GradientBackground
+import com.example.getmoview.ui.composables.MovieRequester
+import com.example.getmoview.ui.composables.MyTexts
 import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
 
 @Composable

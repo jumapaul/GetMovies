@@ -1,4 +1,4 @@
-package com.example.getmoview.ui.screens.composables
+package com.example.getmoview.ui.composables
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween

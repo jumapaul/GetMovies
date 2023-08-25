@@ -1,4 +1,4 @@
-package com.example.getmoview.ui.screens.composables
+package com.example.getmoview.ui.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -52,6 +52,7 @@ fun SearchedMovieItem(
             percentage = percentage,
             fontSize = fontSize,
             radius = radius,
+            modifier = Modifier
         )
     }
 }
@@ -63,6 +64,7 @@ fun MovieItems(
     percentage: Float,
     fontSize: TextUnit,
     radius: Dp,
+    modifier: Modifier
 ) {
 
     Box(

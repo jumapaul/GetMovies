@@ -31,9 +31,9 @@ class MovieViewModel @Inject constructor(
     private val _searchedMovies = mutableStateOf(SearchMovieState())
     val searchedMovies: State<SearchMovieState> = _searchedMovies
 
-    init {
+//    init {
 //        getMovies()
-    }
+//    }
 
     private val paginator = DefaultPaginator(
         initialKeys = _state.value.page,
@@ -91,35 +91,4 @@ class MovieViewModel @Inject constructor(
 //            }
 //        }.launchIn(viewModelScope)
 //    }
-
-    fun getSearchedMovies(searchedMovies: String) {
-        searchUseCase(searchedMovies).onEach { results ->
-            when (results) {
-                is Resources.Success -> {
-                    _searchedMovies.value = SearchMovieState(movie = (results.data ?: emptyList()))
-
-                    if (results.data?.isEmpty() == true) {
-                        moviesNotFound(true)
-                    }
-                }
-
-                is Resources.Error -> {
-                    _searchedMovies.value =
-                        SearchMovieState(error = results.message ?: "Unexpected error occurred")
-                }
-
-                is Resources.IsLoading -> {
-                    _searchedMovies.value = SearchMovieState(isLoading = true)
-                }
-            }
-        }.launchIn(viewModelScope)
-    }
-
-    private val _moviesNotFound = mutableStateOf(false)
-    val moviesNotFound: State<Boolean> = _moviesNotFound
-
-    fun moviesNotFound(notFound: Boolean) {
-        _moviesNotFound.value = notFound
-    }
-
 }
