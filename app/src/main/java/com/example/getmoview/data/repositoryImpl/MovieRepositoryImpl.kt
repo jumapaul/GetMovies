@@ -1,12 +1,13 @@
 package com.example.getmoview.data.repositoryImpl
 
-import android.util.Log
 import com.example.getmoview.data.remote.MovieApi
 import com.example.getmoview.domain.model.genre.GenreDto
 import com.example.getmoview.domain.repository.MovieRepository
-import com.example.getmoview.domain.model.popular_top_rated.MovieDto
-import com.example.getmoview.domain.model.popular_top_rated.MovieDtoItem
+import com.example.getmoview.domain.model.movies.MovieDto
+import com.example.getmoview.domain.model.MovieDtoItem
+import com.example.getmoview.domain.model.top_rated_shows.TopRatedTvShowDto
 import com.example.getmoview.domain.model.trending.TrendingDto
+import com.example.getmoview.domain.model.upcoming.UpcomingMoviesDto
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -20,6 +21,10 @@ class MovieRepositoryImpl(
         return api.getPopularMovies()
     }
 
+    override suspend fun getPopularTvShows(): TopRatedTvShowDto {
+        return api.getPopularTvShows()
+    }
+
     override suspend fun getTrendingMovies(): TrendingDto {
         return withContext(Dispatchers.IO) {
             api.getTrendingMovies()
@@ -29,6 +34,18 @@ class MovieRepositoryImpl(
     override suspend fun getTopRatedMovies(): MovieDto {
         return withContext(Dispatchers.IO) {
             api.getTopRatedMovies()
+        }
+    }
+
+    override suspend fun getTopRatedTvShows(page: Int): TopRatedTvShowDto {
+        return withContext(Dispatchers.IO){
+            api.getTopRatedTvShows(page)
+        }
+    }
+
+    override suspend fun getUpcomingMovies(page: Int): UpcomingMoviesDto {
+        return withContext(Dispatchers.IO){
+            api.getUpcomingMovies(page)
         }
     }
 

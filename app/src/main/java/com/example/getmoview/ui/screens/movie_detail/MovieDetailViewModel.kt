@@ -8,8 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.getmoview.common.Constants.POP_AND_TOP_ID
 import com.example.getmoview.common.Constants.TRENDING_ID
 import com.example.getmoview.common.Resources
-import com.example.getmoview.use_case.MovieDetailUseCase
-import com.example.getmoview.use_case.SearchUseCase
+import com.example.getmoview.ui.screens.search.SearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

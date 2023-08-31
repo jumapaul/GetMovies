@@ -1,4 +1,4 @@
-package com.example.getmoview.domain.model.popular_top_rated
+package com.example.getmoview.domain.model
 
 import kotlinx.serialization.Serializable
 

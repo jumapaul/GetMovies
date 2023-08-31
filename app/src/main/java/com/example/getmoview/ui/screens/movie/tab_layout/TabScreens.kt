@@ -13,8 +13,13 @@ typealias ComposableFun = @Composable (NavController) -> Unit
 
 sealed class TabScreens(val title: String, val screens: ComposableFun) {
 
-    object RecentMovies : TabScreens("Recent Movies", screens = { navController -> Movie(navController) })
-    object MoviesCategory : TabScreens("Movies Category", screens = { MoviesCategoryScreen() })
+    object RecentMovies :
+        TabScreens("Recent Movies", screens = { navController -> Movie(navController) })
+
+    object MoviesCategory : TabScreens(
+        "Movies Category",
+        screens = { navController -> MoviesCategoryScreen(navController) })
+
     object Genre : TabScreens("Genre", screens = { GenreScreen() })
     object Year : TabScreens("Year", screens = { YearScreen() })
     object Language : TabScreens("Language", screens = { LanguageScreen() })

@@ -44,7 +44,7 @@ class ExampleStartupBenchmark {
 
     @Test
     fun scrollCompilation() = scrollAndNavigate(CompilationMode.None())
-    private fun scrollAndNavigate(compilationMode: CompilationMode) {
+    fun scrollAndNavigate(compilationMode: CompilationMode) {
         benchmarkRule.measureRepeated(
             packageName = "com.example.getmoview",
             metrics = listOf(FrameTimingMetric()),

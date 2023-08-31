@@ -1,22 +1,26 @@
 package com.example.getmoview.data.remote
 
-import com.example.getmoview.common.Resources
 import com.example.getmoview.domain.model.genre.GenreDto
-import com.example.getmoview.domain.model.popular_top_rated.MovieDto
-import com.example.getmoview.domain.model.popular_top_rated.MovieDtoItem
+import com.example.getmoview.domain.model.movies.MovieDto
+import com.example.getmoview.domain.model.MovieDtoItem
+import com.example.getmoview.domain.model.top_rated_shows.TopRatedTvShowDto
 import com.example.getmoview.domain.model.trending.TrendingDto
+import com.example.getmoview.domain.model.upcoming.UpcomingMoviesDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MovieApi {
+    
 
     @GET("discover/movie")
-    suspend fun getMovies(
-        @Query("page") page: Int
-    ): MovieDto
+    suspend fun getMovies(@Query("page") page: Int): MovieDto
+
     @GET("movie/popular")
     suspend fun getPopularMovies(): MovieDto
+
+    @GET("tv/popular")
+    suspend fun getPopularTvShows(): TopRatedTvShowDto
 
     @GET("trending/all/day")
     suspend fun getTrendingMovies(): TrendingDto
@@ -24,18 +28,21 @@ interface MovieApi {
     @GET("movie/top_rated")
     suspend fun getTopRatedMovies(): MovieDto
 
+    @GET("tv/top_rated")
+    suspend fun getTopRatedTvShows(@Query("page") page: Int): TopRatedTvShowDto
+
+    @GET("movie/upcoming")
+    suspend fun getUpcomingMovies(@Query("page") page: Int): UpcomingMoviesDto
+
     @GET("search/movie")
-    suspend fun searchMovie(
-        @Query("query") searchTerm: String,
-    ): MovieDto
+    suspend fun searchMovie(@Query("query") searchTerm: String): MovieDto
 
     @GET("movie/{movie_id}")
-    suspend fun getMovieById(
-        @Path("movie_id") movieId: Int
-    ): MovieDtoItem
+    suspend fun getMovieById(@Path("movie_id") movieId: Int): MovieDtoItem
 
     @GET("genre/movie/list")
     suspend fun getMoviesGenre(): GenreDto
+
 
     @GET("configuration/languages")
     suspend fun getLanguage(): GenreDto

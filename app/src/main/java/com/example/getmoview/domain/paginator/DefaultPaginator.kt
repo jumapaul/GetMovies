@@ -1,4 +1,4 @@
-package com.example.getmoview.domain.model
+package com.example.getmoview.domain.paginator
 
 import com.example.getmoview.common.Resources
 import kotlinx.coroutines.flow.Flow

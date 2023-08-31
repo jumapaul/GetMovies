@@ -31,7 +31,7 @@ import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
 
-@OptIn(ExperimentalPagerApi::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun MovieScreen(
     navController: NavController,

@@ -1,5 +1,6 @@
-package com.example.getmoview.domain.model.popular_top_rated
+package com.example.getmoview.domain.model.movies
 
+import com.example.getmoview.domain.model.MovieDtoItem
 import kotlinx.serialization.Serializable
 
 @Serializable

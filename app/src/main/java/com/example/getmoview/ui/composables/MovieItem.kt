@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -25,7 +24,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.getmoview.domain.model.popular_top_rated.MovieDtoItem
+import com.example.getmoview.domain.model.MovieDtoItem
 
 @Composable
 fun SearchedMovieItem(
@@ -56,6 +55,7 @@ fun SearchedMovieItem(
         )
     }
 }
+
 @Composable
 fun MovieItems(
     posterPath: String,
@@ -123,6 +123,131 @@ fun MovieItems(
             }
         }
     }
+}
+
+@Composable
+fun MovieItemsWithoutRating(
+    posterPath: String,
+    title: String,
+    date: String,
+) {
+
+    Box(
+        modifier = Modifier
+            .padding(top = 5.dp, start = 20.dp, end = 20.dp)
+            .height(height = 200.dp)
+    ) {
+        Card(
+            modifier = Modifier.fillMaxSize(),
+            shape = RoundedCornerShape(10.dp)
+        ) {
+            MovieRequester(posterPath = posterPath)
+        }
+        Box(
+            modifier = Modifier
+                .fillMaxSize(),
+            contentAlignment = Alignment.BottomStart
+        ) {
+            Column(
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier
+                    .GradientBackground(
+                        listOf(
+                            Color.Black,
+                            Color.Gray,
+                            Color.LightGray,
+                            Color.Transparent
+                        ), 90f
+                    )
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 15.sp,
+                    modifier = Modifier.padding(start = 5.dp, top = 5.dp),
+                    color = Color.White
+                )
+                Text(
+                    text = date,
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(start = 5.dp, top = 5.dp, bottom = 5.dp),
+                    color = Color.White
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun OtherMoviesItem(
+    posterPath: String,
+    title: String,
+    date: String,
+    percentage: Float,
+    fontSize: TextUnit,
+    radius: Dp,
+    modifier: Modifier
+) {
+
+    Box(
+        modifier = Modifier
+            .height(200.dp)
+            .width(150.dp)
+    ) {
+        Card(
+            modifier = Modifier.fillMaxSize(),
+            shape = RoundedCornerShape(10.dp)
+        ) {
+            MovieRequester(posterPath = posterPath)
+        }
+        Box(modifier = Modifier.padding(10.dp)) {
+            CircularProgressBar(
+                percentage = percentage,
+                radius = radius,
+                fontSize = fontSize,
+            )
+        }
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize(),
+            contentAlignment = Alignment.BottomStart
+        ) {
+            Column(
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier
+                    .GradientBackground(
+                        listOf(
+                            Color.Black,
+                            Color.Gray,
+                            Color.LightGray,
+                            Color.Transparent
+                        ), 90f
+                    )
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 15.sp,
+                    modifier = Modifier.padding(start = 5.dp, top = 5.dp),
+                    color = Color.White
+                )
+                Text(
+                    text = date,
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(start = 5.dp, top = 5.dp, bottom = 5.dp),
+                    color = Color.White
+                )
+            }
+        }
+    }
+
 }
 
 
