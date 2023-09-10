@@ -1,8 +1,8 @@
 package com.example.getmoview.domain.model.top_rated_shows
 
-data class TopRatedTvShowDto(
+data class TvShowDto(
     val page: Int,
-    val results: List<TopRatedShowItem>,
+    val results: List<TvShowItem>,
     val total_pages: Int,
     val total_results: Int
 )

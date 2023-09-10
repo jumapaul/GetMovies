@@ -2,9 +2,12 @@ package com.example.getmoview.ui.screens.movies_category
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.getmoview.common.Resources
+import com.example.getmoview.domain.repository.MovieRepository
+import com.example.getmoview.ui.screens.genre.GenreUseCase
 import com.example.getmoview.ui.screens.movies_category.popular.PopularMoviesUseCase
 import com.example.getmoview.ui.screens.movies_category.popular.PopularTvShowsUseCase
 import com.example.getmoview.ui.screens.movies_category.top_rated.TopRatedMoviesUseCase
@@ -13,6 +16,7 @@ import com.example.getmoview.ui.ui_states.MovieUiState
 import com.example.getmoview.ui.ui_states.TvShowUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -22,7 +26,8 @@ class MoviesCategoryViewModel @Inject constructor(
     private val upcomingMoviesUseCase: UpcomingMoviesUseCase,
     private val topRatedTvShowsUseCase: TopRatedTvShowsUseCase,
     private val popularMoviesUseCase: PopularMoviesUseCase,
-    private val popularTvShowsUseCase: PopularTvShowsUseCase
+    private val popularTvShowsUseCase: PopularTvShowsUseCase,
+    private val repository: MovieRepository
 ) : ViewModel() {
 
     private val _upcomingMoviesState = mutableStateOf(MovieUiState())
@@ -137,5 +142,13 @@ class MoviesCategoryViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    suspend fun getGenreNames(genreIds: List<Int>): List<String> {
+        val response = repository.getGenres()
+
+        val genreMap = response.genres.associate { it.id to it.name }
+
+        return genreIds.map { genreMap[it].orEmpty() }
     }
 }

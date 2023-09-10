@@ -1,11 +1,17 @@
 package com.example.getmoview.ui.screens.movie_detail
 
 import com.example.getmoview.domain.model.MovieDtoItem
+import com.example.getmoview.domain.model.top_rated_shows.TvShowItem
 import com.example.getmoview.domain.model.trending.Results
 
 data class MoviesState(
     val isLoading: Boolean = false,
     val movie: MovieDtoItem? = null,
+    val error: String = ""
+)
+data class TvShowsState(
+    val isLoading: Boolean = false,
+    val shows: TvShowItem? = null,
     val error: String = ""
 )
 

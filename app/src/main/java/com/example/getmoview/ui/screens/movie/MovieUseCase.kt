@@ -17,7 +17,6 @@ class MovieUseCase @Inject constructor(
     operator fun invoke(page: Int): Flow<Resources<List<MovieDtoItem>>> = flow {
         try {
             val api = repository.getMovies(page)
-            Log.d("------->", "invoke: $api")
             emit(Resources.Success(data = api.results))
         } catch (e: HttpException) {
             emit(Resources.Error(message = "An error occurred"))

@@ -20,9 +20,9 @@ class MovieDetailUseCase @Inject constructor(
 
             emit(Resources.Success(movie))
         } catch (e: HttpException) {
-            emit(Resources.Error(data = null, message = "An expected error occurred"))
+            emit(Resources.Error(message = "An expected error occurred"))
         } catch (e: IOException){
-            emit(Resources.Error(data = null, message = "No internet connection"))
+            emit(Resources.Error(message = "No internet connection"))
         }
     }
 }

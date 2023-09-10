@@ -11,4 +11,5 @@ sealed class BottomNavigationRoutes(val title: String?, var icon: Int?, val rout
     object SearchScreen: BottomNavigationRoutes(null, null, "search_screen")
     object PopularMoviesAndTvShows: BottomNavigationRoutes(null, null, "popular")
     object TopRatedMoviesAndTvShows: BottomNavigationRoutes(null, null, "topRated")
+    object UpcomingMovies: BottomNavigationRoutes(null, null, "upcoming")
 }

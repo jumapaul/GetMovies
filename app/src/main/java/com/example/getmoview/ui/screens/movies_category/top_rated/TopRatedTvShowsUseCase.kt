@@ -1,8 +1,7 @@
 package com.example.getmoview.ui.screens.movies_category.top_rated
 
-import android.util.Log
 import com.example.getmoview.common.Resources
-import com.example.getmoview.domain.model.top_rated_shows.TopRatedShowItem
+import com.example.getmoview.domain.model.top_rated_shows.TvShowItem
 import com.example.getmoview.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -14,7 +13,7 @@ class TopRatedTvShowsUseCase @Inject constructor(
     private val repository: MovieRepository
 ) {
 
-    operator fun invoke(page: Int): Flow<Resources<List<TopRatedShowItem>>> = flow {
+    operator fun invoke(page: Int): Flow<Resources<List<TvShowItem>>> = flow {
         try {
             emit(Resources.IsLoading())
             val apiData = repository.getTopRatedTvShows(page).results

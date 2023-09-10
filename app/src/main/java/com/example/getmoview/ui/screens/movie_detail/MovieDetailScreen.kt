@@ -1,6 +1,6 @@
 package com.example.getmoview.ui.screens.movie_detail
 
-import androidx.compose.foundation.Image
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,13 +9,22 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.filled.BookmarkBorder
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
@@ -23,37 +32,89 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.getmoview.R
 import com.example.getmoview.ui.composables.Cards
 import com.example.getmoview.ui.composables.CircularProgressBar
 import com.example.getmoview.ui.composables.GradientBackground
 import com.example.getmoview.ui.composables.MovieRequester
 import com.example.getmoview.ui.composables.MyTexts
-import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
+import com.example.getmoview.ui.screens.movies_category.MoviesCategoryViewModel
 
 @Composable
 fun MovieDetailScreen(
     navController: NavController,
-    viewModel: MovieDetailViewModel = hiltViewModel()
+    viewModel: MovieDetailViewModel = hiltViewModel(),
+    categories: MoviesCategoryViewModel = hiltViewModel()
 ) {
 
     val movie = viewModel.moviesState.value
+    val shows = viewModel.showState.value
 
+
+    movie.movie?.let { movieId ->
+        val genres = movieId.genre_ids
+        val names = remember {
+            mutableStateOf<List<String>>(emptyList())
+        }
+        LaunchedEffect(key1 = genres) {
+            val genreNames = categories.getGenreNames(genres)
+            names.value = genreNames
+        }
+        DetailScreen(
+            navController = navController,
+            posterPath = movieId.poster_path,
+            percentage = movieId.vote_average,
+            title = movieId.title,
+            releaseDate = movieId.release_date,
+            overview = movieId.overview,
+            genres = names
+        )
+    }
+
+//    shows.shows.let { showId ->
+//        val genres = showId?.genre_ids
+//        val names = remember {
+//            mutableStateOf<List<String>>(emptyList())
+//        }
+//        LaunchedEffect(key1 = genres) {
+//            val genreNames = genres?.let { categories.getGenreNames(it) }
+//            if (genreNames != null) {
+//                names.value = genreNames
+//            }
+//        }
+//        if (showId != null) {
+//            DetailScreen(
+//                navController = navController,
+//                posterPath = showId.poster_path,
+//                percentage = showId.vote_average,
+//                title = showId.name,
+//                releaseDate = showId.first_air_date,
+//                overview = showId.overview,
+//                genres = names
+//            )
+//        }
+//    }
+}
+
+@Composable
+fun DetailScreen(
+    navController: NavController,
+    posterPath: String,
+    percentage: Double,
+    title: String,
+    releaseDate: String,
+    overview: String,
+    genres: MutableState<List<String>>
+) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-//        movie.movie?.poster_path?.let { MovieRequester(posterPath = it) }
 
-        movie.movie?.poster_path?.let { MovieRequester(posterPath = it) }
-
-
+        MovieRequester(posterPath = posterPath)
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
@@ -63,20 +124,16 @@ fun MovieDetailScreen(
                 horizontalAlignment = Alignment.Start,
                 modifier = Modifier.wrapContentSize(),
             ) {
-                Card(
-                    shape = RoundedCornerShape(5.dp),
+
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = null,
                     modifier = Modifier
-                        .size(25.dp, 25.dp)
                         .padding(start = 10.dp, top = 10.dp)
                         .clickable {
-                            navController.navigate(BottomNavigationRoutes.MovieScreen.routes)
+                            navController.popBackStack()
                         }
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.baseline_arrow_back_24),
-                        contentDescription = null
-                    )
-                }
+                )
 
                 Column(
                     modifier = Modifier.fillMaxSize(),
@@ -110,97 +167,107 @@ fun MovieDetailScreen(
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.Start
                                 ) {
-                                        movie.movie?.vote_average?.toFloat()?.let {
-                                            CircularProgressBar(
-                                                percentage = it,
-                                                fontSize = 15.sp,
-                                                radius = 30.dp
-                                            )
-                                        }
 
-                                        MyTexts(
-                                            text = "User\n Score",
-                                            style = MaterialTheme.typography.bodyMedium,
-                                            modifier = Modifier.padding(10.dp)
-                                        )
+                                    CircularProgressBar(
+                                        percentage = percentage.toFloat(),
+                                        fontSize = 15.sp,
+                                        radius = 30.dp
+                                    )
+
+
+                                    MyTexts(
+                                        text = "User\n Score",
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        modifier = Modifier.padding(10.dp)
+                                    )
                                 }
 
                                 FavoriteStar(
-                                    onClick = {
-
-                                    }
+                                    onClick = {}
                                 )
                             }
 
-                            movie.movie?.let {
-                                MyTexts(
-                                    text = it.title,
-                                    style = MaterialTheme.typography.headlineLarge,
-                                    modifier = Modifier.padding(top = 15.dp)
-                                )
+                            MyTexts(
+                                text = title,
+                                style = MaterialTheme.typography.headlineLarge,
+                                modifier = Modifier.padding(top = 15.dp)
+                            )
 
-                                MyTexts(
-                                    text = it.release_date,
-                                    style = MaterialTheme.typography.bodySmall,
-                                    modifier = Modifier.padding(top = 5.dp)
-                                )
-                            }
+                            MyTexts(
+                                text = releaseDate,
+                                style = MaterialTheme.typography.bodySmall,
+                                modifier = Modifier.padding(top = 5.dp)
+                            )
 
-                            Row(
+
+                            LazyRow(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(top = 10.dp),
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                Cards(text = "Action")
-                                Cards(text = "Adventure")
-                                Cards(text = "Animation")
-                                Cards(text = "Science Fiction")
+
+                                items(genres.value) { genres ->
+                                    Cards(text = genres)
+                                }
+
                             }
 
-                            movie.movie?.let {
-                                MyTexts(
-                                    text = it.overview,
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    modifier = Modifier
-                                        .padding(top = 20.dp)
-                                        .fillMaxWidth()
-                                        .wrapContentHeight()
-                                )
-                            }
+                            MyTexts(
+                                text = overview,
+                                style = MaterialTheme.typography.bodyMedium,
+                                modifier = Modifier
+                                    .padding(top = 20.dp)
+                                    .fillMaxWidth()
+                                    .wrapContentHeight()
+                            )
                         }
                     }
                 }
             }
         }
+
+
     }
 }
 
 @Composable
 fun FavoriteStar(
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
 
     var clicked by remember {
         mutableStateOf(false)
     }
 
-    val painter: Painter = if (clicked) {
-        painterResource(id = R.drawable.baseline_star_rate_24)
-    } else {
-        painterResource(id = R.drawable.baseline_star_border_24)
-    }
+    val favorite: ImageVector =
+        if (clicked) Icons.Default.Favorite else Icons.Default.FavoriteBorder
 
-    Image(
+    Icon(
         modifier = Modifier
-            .size(40.dp, 40.dp)
             .clickable {
                 clicked = !clicked
                 onClick()
             },
         contentDescription = null,
-        painter = painter,
-        contentScale = ContentScale.Crop,
+        imageVector = favorite,
     )
+}
+
+@Composable
+fun BookMark(
+    onClick: () -> Unit
+) {
+    var isClicked by remember {
+        mutableStateOf(false)
+    }
+
+    val bookMark: ImageVector =
+        if (isClicked) Icons.Default.Bookmark else Icons.Default.BookmarkBorder
+
+    Icon(imageVector = bookMark, contentDescription = null, modifier = Modifier.clickable {
+        isClicked = !isClicked
+        onClick()
+    })
 }

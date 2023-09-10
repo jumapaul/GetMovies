@@ -1,6 +1,6 @@
 package com.example.getmoview.domain.model.top_rated_shows
 
-data class TopRatedShowItem(
+data class TvShowItem(
     val backdrop_path: String,
     val first_air_date: String,
     val genre_ids: List<Int>,

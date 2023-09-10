@@ -5,7 +5,8 @@ import com.example.getmoview.domain.model.genre.GenreDto
 import com.example.getmoview.domain.repository.MovieRepository
 import com.example.getmoview.domain.model.movies.MovieDto
 import com.example.getmoview.domain.model.MovieDtoItem
-import com.example.getmoview.domain.model.top_rated_shows.TopRatedTvShowDto
+import com.example.getmoview.domain.model.top_rated_shows.TvShowDto
+import com.example.getmoview.domain.model.top_rated_shows.TvShowItem
 import com.example.getmoview.domain.model.trending.TrendingDto
 import com.example.getmoview.domain.model.upcoming.UpcomingMoviesDto
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +22,7 @@ class MovieRepositoryImpl(
         return api.getPopularMovies()
     }
 
-    override suspend fun getPopularTvShows(): TopRatedTvShowDto {
+    override suspend fun getPopularTvShows(): TvShowDto {
         return api.getPopularTvShows()
     }
 
@@ -37,7 +38,7 @@ class MovieRepositoryImpl(
         }
     }
 
-    override suspend fun getTopRatedTvShows(page: Int): TopRatedTvShowDto {
+    override suspend fun getTopRatedTvShows(page: Int): TvShowDto {
         return withContext(Dispatchers.IO){
             api.getTopRatedTvShows(page)
         }
@@ -58,6 +59,12 @@ class MovieRepositoryImpl(
     override suspend fun getMovieById(id: Int): MovieDtoItem {
         return withContext(Dispatchers.IO) {
             api.getMovieById(id)
+        }
+    }
+
+    override suspend fun getTvShowsById(id: Int): TvShowItem {
+        return withContext(Dispatchers.IO){
+            api.getShowsById(id)
         }
     }
 

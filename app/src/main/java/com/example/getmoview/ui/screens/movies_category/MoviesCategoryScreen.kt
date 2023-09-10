@@ -1,9 +1,9 @@
 package com.example.getmoview.ui.screens.movies_category
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -52,25 +52,32 @@ fun MoviesCategoryScreen(
     ) {
 
         Column {
-            TitleAlignment(text1 = "Upcoming Movies", text2 = "See all", onClick = {
-//                navController
-            })
+            TitleAlignment(
+                text1 = "Upcoming Movies",
+                text2 = "See all",
+                modifier = Modifier.clickable {
+                    navController.navigate(BottomNavigationRoutes.UpcomingMovies.routes)
+                })
 
             AutoSliding(
                 modifier = Modifier,
                 itemsCount = upcomingMoviesState.movies.size
             ) { index ->
                 val items = upcomingMoviesState.movies[index]
-                MovieItemsWithoutRating(
-                    posterPath = items.poster_path,
-                    title = items.title,
-                    date = items.release_date
-                )
+                Box(modifier = Modifier.clickable {
+                    navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${items.id}")
+                }) {
+                    MovieItemsWithoutRating(
+                        posterPath = items.poster_path,
+                        title = items.title,
+                        date = items.release_date
+                    )
+                }
             }
         }
 
         Column(modifier = Modifier.padding(top = 5.dp)) {
-            TitleAlignment(text1 = "Top Rated", text2 = "Movies", onClick = {
+            TitleAlignment(text1 = "Top Rated", text2 = "Movies", modifier = Modifier.clickable {
                 navController.navigate(BottomNavigationRoutes.TopRatedMoviesAndTvShows.routes)
             })
             LazyRow(
@@ -78,88 +85,116 @@ fun MoviesCategoryScreen(
                 horizontalArrangement = Arrangement.spacedBy(5.dp)
             ) {
                 items(topRatedMoviesState.movies) { movie ->
-                    OtherMoviesItem(
-                        posterPath = movie.poster_path,
-                        title = movie.title,
-                        date = movie.release_date,
-                        percentage = movie.vote_average.toFloat(),
-                        fontSize = 18.sp,
-                        radius = 20.dp,
-                        modifier = Modifier
-                    )
+
+                    Box(modifier = Modifier.clickable {
+                        navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${movie.id}")
+                    }) {
+                        OtherMoviesItem(
+                            posterPath = movie.poster_path,
+                            title = movie.title,
+                            date = movie.release_date,
+                            percentage = movie.vote_average.toFloat(),
+                            fontSize = 18.sp,
+                            radius = 20.dp,
+                            modifier = Modifier
+                        )
+                    }
                 }
             }
         }
 
         Column(modifier = Modifier.padding(top = 5.dp)) {
-            TitleAlignment(text1 = "Top rated shows", text2 = "Tv Shows", onClick = {
-                navController.navigate(BottomNavigationRoutes.TopRatedMoviesAndTvShows.routes)
-            })
+            TitleAlignment(
+                text1 = "Top rated shows",
+                text2 = "Tv Shows",
+                modifier = Modifier.clickable {
+                    navController.navigate(BottomNavigationRoutes.TopRatedMoviesAndTvShows.routes)
+                })
 
             LazyRow(
                 modifier = Modifier,
                 horizontalArrangement = Arrangement.spacedBy(5.dp)
             ) {
                 items(topRatedShows.movies) { shows ->
-                    OtherMoviesItem(
-                        posterPath = shows.poster_path,
-                        title = shows.name,
-                        date = shows.first_air_date,
-                        percentage = shows.vote_average.toFloat(),
-                        fontSize = 18.sp,
-                        radius = 20.dp,
-                        modifier = Modifier
-                    )
+                    Box(modifier = Modifier.clickable {
+                        navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${shows.id}")
+                    }) {
+                        OtherMoviesItem(
+                            posterPath = shows.poster_path,
+                            title = shows.name,
+                            date = shows.first_air_date,
+                            percentage = shows.vote_average.toFloat(),
+                            fontSize = 18.sp,
+                            radius = 20.dp,
+                            modifier = Modifier
+                        )
+                    }
                 }
 
             }
         }
 
         Column(modifier = Modifier.padding(top = 5.dp)) {
-            TitleAlignment(text1 = "Popular Movies", text2 = "Movies", onClick = {
-                navController.navigate(BottomNavigationRoutes.PopularMoviesAndTvShows.routes)
-            })
+            TitleAlignment(
+                text1 = "Popular Movies",
+                text2 = "Movies",
+                modifier = Modifier.clickable {
+                    navController.navigate(BottomNavigationRoutes.PopularMoviesAndTvShows.routes)
+                })
 
             LazyRow(
                 modifier = Modifier,
                 horizontalArrangement = Arrangement.spacedBy(5.dp)
             ) {
                 items(popularMovies.movies) { movies ->
-                    OtherMoviesItem(
-                        posterPath = movies.poster_path,
-                        title = movies.title,
-                        date = movies.release_date,
-                        percentage = movies.vote_average.toFloat(),
-                        fontSize = 18.sp,
-                        radius = 20.dp,
-                        modifier = Modifier
-                    )
+
+                    Box(modifier = Modifier.clickable {
+                        navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${movies.id}")
+
+                    }) {
+                        OtherMoviesItem(
+                            posterPath = movies.poster_path,
+                            title = movies.title,
+                            date = movies.release_date,
+                            percentage = movies.vote_average.toFloat(),
+                            fontSize = 18.sp,
+                            radius = 20.dp,
+                            modifier = Modifier
+                        )
+                    }
                 }
             }
         }
         Column(modifier = Modifier.padding(top = 5.dp)) {
-            TitleAlignment(text1 = "Popular Tv Shows", text2 = "Tv Shows", onClick = {
-                navController.navigate(BottomNavigationRoutes.PopularMoviesAndTvShows.routes)
-            })
+            TitleAlignment(
+                text1 = "Popular Tv Shows",
+                text2 = "Tv Shows",
+                modifier = Modifier.clickable {
+                    navController.navigate(BottomNavigationRoutes.PopularMoviesAndTvShows.routes)
+                })
 
             LazyRow(
                 modifier = Modifier,
                 horizontalArrangement = Arrangement.spacedBy(5.dp)
             ) {
-                items(popularTvShows.movies) { movies ->
-                    OtherMoviesItem(
-                        posterPath = movies.poster_path,
-                        title = movies.name,
-                        date = movies.first_air_date,
-                        percentage = movies.vote_average.toFloat(),
-                        fontSize = 18.sp,
-                        radius = 20.dp,
-                        modifier = Modifier
-                    )
+                items(popularTvShows.movies) { tvShowItem ->
+
+                    Box(modifier = Modifier.clickable {
+                        navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${tvShowItem.id}")
+                    }) {
+                        OtherMoviesItem(
+                            posterPath = tvShowItem.poster_path,
+                            title = tvShowItem.name,
+                            date = tvShowItem.first_air_date,
+                            percentage = tvShowItem.vote_average.toFloat(),
+                            fontSize = 18.sp,
+                            radius = 20.dp,
+                            modifier = Modifier
+                        )
+                    }
                 }
             }
         }
-
     }
 }
 
@@ -167,7 +202,7 @@ fun MoviesCategoryScreen(
 fun TitleAlignment(
     text1: String,
     text2: String,
-    onClick: () -> Unit
+    modifier: Modifier
 ) {
 
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -185,9 +220,7 @@ fun TitleAlignment(
             MyTexts(
                 text = "See All",
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.clickable {
-                    onClick
-                },
+                modifier = modifier,
                 color = colorResource(id = R.color.teal_700)
             )
         }

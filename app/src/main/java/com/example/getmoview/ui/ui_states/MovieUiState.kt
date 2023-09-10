@@ -2,7 +2,7 @@ package com.example.getmoview.ui.ui_states
 
 import com.example.getmoview.domain.model.genre.Genre
 import com.example.getmoview.domain.model.MovieDtoItem
-import com.example.getmoview.domain.model.top_rated_shows.TopRatedShowItem
+import com.example.getmoview.domain.model.top_rated_shows.TvShowItem
 
 data class MovieUiState(
     val isLoading: Boolean = false,
@@ -15,7 +15,7 @@ data class MovieUiState(
 
 data class TvShowUiState(
     val isLoading: Boolean = false,
-    val movies: List<TopRatedShowItem> = emptyList(),
+    val movies: List<TvShowItem> = emptyList(),
     var page: Int = 1,
     val endReached: Boolean = false,
     val error: String? = null,

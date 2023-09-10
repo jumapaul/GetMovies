@@ -2,26 +2,22 @@ package com.example.getmoview.ui.screens.movie.tab_layout
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import com.example.getmoview.ui.screens.a_z.AtoZScreen
 import com.example.getmoview.ui.screens.genre.GenreScreen
 import com.example.getmoview.ui.screens.language.LanguageScreen
 import com.example.getmoview.ui.screens.movie.Movie
 import com.example.getmoview.ui.screens.movies_category.MoviesCategoryScreen
-import com.example.getmoview.ui.screens.year.YearScreen
 
 typealias ComposableFun = @Composable (NavController) -> Unit
 
-sealed class TabScreens(val title: String, val screens: ComposableFun) {
+sealed class CategoryTabScreens(val title: String, val screens: ComposableFun) {
 
     object RecentMovies :
-        TabScreens("Recent Movies", screens = { navController -> Movie(navController) })
+        CategoryTabScreens("Recent Movies", screens = { navController -> Movie(navController) })
 
-    object MoviesCategory : TabScreens(
+    object MoviesCategory : CategoryTabScreens(
         "Movies Category",
         screens = { navController -> MoviesCategoryScreen(navController) })
 
-    object Genre : TabScreens("Genre", screens = { GenreScreen() })
-    object Year : TabScreens("Year", screens = { YearScreen() })
-    object Language : TabScreens("Language", screens = { LanguageScreen() })
-    object AtoZ : TabScreens("A-Z", screens = { AtoZScreen() })
+    object Genre : CategoryTabScreens("Genre", screens = { GenreScreen() })
+    object Language : CategoryTabScreens("Language", screens = { LanguageScreen() })
 }

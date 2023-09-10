@@ -1,6 +1,5 @@
 package com.example.getmoview.ui.screens.movie
 
-import androidx.activity.compose.ReportDrawnWhen
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,17 +14,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.getmoview.ui.composables.MovieItems
+import com.example.getmoview.ui.composables.MyTexts
 import com.example.getmoview.ui.composables.StaticSearchBar
 import com.example.getmoview.ui.screens.movie.tab_layout.TabContent
-import com.example.getmoview.ui.screens.movie.tab_layout.TabScreens
+import com.example.getmoview.ui.screens.movie.tab_layout.CategoryTabScreens
 import com.example.getmoview.ui.screens.movie.tab_layout.Tabs
 import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -51,12 +51,10 @@ fun MovieScreen(
 
                 StaticSearchBar(navController)
                 val screens = listOf(
-                    TabScreens.RecentMovies,
-                    TabScreens.MoviesCategory,
-                    TabScreens.Genre,
-                    TabScreens.Year,
-                    TabScreens.Language,
-                    TabScreens.AtoZ
+                    CategoryTabScreens.RecentMovies,
+                    CategoryTabScreens.MoviesCategory,
+                    CategoryTabScreens.Genre,
+                    CategoryTabScreens.Language,
                 )
                 val pagerState = rememberPagerState(initialPage = 0)
 
@@ -105,6 +103,11 @@ fun Movie(
                 horizontalAlignment = Alignment.Start,
                 modifier = Modifier.fillMaxSize()
             ) {
+                MyTexts(
+                    text = "Discover Your Movies And Tv shows",
+                    style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+                    modifier = Modifier
+                )
                 LazyVerticalGrid(
                     modifier = Modifier.testTag("movies"),
                     columns = GridCells.Fixed(2),

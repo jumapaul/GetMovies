@@ -13,8 +13,9 @@ import com.example.getmoview.ui.screens.account.AccountScreen
 import com.example.getmoview.ui.screens.favorite.FavoriteScreen
 import com.example.getmoview.ui.screens.movie.MovieScreen
 import com.example.getmoview.ui.screens.movie_detail.MovieDetailScreen
-import com.example.getmoview.ui.screens.movies_category.popular.AllPopularMoviesAndTvShow
+import com.example.getmoview.ui.screens.movies_category.popular.all.AllPopularMoviesAndTvShow
 import com.example.getmoview.ui.screens.movies_category.top_rated.AllTopRatedAndTvShows
+import com.example.getmoview.ui.screens.upcoming.UpcomingMovies
 import com.example.getmoview.ui.screens.watchlist_screen.WatchListScreen
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -44,7 +45,7 @@ fun BottomNavigationGraph(navHostController: NavHostController, modifier: Modifi
             WatchListScreen()
         }
 
-        composable(BottomNavigationRoutes.MovieDetails.routes + "/{popularAndTopRated}") {
+        composable(BottomNavigationRoutes.MovieDetails.routes + "/{movies}") {
             MovieDetailScreen(navHostController)
         }
 
@@ -52,11 +53,16 @@ fun BottomNavigationGraph(navHostController: NavHostController, modifier: Modifi
             SearchScreen(navHostController)
         }
 
-        composable(BottomNavigationRoutes.SearchScreen.routes){
-            AllPopularMoviesAndTvShow()
+        composable(BottomNavigationRoutes.PopularMoviesAndTvShows.routes){
+            AllPopularMoviesAndTvShow(navHostController)
         }
-        composable(BottomNavigationRoutes.SearchScreen.routes){
-            AllTopRatedAndTvShows()
+
+        composable(BottomNavigationRoutes.TopRatedMoviesAndTvShows.routes){
+            AllTopRatedAndTvShows(navHostController)
+        }
+
+        composable(BottomNavigationRoutes.UpcomingMovies.routes){
+            UpcomingMovies(navHostController)
         }
     }
 }

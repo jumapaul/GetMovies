@@ -1,11 +1,13 @@
 package com.example.getmoview.ui.screens.movie_detail
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.getmoview.common.Constants.POP_AND_TOP_ID
+import com.example.getmoview.common.Constants.MOVIES_ID
+import com.example.getmoview.common.Constants.SHOWS
 import com.example.getmoview.common.Constants.TRENDING_ID
 import com.example.getmoview.common.Resources
 import com.example.getmoview.ui.screens.search.SearchUseCase
@@ -17,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieDetailViewModel @Inject constructor(
     private val movieDetailUseCase: MovieDetailUseCase,
+    private val tvShowDetailUseCase: TvShowDetailUseCase,
     private val searchUseCase: SearchUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -24,17 +27,23 @@ class MovieDetailViewModel @Inject constructor(
     private val _moviesState = mutableStateOf(MoviesState())
     val moviesState: State<MoviesState> = _moviesState
 
+    private val _showState = mutableStateOf(TvShowsState())
+    val showState: State<TvShowsState> = _showState
+
     private val _trendingMovieState = mutableStateOf(TrendingMovieState())
     val trendingMovieState: State<TrendingMovieState> = _trendingMovieState
 
     init {
-        savedStateHandle.get<String>(POP_AND_TOP_ID)?.let { movieId ->
+        savedStateHandle.get<String>(MOVIES_ID)?.let { movieId ->
             getPopularAndTopRatedId(movieId.toInt())
         }
 
-        savedStateHandle.get<String>(TRENDING_ID)?.let { movieId ->
-//            getTrendingMovieId(movieId.toInt() )
+        savedStateHandle.get<String>(MOVIES_ID)?.let { showsId->
+            getTvShowId(showsId.toInt())
         }
+//        savedStateHandle.get<String>(TRENDING_ID)?.let { movieId ->
+////            getTrendingMovieId(movieId.toInt() )
+//        }
 
     }
 
@@ -57,8 +66,24 @@ class MovieDetailViewModel @Inject constructor(
                             error = result.message ?: "Unexpected error occurred"
                         )
                 }
-                else ->{
+            }
+        }.launchIn(viewModelScope)
+    }
 
+    private fun getTvShowId(showId: Int) {
+        tvShowDetailUseCase(showId).onEach { shows ->
+            when (shows) {
+                is Resources.IsLoading -> {
+                    _showState.value = TvShowsState(isLoading = true)
+                }
+
+                is Resources.Success -> {
+                    _showState.value = TvShowsState(shows = shows.data)
+                }
+
+                is Resources.Error -> {
+                    _showState.value =
+                        TvShowsState(error = shows.message ?: "Unexpected error occurred")
                 }
             }
         }.launchIn(viewModelScope)
