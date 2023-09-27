@@ -13,6 +13,7 @@ import com.example.getmoview.ui.screens.account.AccountScreen
 import com.example.getmoview.ui.screens.favorite.FavoriteScreen
 import com.example.getmoview.ui.screens.movie.MovieScreen
 import com.example.getmoview.ui.screens.movie_detail.MovieDetailScreen
+import com.example.getmoview.ui.screens.movie_detail.ShowsDetailScreen
 import com.example.getmoview.ui.screens.movies_category.popular.all.AllPopularMoviesAndTvShow
 import com.example.getmoview.ui.screens.movies_category.top_rated.AllTopRatedAndTvShows
 import com.example.getmoview.ui.screens.upcoming.UpcomingMovies
@@ -47,6 +48,10 @@ fun BottomNavigationGraph(navHostController: NavHostController, modifier: Modifi
 
         composable(BottomNavigationRoutes.MovieDetails.routes + "/{movies}") {
             MovieDetailScreen(navHostController)
+        }
+
+        composable(BottomNavigationRoutes.ShowsDetail.routes + "/{shows}"){
+            ShowsDetailScreen(navController = navHostController)
         }
 
         composable(BottomNavigationRoutes.SearchScreen.routes){

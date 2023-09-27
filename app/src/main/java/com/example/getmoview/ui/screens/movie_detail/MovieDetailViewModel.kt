@@ -1,14 +1,12 @@
 package com.example.getmoview.ui.screens.movie_detail
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.getmoview.common.Constants.MOVIES_ID
-import com.example.getmoview.common.Constants.SHOWS
-import com.example.getmoview.common.Constants.TRENDING_ID
+import com.example.getmoview.common.Constants.SHOWS_ID
 import com.example.getmoview.common.Resources
 import com.example.getmoview.ui.screens.search.SearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -38,7 +36,7 @@ class MovieDetailViewModel @Inject constructor(
             getPopularAndTopRatedId(movieId.toInt())
         }
 
-        savedStateHandle.get<String>(MOVIES_ID)?.let { showsId->
+        savedStateHandle.get<String>(SHOWS_ID)?.let { showsId->
             getTvShowId(showsId.toInt())
         }
 //        savedStateHandle.get<String>(TRENDING_ID)?.let { movieId ->

@@ -8,6 +8,7 @@ sealed class BottomNavigationRoutes(val title: String?, var icon: Int?, val rout
     object AccountScreen : BottomNavigationRoutes("Account", R.drawable.account, "account")
     object WatchListScreen : BottomNavigationRoutes("WatchList", R.drawable.baseline_bookmarks, "bookmarks")
     object MovieDetails: BottomNavigationRoutes(null, null, "movie_detail")
+    object ShowsDetail: BottomNavigationRoutes(null, null, "top_rated")
     object SearchScreen: BottomNavigationRoutes(null, null, "search_screen")
     object PopularMoviesAndTvShows: BottomNavigationRoutes(null, null, "popular")
     object TopRatedMoviesAndTvShows: BottomNavigationRoutes(null, null, "topRated")

@@ -46,7 +46,7 @@ fun GetTopRatedCategoryShows(
                 }
 
                 Box(modifier = Modifier.clickable {
-                    navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${shows.id}")
+                    navController.navigate(BottomNavigationRoutes.ShowsDetail.routes + "/${shows.id}")
                 }){
                     VerticalMoviesItem(
                         posterPath = shows.poster_path,

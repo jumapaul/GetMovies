@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
@@ -21,7 +22,6 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -52,16 +52,19 @@ fun MovieDetailScreen(
 ) {
 
     val movie = viewModel.moviesState.value
-    val shows = viewModel.showState.value
 
+    Log.d("xxxxxxx", "MovieDetailScreen: ${movie.movie}")
 
     movie.movie?.let { movieId ->
-        val genres = movieId.genre_ids
+        val movieGenre = movieId.genre_ids
+
+        Log.d("--------->", "Movie Genres: ${movieId.genre_ids}")
+
         val names = remember {
             mutableStateOf<List<String>>(emptyList())
         }
-        LaunchedEffect(key1 = genres) {
-            val genreNames = categories.getGenreNames(genres)
+        LaunchedEffect(key1 = movieGenre) {
+            val genreNames = categories.getGenreNames(movieGenre)
             names.value = genreNames
         }
         DetailScreen(
@@ -74,30 +77,37 @@ fun MovieDetailScreen(
             genres = names
         )
     }
+}
 
-//    shows.shows.let { showId ->
-//        val genres = showId?.genre_ids
-//        val names = remember {
-//            mutableStateOf<List<String>>(emptyList())
-//        }
-//        LaunchedEffect(key1 = genres) {
-//            val genreNames = genres?.let { categories.getGenreNames(it) }
-//            if (genreNames != null) {
-//                names.value = genreNames
-//            }
-//        }
-//        if (showId != null) {
-//            DetailScreen(
-//                navController = navController,
-//                posterPath = showId.poster_path,
-//                percentage = showId.vote_average,
-//                title = showId.name,
-//                releaseDate = showId.first_air_date,
-//                overview = showId.overview,
-//                genres = names
-//            )
-//        }
-//    }
+@Composable
+fun ShowsDetailScreen(
+    navController: NavController,
+    viewModel: MovieDetailViewModel = hiltViewModel(),
+    categories: MoviesCategoryViewModel = hiltViewModel()
+){
+    val shows = viewModel.showState.value
+
+    shows.shows?.let { showsId->
+
+        val genres = showsId.genre_ids
+
+        val names = remember {
+            mutableStateOf<List<String>>(emptyList())
+        }
+        LaunchedEffect(key1 = genres) {
+            val genreNames = genres.let { categories.getGenreNames(it) }
+            names.value = genreNames
+        }
+        DetailScreen(
+            navController = navController,
+            posterPath = showsId.poster_path,
+            percentage = showsId.vote_average,
+            title = showsId.name,
+            releaseDate = showsId.first_air_date,
+            overview = showsId.overview,
+            genres = names
+        )
+    }
 }
 
 @Composable
@@ -108,8 +118,9 @@ fun DetailScreen(
     title: String,
     releaseDate: String,
     overview: String,
-    genres: MutableState<List<String>>
+    genres: MutableState<List<String>>,
 ) {
+
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -249,7 +260,8 @@ fun FavoriteStar(
             .clickable {
                 clicked = !clicked
                 onClick()
-            },
+            }
+            .size(50.dp),
         contentDescription = null,
         imageVector = favorite,
     )

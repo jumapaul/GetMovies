@@ -40,7 +40,7 @@ fun SearchedMovieList(
                             Log.d("---------->", "SearchedMovieList: $item")
                         },
                         searchedItem = item,
-                        radius = 20.dp
+                        radius = 20.dp,
                     )
                 }
             }

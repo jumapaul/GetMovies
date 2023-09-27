@@ -1,5 +1,6 @@
 package com.example.getmoview.ui.screens.movies_category.top_rated.tab_layout
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -38,6 +39,8 @@ fun GetTopMoviesCategoryMovies(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(movies.movies) { movies ->
+
+//                Log.d("------->", "GetTopMoviesCategoryMovies: ${movies.id} and title ${movies.title}")
                 val genres = movies.genre_ids
                 val names = remember {
                     mutableStateOf<List<String>>(emptyList())
@@ -49,6 +52,8 @@ fun GetTopMoviesCategoryMovies(
                 }
 
                 Box(modifier = Modifier.clickable {
+                    Log.d("xxxxxxx", "GetTopMoviesCategoryMovies: ${movies.id} and movies title ${movies.title}")
+
                     navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${movies.id}")
                 }){
                     VerticalMoviesItem(

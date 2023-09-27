@@ -35,7 +35,7 @@ fun SearchedMovieItem(
     fontSize: TextUnit,
     onItemClick: (MovieDtoItem) -> Unit,
     searchedItem: MovieDtoItem,
-    radius: Dp
+    radius: Dp,
 ) {
     Box(
         modifier = Modifier
@@ -51,7 +51,7 @@ fun SearchedMovieItem(
             percentage = percentage,
             fontSize = fontSize,
             radius = radius,
-            modifier = Modifier
+            modifier = Modifier,
         )
     }
 }
@@ -64,7 +64,7 @@ fun MovieItems(
     percentage: Float,
     fontSize: TextUnit,
     radius: Dp,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
 
     Box(

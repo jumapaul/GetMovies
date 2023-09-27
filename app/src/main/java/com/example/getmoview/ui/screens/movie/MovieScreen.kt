@@ -130,7 +130,8 @@ fun Movie(
                                     percentage = item.vote_average.toFloat(),
                                     fontSize = 18.sp,
                                     radius = 20.dp,
-                                    modifier = Modifier.testTag("moviesList")
+                                    modifier = Modifier.testTag("moviesList"),
+//                                    genres = item.genre_ids
                                 )
                             }
                         }

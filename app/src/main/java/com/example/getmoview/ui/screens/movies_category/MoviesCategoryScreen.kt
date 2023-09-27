@@ -1,5 +1,6 @@
 package com.example.getmoview.ui.screens.movies_category
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -64,7 +65,9 @@ fun MoviesCategoryScreen(
                 itemsCount = upcomingMoviesState.movies.size
             ) { index ->
                 val items = upcomingMoviesState.movies[index]
+
                 Box(modifier = Modifier.clickable {
+
                     navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${items.id}")
                 }) {
                     MovieItemsWithoutRating(
@@ -87,6 +90,7 @@ fun MoviesCategoryScreen(
                 items(topRatedMoviesState.movies) { movie ->
 
                     Box(modifier = Modifier.clickable {
+                        Log.d("........>", "MoviesCategoryScreen: ${movie.genre_ids}")
                         navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${movie.id}")
                     }) {
                         OtherMoviesItem(
@@ -117,7 +121,7 @@ fun MoviesCategoryScreen(
             ) {
                 items(topRatedShows.movies) { shows ->
                     Box(modifier = Modifier.clickable {
-                        navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${shows.id}")
+                        navController.navigate(BottomNavigationRoutes.ShowsDetail.routes + "/${shows.id}")
                     }) {
                         OtherMoviesItem(
                             posterPath = shows.poster_path,
@@ -180,7 +184,7 @@ fun MoviesCategoryScreen(
                 items(popularTvShows.movies) { tvShowItem ->
 
                     Box(modifier = Modifier.clickable {
-                        navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${tvShowItem.id}")
+                        navController.navigate(BottomNavigationRoutes.ShowsDetail.routes + "/${tvShowItem.id}")
                     }) {
                         OtherMoviesItem(
                             posterPath = tvShowItem.poster_path,

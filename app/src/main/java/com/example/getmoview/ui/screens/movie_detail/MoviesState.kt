@@ -9,6 +9,7 @@ data class MoviesState(
     val movie: MovieDtoItem? = null,
     val error: String = ""
 )
+
 data class TvShowsState(
     val isLoading: Boolean = false,
     val shows: TvShowItem? = null,
