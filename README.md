@@ -4,9 +4,9 @@ Apart from this, you can have a list of favorites and also have a watchlist for 
 ### Screenshot and Demo
 
 #### Light Theme
-Home Screen             |  Category Screen             | Genre Screen        | Filter Screen
-:-------------------------:|:-------------------------:|:-------------------------:
-![Home screen image](images/5-lightTheme.png)  |  ![AddTask screen image](images/6-lightTheme.png)  | ![AddTask screen image](images/1-lightTheme.png)
+Home Screen             |  Category Screen             | See All CAtegory Screen        | Filter Screen
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+![Home screen image](images/home_screen.png)  |  ![Movies Category screen image](images/movies_category.png)  | ![See all category](images/see_all_category.png) | ![Movie Detail screen](images/movie_detail.png)
 
 Similar movies           | Favorite Screen             |  WatchList Screen             | Account Screen
 :-------------------------:|:-------------------------:|:-------------------------:
