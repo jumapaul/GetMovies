@@ -35,6 +35,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.getmoview.common.utils.GenreIdToName
 import com.example.getmoview.ui.composables.MovieRequester
 import com.example.getmoview.ui.composables.MyTexts
 import com.example.getmoview.ui.composables.VerticalMoviesItem
@@ -80,15 +81,20 @@ fun UpcomingMovies(
             verticalArrangement = Arrangement.spacedBy(5.dp)
         ) {
             items(upcoming.movies) { item ->
-                val genres = item.genre_ids
 
                 val names = remember {
                     mutableStateOf<List<String>>(emptyList())
                 }
-                LaunchedEffect(key1 = genres) {
-                    val genreName = viewModel.getGenreNames(genres)
-                    names.value = genreName
-                }
+                GenreIdToName(genres = item.genre_ids, names)
+//                val genres = item.genre_ids
+//
+//                val names = remember {
+//                    mutableStateOf<List<String>>(emptyList())
+//                }
+//                LaunchedEffect(key1 = genres) {
+//                    val genreName = viewModel.getGenreNames(genres)
+//                    names.value = genreName
+//                }
 
                 Box(modifier = Modifier.clickable {
                     navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${item.id}")

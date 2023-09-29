@@ -1,4 +1,4 @@
-package com.example.getmoview.ui.screens.movies_category.popular.tab_layout
+package com.example.getmoview.ui.screens.movies_category.common_composables
 
 import androidx.compose.foundation.background
 import androidx.compose.material.LeadingIconTab
@@ -10,6 +10,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
+import com.example.getmoview.ui.screens.movies_category.popular.tab_layout.PopularMoviesShowTabScreens
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
@@ -23,6 +24,7 @@ fun PopularTabLayout(tabs: List<PopularMoviesShowTabScreens>, pagerState: PagerS
 
     TabRow(
         selectedTabIndex = pagerState.currentPage,
+
         modifier = Modifier.background(color = Color.White),
         indicator = { tabPositions ->
             TabRowDefaults.Indicator(

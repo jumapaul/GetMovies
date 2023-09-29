@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.getmoview.common.utils.GenreIdToName
 import com.example.getmoview.ui.composables.VerticalMoviesItem
 import com.example.getmoview.ui.screens.movies_category.MoviesCategoryViewModel
 import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
@@ -41,15 +42,10 @@ fun GetPopularMoviesCategory(
             verticalArrangement = Arrangement.spacedBy(5.dp)
         ) {
             items(movies.movies) { movies ->
-                val genre = movies.genre_ids
                 val names = remember {
                     mutableStateOf<List<String>>(emptyList())
                 }
-
-                LaunchedEffect(key1 = genre) {
-                    val genreName = viewModel.getGenreNames(genre)
-                    names.value = genreName
-                }
+                GenreIdToName(genres = movies.genre_ids, names)
 
                 Box(modifier = Modifier.clickable {
                     navController.navigate(

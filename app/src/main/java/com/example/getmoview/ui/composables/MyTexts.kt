@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextOverflow
 
 @Composable
 fun MyTexts(
@@ -18,6 +19,8 @@ fun MyTexts(
         text = text,
         style = style,
         color = color,
-        modifier = modifier
+        modifier = modifier,
+        overflow = TextOverflow.Ellipsis,
+        maxLines = 1
     )
 }

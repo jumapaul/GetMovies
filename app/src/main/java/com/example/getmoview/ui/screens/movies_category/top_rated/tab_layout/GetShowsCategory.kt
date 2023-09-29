@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.getmoview.common.utils.GenreIdToName
 import com.example.getmoview.ui.composables.VerticalMoviesItem
 import com.example.getmoview.ui.screens.movies_category.MoviesCategoryViewModel
 import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
@@ -35,15 +36,10 @@ fun GetTopRatedCategoryShows(
             verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
             items(shows.movies) { shows ->
-                val genres = shows.genre_ids
                 val names = remember {
                     mutableStateOf<List<String>>(emptyList())
                 }
-
-                LaunchedEffect(key1 = genres) {
-                    val genreNames = viewModel.getGenreNames(genres)
-                    names.value = genreNames
-                }
+                GenreIdToName(genres = shows.genre_ids, names)
 
                 Box(modifier = Modifier.clickable {
                     navController.navigate(BottomNavigationRoutes.ShowsDetail.routes + "/${shows.id}")
