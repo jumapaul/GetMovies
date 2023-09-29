@@ -1,7 +1,7 @@
 package com.example.getmoview.ui.screens.movies_category.popular
 
 import com.example.getmoview.common.Resources
-import com.example.getmoview.domain.model.top_rated_shows.TvShowItem
+import com.example.getmoview.domain.model.top_shows.TvShowItem
 import com.example.getmoview.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

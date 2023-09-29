@@ -3,8 +3,8 @@ package com.example.getmoview.domain.repository
 import com.example.getmoview.domain.model.genre.GenreDto
 import com.example.getmoview.domain.model.movies.MovieDto
 import com.example.getmoview.domain.model.MovieDtoItem
-import com.example.getmoview.domain.model.top_rated_shows.TvShowDto
-import com.example.getmoview.domain.model.top_rated_shows.TvShowItem
+import com.example.getmoview.domain.model.top_shows.TvShowDto
+import com.example.getmoview.domain.model.top_shows.TvShowItem
 import com.example.getmoview.domain.model.trending.TrendingDto
 import com.example.getmoview.domain.model.upcoming.UpcomingMoviesDto
 
@@ -32,6 +32,8 @@ interface MovieRepository {
     suspend fun getTvShowsById(id: Int): TvShowItem
 
     suspend fun getMovies(page: Int): MovieDto
+
+    suspend fun getTvShows(page: Int): TvShowDto
 
     suspend fun getGenres(): GenreDto
 }

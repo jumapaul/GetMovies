@@ -42,12 +42,4 @@ class GenreViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
-
-    suspend fun genreToGenreCode(genreNames: List<String>): List<Int> {
-        val response = repository.getGenres()
-
-        val genreMap = response.genres.associate { it.name to it.id }
-
-        return genreNames.mapNotNull { genreMap[it] }
-    }
 }

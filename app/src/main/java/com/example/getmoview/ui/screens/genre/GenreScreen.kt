@@ -1,10 +1,7 @@
 package com.example.getmoview.ui.screens.genre
 
-import android.util.Log
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -13,11 +10,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,28 +23,27 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.getmoview.common.utils.GenreIdToName
-import com.example.getmoview.domain.model.MovieDtoItem
-import com.example.getmoview.domain.model.genre.Genre
 import com.example.getmoview.ui.composables.ExpandButton
 import com.example.getmoview.ui.composables.ListingItem
-import com.example.getmoview.ui.composables.VerticalMoviesItem
-import com.example.getmoview.ui.screens.movie.MovieViewModel
-import com.example.getmoview.ui.screens.movies_category.MoviesCategoryViewModel
-import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
+import com.example.getmoview.ui.screens.genre.tab_layout.GenreContent
+import com.example.getmoview.ui.screens.genre.tab_layout.GenreScreens
+import com.example.getmoview.ui.screens.genre.tab_layout.GenreTab
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.rememberPagerState
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun GenreScreen(
     navController: NavController,
-    moviesViewModel: MovieViewModel = hiltViewModel(),
-    viewModel: MoviesCategoryViewModel = hiltViewModel(),
-
     ) {
-    val availableMovies = moviesViewModel.state.value
+
     val selectedGenreIds = remember {
         mutableStateOf(emptyList<Int>())
     }
 
+    val genreMovieScreen = GenreScreens.GetMoviesByGenreId(selectedGenreIds)
+
+    val genreTvShowScreen = GenreScreens.GetShowsByGenreId(selectedGenreIds)
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -60,33 +53,16 @@ fun GenreScreen(
     ) {
         GenreItem(selectedGenreIds)
 
-        val filteredMovies = filterMoviesByGenres(
-            availableMovies.movies,
-            selectedGenreIds.value
+        val pagerState = rememberPagerState(initialPage = 0)
+
+        val tabs = listOf(
+            genreMovieScreen,
+            genreTvShowScreen
         )
 
-        LazyColumn(modifier = Modifier,
-            verticalArrangement = Arrangement.spacedBy(3.dp)
-            ) {
-            items(filteredMovies){movies->
+        GenreTab(tabs = tabs, pagerState = pagerState)
+        GenreContent(tabs = tabs, pagerState = pagerState, navController = navController)
 
-                val names = remember {
-                    mutableStateOf<List<String>>(emptyList())
-                }
-                GenreIdToName(genres = movies.genre_ids, names)
-                Box(modifier = Modifier.clickable {
-                    navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${movies.id}")
-                }) {
-                    VerticalMoviesItem(
-                        posterPath = movies.poster_path,
-                        title = movies.title,
-                        description = movies.overview,
-                        date = movies.release_date,
-                        genreId = names
-                    )
-                }
-            }
-        }
     }
 }
 
@@ -139,17 +115,6 @@ fun ExpandedItemList(
                 genre = genre,
                 selectedGenreIds = selectedGenreIds
             )
-        }
-    }
-}
-
-fun filterMoviesByGenres(
-    movies: List<MovieDtoItem>,
-    selectedGenreIds: List<Int>
-): List<MovieDtoItem> {
-    return movies.filter { movies ->
-        selectedGenreIds.all { genreId ->
-            movies.genre_ids.contains(genreId)
         }
     }
 }

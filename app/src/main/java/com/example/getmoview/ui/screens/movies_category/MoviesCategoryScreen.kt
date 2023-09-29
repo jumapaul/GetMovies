@@ -1,6 +1,5 @@
 package com.example.getmoview.ui.screens.movies_category
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -118,7 +117,7 @@ fun MoviesCategoryScreen(
                 modifier = Modifier,
                 horizontalArrangement = Arrangement.spacedBy(5.dp)
             ) {
-                items(topRatedShows.movies) { shows ->
+                items(topRatedShows.shows) { shows ->
                     Box(modifier = Modifier.clickable {
                         navController.navigate(BottomNavigationRoutes.ShowsDetail.routes + "/${shows.id}")
                     }) {
@@ -180,7 +179,7 @@ fun MoviesCategoryScreen(
                 modifier = Modifier,
                 horizontalArrangement = Arrangement.spacedBy(5.dp)
             ) {
-                items(popularTvShows.movies) { tvShowItem ->
+                items(popularTvShows.shows) { tvShowItem ->
 
                     Box(modifier = Modifier.clickable {
                         navController.navigate(BottomNavigationRoutes.ShowsDetail.routes + "/${tvShowItem.id}")

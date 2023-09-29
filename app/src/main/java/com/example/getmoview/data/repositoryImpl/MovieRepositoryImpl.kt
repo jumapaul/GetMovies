@@ -5,8 +5,8 @@ import com.example.getmoview.domain.model.genre.GenreDto
 import com.example.getmoview.domain.repository.MovieRepository
 import com.example.getmoview.domain.model.movies.MovieDto
 import com.example.getmoview.domain.model.MovieDtoItem
-import com.example.getmoview.domain.model.top_rated_shows.TvShowDto
-import com.example.getmoview.domain.model.top_rated_shows.TvShowItem
+import com.example.getmoview.domain.model.top_shows.TvShowDto
+import com.example.getmoview.domain.model.top_shows.TvShowItem
 import com.example.getmoview.domain.model.trending.TrendingDto
 import com.example.getmoview.domain.model.upcoming.UpcomingMoviesDto
 import kotlinx.coroutines.Dispatchers
@@ -72,6 +72,12 @@ class MovieRepositoryImpl(
          return  withContext(Dispatchers.IO){
              api.getMovies(page)
          }
+    }
+
+    override suspend fun getTvShows(page: Int): TvShowDto {
+        return withContext(Dispatchers.IO){
+            api.getShows(page)
+        }
     }
 
     override suspend fun getGenres(): GenreDto {

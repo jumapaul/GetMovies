@@ -1,4 +1,4 @@
-package com.example.getmoview.domain.model.top_rated_shows
+package com.example.getmoview.domain.model.top_shows
 
 data class TvShowDto(
     val page: Int,

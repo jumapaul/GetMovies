@@ -1,6 +1,5 @@
-package com.example.getmoview.ui.screens.movie_detail
+package com.example.getmoview.domain.use_cases
 
-import android.util.Log
 import com.example.getmoview.common.Resources
 import com.example.getmoview.domain.model.top_shows.TvShowItem
 import com.example.getmoview.domain.repository.MovieRepository
@@ -10,21 +9,18 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class TvShowDetailUseCase @Inject constructor(
+class GetShowsUseCase @Inject constructor(
     private val repository: MovieRepository
 ) {
-
-    operator fun invoke(showId: Int): Flow<Resources<TvShowItem>> = flow {
+    operator fun invoke(page: Int): Flow<Resources<List<TvShowItem>>> = flow {
         try {
-            val data = repository.getTvShowsById(showId)
-            Log.d(">>>>>>>>", "setting id: $data")
-            emit(Resources.Success(data = data))
-
+            val api = repository.getTvShows(page)
+            emit(Resources.Success(data = api.results))
         }catch (e: HttpException){
             emit(Resources.Error(message = "An error occurred"))
-
         }catch (e: IOException){
-            emit(Resources.Error(message = "You have no internet connection"))
+            emit(Resources.Error(message = "No internet connection"))
         }
     }
+
 }

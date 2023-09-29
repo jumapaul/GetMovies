@@ -1,4 +1,4 @@
-package com.example.getmoview.ui.screens.movies_category.common_composables
+package com.example.getmoview.ui.screens.movies_category.popular.tab_layout
 
 import androidx.compose.foundation.background
 import androidx.compose.material.LeadingIconTab
@@ -10,7 +10,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
-import com.example.getmoview.ui.screens.movies_category.popular.tab_layout.PopularMoviesShowTabScreens
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState

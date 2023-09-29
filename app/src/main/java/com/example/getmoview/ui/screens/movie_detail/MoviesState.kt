@@ -1,7 +1,7 @@
 package com.example.getmoview.ui.screens.movie_detail
 
 import com.example.getmoview.domain.model.MovieDtoItem
-import com.example.getmoview.domain.model.top_rated_shows.TvShowItem
+import com.example.getmoview.domain.model.top_shows.TvShowItem
 import com.example.getmoview.domain.model.trending.Results
 
 data class MoviesState(

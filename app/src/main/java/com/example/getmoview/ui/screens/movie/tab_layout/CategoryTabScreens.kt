@@ -18,6 +18,8 @@ sealed class CategoryTabScreens(val title: String, val screens: ComposableFun) {
         "Movies Category",
         screens = { navController -> MoviesCategoryScreen(navController) })
 
-    object Genre : CategoryTabScreens("Genre", screens = { navController -> GenreScreen(navController) })
+    object Genre :
+        CategoryTabScreens("Genre", screens = { navController -> GenreScreen(navController) })
+
     object Language : CategoryTabScreens("Language", screens = { LanguageScreen() })
 }

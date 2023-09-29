@@ -2,12 +2,10 @@ package com.example.getmoview.ui.screens.movies_category
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.getmoview.common.Resources
 import com.example.getmoview.domain.repository.MovieRepository
-import com.example.getmoview.ui.screens.genre.GenreUseCase
 import com.example.getmoview.ui.screens.movies_category.popular.PopularMoviesUseCase
 import com.example.getmoview.ui.screens.movies_category.popular.PopularTvShowsUseCase
 import com.example.getmoview.ui.screens.movies_category.top_rated.TopRatedMoviesUseCase
@@ -16,7 +14,6 @@ import com.example.getmoview.ui.ui_states.MovieUiState
 import com.example.getmoview.ui.ui_states.TvShowUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -98,7 +95,7 @@ class MoviesCategoryViewModel @Inject constructor(
                 }
 
                 is Resources.Success -> {
-                    _topRatedShowsState.value = TvShowUiState(movies = results.data ?: emptyList())
+                    _topRatedShowsState.value = TvShowUiState(shows = results.data ?: emptyList())
                 }
 
                 is Resources.Error -> {
@@ -135,7 +132,7 @@ class MoviesCategoryViewModel @Inject constructor(
                     _popularTvShows.value = TvShowUiState(isLoading = true)
                 }
                 is Resources.Success -> {
-                    _popularTvShows.value = TvShowUiState(movies = results.data?: emptyList())
+                    _popularTvShows.value = TvShowUiState(shows = results.data?: emptyList())
                 }
                 is Resources.Error -> {
                     _popularTvShows.value = TvShowUiState(error= results.message?: "An error occurred")

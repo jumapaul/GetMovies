@@ -10,9 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.getmoview.ui.screens.movies_category.common_composables.MoviesAndShowsTitle
-import com.example.getmoview.ui.screens.movies_category.common_composables.PopularMoviesShowContent
+import com.example.getmoview.ui.screens.movies_category.popular.tab_layout.PopularMoviesShowContent
 import com.example.getmoview.ui.screens.movies_category.popular.tab_layout.PopularMoviesShowTabScreens
-import com.example.getmoview.ui.screens.movies_category.common_composables.PopularTabLayout
+import com.example.getmoview.ui.screens.movies_category.popular.tab_layout.PopularTabLayout
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
 
