@@ -1,6 +1,7 @@
 package com.example.getmoview.ui.screens.movies_category.popular.all
 
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,34 +21,41 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.getmoview.ui.composables.VerticalMoviesItem
 import com.example.getmoview.ui.screens.movies_category.MoviesCategoryViewModel
+import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
 
 @Composable
 fun GetPopularMoviesCategory(
     navController: NavController,
     viewModel: MoviesCategoryViewModel = hiltViewModel()
-){
+) {
     val movies = viewModel.popularMovies.value
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(5.dp),
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(5.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
-        ) {
-        LazyColumn(modifier = Modifier,
+    ) {
+        LazyColumn(
+            modifier = Modifier,
             verticalArrangement = Arrangement.spacedBy(5.dp)
-            ){
-            items(movies.movies){movies->
+        ) {
+            items(movies.movies) { movies ->
                 val genre = movies.genre_ids
                 val names = remember {
                     mutableStateOf<List<String>>(emptyList())
                 }
 
-                LaunchedEffect(key1 = genre){
+                LaunchedEffect(key1 = genre) {
                     val genreName = viewModel.getGenreNames(genre)
                     names.value = genreName
                 }
 
-                Box(modifier = Modifier){
+                Box(modifier = Modifier.clickable {
+                    navController.navigate(
+                        BottomNavigationRoutes.MovieDetails.routes + "/${movies.id}"
+                    )
+                }) {
                     VerticalMoviesItem(
                         posterPath = movies.poster_path,
                         title = movies.title,

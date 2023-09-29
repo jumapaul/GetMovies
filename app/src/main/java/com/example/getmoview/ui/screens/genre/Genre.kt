@@ -101,7 +101,8 @@ fun ExpandedItemList(
     val state = viewModel.genre.value
 
     FlowRow(
-        horizontalArrangement = Arrangement.Start
+        horizontalArrangement = Arrangement.spacedBy(5.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         state.genre.forEach { genre ->
             ListingItem(text = genre.name)

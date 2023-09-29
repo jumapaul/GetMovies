@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -56,17 +57,17 @@ fun MovieDetailScreen(
     Log.d("xxxxxxx", "MovieDetailScreen: ${movie.movie}")
 
     movie.movie?.let { movieId ->
-        val movieGenre = movieId.genre_ids
-
-        Log.d("--------->", "Movie Genres: ${movieId.genre_ids}")
-
-        val names = remember {
-            mutableStateOf<List<String>>(emptyList())
-        }
-        LaunchedEffect(key1 = movieGenre) {
-            val genreNames = categories.getGenreNames(movieGenre)
-            names.value = genreNames
-        }
+//        val movieGenre = movieId.genre_ids
+//
+//        Log.d("--------->", "Movie Genres: ${movieId.genre_ids}")
+//
+//        val names = remember {
+//            mutableStateOf<List<String>>(emptyList())
+//        }
+//        LaunchedEffect(key1 = movieGenre) {
+//            val genreNames = categories.getGenreNames(movieGenre)
+//            names.value = genreNames
+//        }
         DetailScreen(
             navController = navController,
             posterPath = movieId.poster_path,
@@ -74,7 +75,7 @@ fun MovieDetailScreen(
             title = movieId.title,
             releaseDate = movieId.release_date,
             overview = movieId.overview,
-            genres = names
+//            genres = names
         )
     }
 }
@@ -89,15 +90,15 @@ fun ShowsDetailScreen(
 
     shows.shows?.let { showsId->
 
-        val genres = showsId.genre_ids
-
-        val names = remember {
-            mutableStateOf<List<String>>(emptyList())
-        }
-        LaunchedEffect(key1 = genres) {
-            val genreNames = genres.let { categories.getGenreNames(it) }
-            names.value = genreNames
-        }
+//        val genres = showsId.genre_ids
+//
+//        val names = remember {
+//            mutableStateOf<List<String>>(emptyList())
+//        }
+//        LaunchedEffect(key1 = genres) {
+//            val genreNames = genres.let { categories.getGenreNames(it) }
+//            names.value = genreNames
+//        }
         DetailScreen(
             navController = navController,
             posterPath = showsId.poster_path,
@@ -105,7 +106,7 @@ fun ShowsDetailScreen(
             title = showsId.name,
             releaseDate = showsId.first_air_date,
             overview = showsId.overview,
-            genres = names
+//            genres = names
         )
     }
 }
@@ -118,7 +119,7 @@ fun DetailScreen(
     title: String,
     releaseDate: String,
     overview: String,
-    genres: MutableState<List<String>>,
+//    genres: MutableState<List<String>>,
 ) {
 
     Box(
@@ -194,7 +195,8 @@ fun DetailScreen(
                                 }
 
                                 FavoriteStar(
-                                    onClick = {}
+                                    onClick = {},
+                                    size = 50.dp
                                 )
                             }
 
@@ -211,19 +213,19 @@ fun DetailScreen(
                             )
 
 
-                            LazyRow(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 10.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
-
-                                items(genres.value) { genres ->
-                                    Cards(text = genres)
-                                }
-
-                            }
+//                            LazyRow(
+//                                modifier = Modifier
+//                                    .fillMaxWidth()
+//                                    .padding(top = 10.dp),
+//                                verticalAlignment = Alignment.CenterVertically,
+//                                horizontalArrangement = Arrangement.SpaceBetween
+//                            ) {
+//
+//                                items(genres.value) { genres ->
+//                                    Cards(text = genres)
+//                                }
+//
+//                            }
 
                             MyTexts(
                                 text = overview,
@@ -246,6 +248,7 @@ fun DetailScreen(
 @Composable
 fun FavoriteStar(
     onClick: () -> Unit,
+    size: Dp
 ) {
 
     var clicked by remember {
@@ -261,7 +264,7 @@ fun FavoriteStar(
                 clicked = !clicked
                 onClick()
             }
-            .size(50.dp),
+            .size(size),
         contentDescription = null,
         imageVector = favorite,
     )

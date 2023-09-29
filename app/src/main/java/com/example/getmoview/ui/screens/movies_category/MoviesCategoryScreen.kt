@@ -90,7 +90,6 @@ fun MoviesCategoryScreen(
                 items(topRatedMoviesState.movies) { movie ->
 
                     Box(modifier = Modifier.clickable {
-                        Log.d("........>", "MoviesCategoryScreen: ${movie.genre_ids}")
                         navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${movie.id}")
                     }) {
                         OtherMoviesItem(

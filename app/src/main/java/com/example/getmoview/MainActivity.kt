@@ -62,9 +62,26 @@ class MainActivity : ComponentActivity() {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
 
         when (navBackStackEntry?.destination?.route) {
-            BottomNavigationRoutes.MovieDetails.routes + "/{popularAndTopRated}" -> {
+            BottomNavigationRoutes.MovieDetails.routes + "/{movies}" -> {
                 bottomBarState.value = false
             }
+
+            BottomNavigationRoutes.ShowsDetail.routes + "/{shows}" ->{
+                bottomBarState.value = false
+            }
+
+            BottomNavigationRoutes.UpcomingMovies.routes->{
+                bottomBarState.value = false
+            }
+
+            BottomNavigationRoutes.TopRatedMoviesAndTvShows.routes->{
+                bottomBarState.value = false
+            }
+
+            BottomNavigationRoutes.PopularMoviesAndTvShows.routes->{
+                bottomBarState.value = false
+            }
+
 
             else -> {
                 bottomBarState.value = true

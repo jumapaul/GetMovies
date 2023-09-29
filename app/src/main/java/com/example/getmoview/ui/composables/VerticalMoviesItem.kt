@@ -1,15 +1,20 @@
 package com.example.getmoview.ui.composables
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarToday
@@ -21,6 +26,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.getmoview.ui.screens.movie_detail.BookMark
@@ -91,7 +98,8 @@ fun VerticalMoviesItem(
                 }
 
                 FavoriteStar(
-                    onClick = {}
+                    onClick = {},
+                    size = 25.dp
 
                 )
                 BookMark(
@@ -107,12 +115,21 @@ fun VerticalMoviesItem(
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 items(genreId.value) { genreId ->
-                    MyTexts(
-                        text = genreId,
-                        style = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier
-                    )
-
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(2.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier.size(5.dp)
+                                .clip(shape = CircleShape)
+                                .background(color = if (isSystemInDarkTheme()) Color.White else Color.Black)
+                        )
+                        MyTexts(
+                            text = genreId,
+                            style = MaterialTheme.typography.bodySmall,
+                            modifier = Modifier
+                        )
+                    }
                 }
             }
         }
