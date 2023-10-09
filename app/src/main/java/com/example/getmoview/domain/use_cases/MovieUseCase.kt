@@ -1,4 +1,4 @@
-package com.example.getmoview.ui.screens.movie
+package com.example.getmoview.domain.use_cases
 
 import android.util.Log
 import com.example.getmoview.common.Resources

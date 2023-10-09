@@ -1,4 +1,4 @@
-package com.example.getmoview.ui.screens.movies_category.popular
+package com.example.getmoview.domain.use_cases.popular
 
 import android.util.Log
 import com.example.getmoview.common.Resources

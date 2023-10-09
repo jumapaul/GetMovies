@@ -54,7 +54,6 @@ fun MovieScreen(
                     CategoryTabScreens.RecentMovies,
                     CategoryTabScreens.MoviesCategory,
                     CategoryTabScreens.Genre,
-                    CategoryTabScreens.Language,
                 )
                 val pagerState = rememberPagerState(initialPage = 0)
 

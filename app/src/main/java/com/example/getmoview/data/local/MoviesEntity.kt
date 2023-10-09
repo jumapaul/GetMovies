@@ -1,16 +1,16 @@
-package com.example.getmoview.domain.model.trending
+package com.example.getmoview.data.local
 
-data class Results(
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "movies")
+data class MoviesEntity(
+    @PrimaryKey(autoGenerate = false)
+    val id: Int,
     val adult: Boolean,
     val backdrop_path: String,
-    val first_air_date: String,
-    val genre_ids: List<Int>,
-    val id: Int,
-    val media_type: String,
-    val name: String,
-    val origin_country: List<String>,
+//    val genre_ids: List<Int>,
     val original_language: String,
-    val original_name: String,
     val original_title: String,
     val overview: String,
     val popularity: Double,

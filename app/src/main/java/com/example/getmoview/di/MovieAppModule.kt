@@ -1,6 +1,11 @@
 package com.example.getmoview.di
 
+import android.app.Application
+import androidx.room.Room
 import com.example.getmoview.common.Constants.BASE_URL
+import com.example.getmoview.common.Constants.DATABASE_NAME
+import com.example.getmoview.data.local.MovieDatabase
+import com.example.getmoview.data.local.MoviesDao
 import com.example.getmoview.data.repositoryImpl.MovieRepositoryImpl
 import com.example.getmoview.data.remote.MovieApi
 import com.example.getmoview.data.remote.TokenInterceptor
@@ -20,7 +25,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object MovieAppModule {
-
     @Provides
     @Singleton
     fun provideMovieApi(gson: Gson): MovieApi {
@@ -43,10 +47,17 @@ object MovieAppModule {
     fun provideGsonBuilder(): Gson = GsonBuilder().create()
 
     // Injects database
+    @Singleton
+    @Provides
+    fun provideMovieDatabase(application: Application): MovieDatabase {
+        return Room.databaseBuilder(
+            application, MovieDatabase::class.java, DATABASE_NAME
+        ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
+    }
 
     @Singleton
     @Provides
-    fun provideRepository(api: MovieApi): MovieRepository {
-        return MovieRepositoryImpl(api)
+    fun provideRepository(api: MovieApi, db: MovieDatabase): MovieRepository {
+        return MovieRepositoryImpl(api, db.moviesDao)
     }
 }

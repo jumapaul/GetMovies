@@ -3,7 +3,6 @@ package com.example.getmoview.ui.screens.movie.tab_layout
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import com.example.getmoview.ui.screens.genre.GenreScreen
-import com.example.getmoview.ui.screens.language.LanguageScreen
 import com.example.getmoview.ui.screens.movie.Movie
 import com.example.getmoview.ui.screens.movies_category.MoviesCategoryScreen
 
@@ -20,6 +19,4 @@ sealed class CategoryTabScreens(val title: String, val screens: ComposableFun) {
 
     object Genre :
         CategoryTabScreens("Genre", screens = { navController -> GenreScreen(navController) })
-
-    object Language : CategoryTabScreens("Language", screens = { LanguageScreen() })
 }

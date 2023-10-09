@@ -1,4 +1,4 @@
-package com.example.getmoview.ui.screens.movies_category.top_rated
+package com.example.getmoview.domain.use_cases.top_rated
 
 import com.example.getmoview.common.Resources
 import com.example.getmoview.domain.model.top_shows.TvShowItem

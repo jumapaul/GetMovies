@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.getmoview.common.Constants.MOVIES_ID
 import com.example.getmoview.common.Constants.SHOWS_ID
 import com.example.getmoview.common.Resources
+import com.example.getmoview.domain.use_cases.MovieDetailUseCase
+import com.example.getmoview.domain.use_cases.TvShowDetailUseCase
 import com.example.getmoview.ui.screens.search.SearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -28,8 +30,8 @@ class MovieDetailViewModel @Inject constructor(
     private val _showState = mutableStateOf(TvShowsState())
     val showState: State<TvShowsState> = _showState
 
-    private val _trendingMovieState = mutableStateOf(TrendingMovieState())
-    val trendingMovieState: State<TrendingMovieState> = _trendingMovieState
+//    private val _trendingMovieState = mutableStateOf(TrendingMovieState())
+//    val trendingMovieState: State<TrendingMovieState> = _trendingMovieState
 
     init {
         savedStateHandle.get<String>(MOVIES_ID)?.let { movieId ->

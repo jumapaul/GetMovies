@@ -97,11 +97,11 @@ fun VerticalMoviesItem(
                     )
                 }
 
-                FavoriteStar(
-                    onClick = {},
-                    size = 25.dp
-
-                )
+//                FavoriteStar(
+//                    onClick = {},
+//                    size = 25.dp
+//
+//                )
                 BookMark(
                     onClick = {
                         //TODO

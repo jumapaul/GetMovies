@@ -1,5 +1,6 @@
 package com.example.getmoview.domain.model
 
+import com.example.getmoview.data.local.MoviesEntity
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -18,4 +19,24 @@ data class MovieDtoItem(
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Int
-)
+) {
+    fun toMovieEntity(): MoviesEntity {
+        return MoviesEntity(
+            id,
+            adult,
+            backdrop_path,
+//            genre_ids,
+            original_language,
+            original_title,
+            overview,
+            popularity,
+            poster_path,
+            release_date,
+            title,
+            video,
+            vote_average,
+            vote_count
+        )
+
+    }
+}

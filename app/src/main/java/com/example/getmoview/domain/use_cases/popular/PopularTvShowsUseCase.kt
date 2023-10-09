@@ -1,28 +1,26 @@
-package com.example.getmoview.ui.screens.movies_category.top_rated
+package com.example.getmoview.domain.use_cases.popular
 
 import com.example.getmoview.common.Resources
+import com.example.getmoview.domain.model.top_shows.TvShowItem
 import com.example.getmoview.domain.repository.MovieRepository
-import com.example.getmoview.domain.model.MovieDtoItem
-import io.ktor.utils.io.errors.IOException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
-class TopRatedMoviesUseCase @Inject constructor(
+class PopularTvShowsUseCase @Inject constructor(
     private val repository: MovieRepository
 ) {
 
-    operator fun invoke(): Flow<Resources<List<MovieDtoItem>>> = flow {
+    operator fun invoke(): Flow<Resources<List<TvShowItem>>> = flow {
         try {
             emit(Resources.IsLoading())
-            val apiData = repository.getTopRatedMovies().results
-
-            emit(Resources.Success(data = apiData))
+            val movies = repository.getPopularTvShows().results
+            emit(Resources.Success(data = movies))
         } catch (e: HttpException) {
-            emit(
-                Resources.Error(e.localizedMessage?: "An error occurred")
-            )
+            emit(Resources.Error(e.localizedMessage ?: "An error occurred"))
+
         } catch (e: IOException) {
             emit(
                 Resources.Error(

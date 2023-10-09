@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.getmoview.common.Resources
 import com.example.getmoview.domain.repository.MovieRepository
+import com.example.getmoview.domain.use_cases.GenreUseCase
 import com.example.getmoview.ui.ui_states.GenreUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn

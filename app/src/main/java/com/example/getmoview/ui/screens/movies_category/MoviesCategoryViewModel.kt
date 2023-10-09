@@ -6,10 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.getmoview.common.Resources
 import com.example.getmoview.domain.repository.MovieRepository
-import com.example.getmoview.ui.screens.movies_category.popular.PopularMoviesUseCase
-import com.example.getmoview.ui.screens.movies_category.popular.PopularTvShowsUseCase
-import com.example.getmoview.ui.screens.movies_category.top_rated.TopRatedMoviesUseCase
-import com.example.getmoview.ui.screens.movies_category.top_rated.TopRatedTvShowsUseCase
+import com.example.getmoview.domain.use_cases.popular.PopularMoviesUseCase
+import com.example.getmoview.domain.use_cases.popular.PopularTvShowsUseCase
+import com.example.getmoview.domain.use_cases.UpcomingMoviesUseCase
+import com.example.getmoview.domain.use_cases.top_rated.TopRatedMoviesUseCase
+import com.example.getmoview.domain.use_cases.top_rated.TopRatedTvShowsUseCase
 import com.example.getmoview.ui.ui_states.MovieUiState
 import com.example.getmoview.ui.ui_states.TvShowUiState
 import dagger.hilt.android.lifecycle.HiltViewModel

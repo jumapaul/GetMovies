@@ -5,7 +5,6 @@ import com.example.getmoview.domain.model.movies.MovieDto
 import com.example.getmoview.domain.model.MovieDtoItem
 import com.example.getmoview.domain.model.top_shows.TvShowDto
 import com.example.getmoview.domain.model.top_shows.TvShowItem
-import com.example.getmoview.domain.model.trending.TrendingDto
 import com.example.getmoview.domain.model.upcoming.UpcomingMoviesDto
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -23,9 +22,6 @@ interface MovieApi {
 
     @GET("tv/popular")
     suspend fun getPopularTvShows(): TvShowDto
-
-    @GET("trending/all/day")
-    suspend fun getTrendingMovies(): TrendingDto
 
     @GET("movie/top_rated")
     suspend fun getTopRatedMovies(): MovieDto

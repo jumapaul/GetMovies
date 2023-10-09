@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBackIos
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -23,7 +24,7 @@ fun MoviesAndShowsTitle(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(imageVector = Icons.Default.ArrowBackIos, contentDescription = null,
+        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null,
             modifier = Modifier.clickable {
                 navController.popBackStack()
             }
