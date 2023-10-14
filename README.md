@@ -10,7 +10,7 @@ Home Screen             |  Category Screen             | See All CAtegory Screen
 
 Favourite Screen           | Search Screen             |  WatchList Screen             | Setting Screen
 :-------------------------:|:-------------------------:|:-------------------------:
-![Favorite screen image](images/favorite.jpeg)  |  ![AddTask screen image](images/search.jpeg)  | ![AddTask screen image](images/setting.jpeg)
+![Favorite screen image](images/favorite.png)  |  ![AddTask screen image](images/search.png)  | ![AddTask screen image](images/setting.png)
 
 
 ### Tools and library
