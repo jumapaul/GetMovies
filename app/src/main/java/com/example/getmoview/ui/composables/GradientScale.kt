@@ -14,7 +14,7 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 @Composable
-fun Modifier.GradientBackground(colors: List<Color>, angle: Float) = this.then(
+fun Modifier.gradientBackground(colors: List<Color>, angle: Float) = this.then(
     Modifier.drawBehind {
         // Setting angle in radians
         val angleRad = angle / 180 * PI

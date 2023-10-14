@@ -1,6 +1,7 @@
 package com.example.getmoview.domain.repository
 
 import com.example.getmoview.data.local.MoviesEntity
+import com.example.getmoview.data.local.ShowsEntity
 import com.example.getmoview.domain.model.genre.GenreDto
 import com.example.getmoview.domain.model.movies.MovieDto
 import com.example.getmoview.domain.model.MovieDtoItem
@@ -43,4 +44,12 @@ interface MovieRepository {
     suspend fun insertMovies(moviesEntity: MoviesEntity)
 
     suspend fun deleteMovie(moviesEntity: MoviesEntity)
+
+    fun getLocalShows(): List<ShowsEntity>
+
+    suspend fun getLocalShowsById(id: Int): ShowsEntity
+
+    suspend fun insertShows(showsEntity: ShowsEntity)
+
+    suspend fun deleteShows(showsEntity: ShowsEntity)
 }

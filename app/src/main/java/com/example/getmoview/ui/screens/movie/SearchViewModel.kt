@@ -1,4 +1,4 @@
-package com.example.getmoview.ui.screens.search
+package com.example.getmoview.ui.screens.movie
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.getmoview.common.Resources
 import com.example.getmoview.ui.screens.movie_detail.SearchMovieState
+import com.example.getmoview.domain.use_cases.SearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

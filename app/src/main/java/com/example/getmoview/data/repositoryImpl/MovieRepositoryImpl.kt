@@ -2,16 +2,16 @@ package com.example.getmoview.data.repositoryImpl
 
 import com.example.getmoview.data.local.MoviesDao
 import com.example.getmoview.data.local.MoviesEntity
+import com.example.getmoview.data.local.ShowsEntity
 import com.example.getmoview.data.remote.MovieApi
-import com.example.getmoview.domain.model.genre.GenreDto
-import com.example.getmoview.domain.repository.MovieRepository
-import com.example.getmoview.domain.model.movies.MovieDto
 import com.example.getmoview.domain.model.MovieDtoItem
+import com.example.getmoview.domain.model.genre.GenreDto
+import com.example.getmoview.domain.model.movies.MovieDto
 import com.example.getmoview.domain.model.top_shows.TvShowDto
 import com.example.getmoview.domain.model.top_shows.TvShowItem
 import com.example.getmoview.domain.model.upcoming.UpcomingMoviesDto
+import com.example.getmoview.domain.repository.MovieRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 class MovieRepositoryImpl(
@@ -94,14 +94,36 @@ class MovieRepositoryImpl(
     }
 
     override suspend fun insertMovies(moviesEntity: MoviesEntity) {
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             dao.addMovies(moviesEntity)
         }
     }
 
     override suspend fun deleteMovie(moviesEntity: MoviesEntity) {
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             dao.deleteMovie(moviesEntity)
+        }
+    }
+
+    override fun getLocalShows(): List<ShowsEntity> {
+        return dao.getAllShows()
+    }
+
+    override suspend fun getLocalShowsById(id: Int): ShowsEntity {
+        return withContext(Dispatchers.IO) {
+            dao.getShowById(id)
+        }
+    }
+
+    override suspend fun insertShows(showsEntity: ShowsEntity) {
+        return withContext(Dispatchers.IO) {
+            dao.addShows(showsEntity)
+        }
+    }
+
+    override suspend fun deleteShows(showsEntity: ShowsEntity) {
+        return withContext(Dispatchers.IO) {
+            dao.deleteShows(showsEntity)
         }
     }
 }

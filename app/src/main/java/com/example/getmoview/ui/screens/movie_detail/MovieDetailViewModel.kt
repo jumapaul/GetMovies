@@ -10,7 +10,7 @@ import com.example.getmoview.common.Constants.SHOWS_ID
 import com.example.getmoview.common.Resources
 import com.example.getmoview.domain.use_cases.MovieDetailUseCase
 import com.example.getmoview.domain.use_cases.TvShowDetailUseCase
-import com.example.getmoview.ui.screens.search.SearchUseCase
+import com.example.getmoview.domain.use_cases.SearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

@@ -95,7 +95,7 @@ fun MovieItems(
                 verticalArrangement = Arrangement.Bottom,
                 horizontalAlignment = Alignment.Start,
                 modifier = Modifier
-                    .GradientBackground(
+                    .gradientBackground(
                         listOf(
                             Color.Black,
                             Color.Gray,
@@ -151,7 +151,7 @@ fun MovieItemsWithoutRating(
                 verticalArrangement = Arrangement.Bottom,
                 horizontalAlignment = Alignment.Start,
                 modifier = Modifier
-                    .GradientBackground(
+                    .gradientBackground(
                         listOf(
                             Color.Black,
                             Color.Gray,
@@ -219,7 +219,7 @@ fun OtherMoviesItem(
                 verticalArrangement = Arrangement.Bottom,
                 horizontalAlignment = Alignment.Start,
                 modifier = Modifier
-                    .GradientBackground(
+                    .gradientBackground(
                         listOf(
                             Color.Black,
                             Color.Gray,

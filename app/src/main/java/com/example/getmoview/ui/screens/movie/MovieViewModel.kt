@@ -8,7 +8,7 @@ import com.example.getmoview.domain.paginator.DefaultPaginator
 import com.example.getmoview.domain.use_cases.MovieUseCase
 import com.example.getmoview.ui.ui_states.MovieUiState
 import com.example.getmoview.ui.screens.movie_detail.SearchMovieState
-import com.example.getmoview.ui.screens.search.SearchUseCase
+import com.example.getmoview.domain.use_cases.SearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

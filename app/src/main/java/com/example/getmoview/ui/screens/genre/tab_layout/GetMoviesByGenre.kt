@@ -5,10 +5,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -16,6 +21,7 @@ import androidx.navigation.NavController
 import com.example.getmoview.common.utils.GenreIdToName
 import com.example.getmoview.domain.model.MovieDtoItem
 import com.example.getmoview.ui.composables.VerticalMoviesItem
+import com.example.getmoview.ui.screens.favorite.FavoriteMoviesViewModel
 import com.example.getmoview.ui.screens.movie.MovieViewModel
 import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
 
@@ -25,6 +31,7 @@ fun GetMoviesByGenre(
     selectedGenreIds: MutableState<List<Int>>,
 //    viewModel: MoviesCategoryViewModel = hiltViewModel(),
     moviesViewModel: MovieViewModel = hiltViewModel(),
+    favoriteMoviesViewModel: FavoriteMoviesViewModel = hiltViewModel()
     ){
 
     val availableMovies = moviesViewModel.state.value
@@ -43,6 +50,10 @@ fun GetMoviesByGenre(
                 mutableStateOf<List<String>>(emptyList())
             }
             GenreIdToName(genres = movies.genre_ids, names)
+
+            var isFavorite by remember {
+                mutableStateOf(false)
+            }
             Box(modifier = Modifier.clickable {
                 navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${movies.id}")
             }) {
@@ -51,6 +62,8 @@ fun GetMoviesByGenre(
                     title = movies.title,
                     description = movies.overview,
                     date = movies.release_date,
+                    onClick = {favoriteMoviesViewModel.addFavoriteMovie(movies.toMovieEntity())},
+                    favorite = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                     genreId = names
                 )
             }

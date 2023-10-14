@@ -5,7 +5,6 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MoviesDao {
@@ -20,4 +19,16 @@ interface MoviesDao {
 
     @Delete
     suspend fun deleteMovie(moviesEntity: MoviesEntity)
+
+    @Query("SELECT * FROM shows")
+    fun getAllShows(): List<ShowsEntity>
+
+    @Query("SELECT * FROM shows WHERE id=:id")
+    suspend fun getShowById(id: Int): ShowsEntity
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addShows(showsEntity: ShowsEntity)
+
+    @Delete
+    suspend fun deleteShows(showsEntity: ShowsEntity)
 }

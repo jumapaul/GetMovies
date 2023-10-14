@@ -1,8 +1,6 @@
 package com.example.getmoview.ui.screens.genre.tab_layout
 
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.navigation.NavController
 import com.example.getmoview.ui.screens.movie.tab_layout.ComposableFun
 
 sealed class GenreScreens(val title: String, val screens: ComposableFun) {

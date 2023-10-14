@@ -15,6 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.getmoview.ui.composables.SearchBar
 import com.example.getmoview.ui.composables.SearchedMovieList
+import com.example.getmoview.ui.screens.movie.SearchViewModel
 import kotlinx.coroutines.delay
 
 @Composable

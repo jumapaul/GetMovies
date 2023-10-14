@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -20,8 +21,7 @@ fun BottomNavigator(navController: NavController, bottomBarState: MutableState<B
     val items = listOf(
         BottomNavigationRoutes.MovieScreen,
         BottomNavigationRoutes.FavoriteScreen,
-        BottomNavigationRoutes.WatchListScreen,
-        BottomNavigationRoutes.AccountScreen,
+        BottomNavigationRoutes.SettingScreen,
     )
 
     AnimatedVisibility(
@@ -48,11 +48,8 @@ fun BottomNavigator(navController: NavController, bottomBarState: MutableState<B
                             }
                         },
                         icon = {
-                            items.icon?.let { painterResource(id = it) }?.let {
-                                Icon(
-                                    painter = it,
-                                    contentDescription = null
-                                )
+                            items.icon?.let { imageVector: ImageVector ->  (imageVector) }?.let {
+                                Icon(imageVector = it, contentDescription = null)
                             }
                         },
                         label = { items.title?.let { Text(text = it) } },

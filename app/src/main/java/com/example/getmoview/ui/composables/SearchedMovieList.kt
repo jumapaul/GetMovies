@@ -6,17 +6,13 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.getmoview.R
-import com.example.getmoview.ui.screens.movie.MovieViewModel
 import com.example.getmoview.ui.screens.movie_detail.SearchMovieState
 import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
-import com.example.getmoview.ui.screens.search.SearchViewModel
-import kotlinx.coroutines.delay
+import com.example.getmoview.ui.screens.movie.SearchViewModel
 
 @Composable
 fun SearchedMovieList(

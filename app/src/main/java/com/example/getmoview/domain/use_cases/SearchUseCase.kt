@@ -1,4 +1,4 @@
-package com.example.getmoview.ui.screens.search
+package com.example.getmoview.domain.use_cases
 
 import com.example.getmoview.common.Resources
 import com.example.getmoview.domain.repository.MovieRepository

@@ -1,12 +1,16 @@
 package com.example.getmoview.ui.screens.routes
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.getmoview.R
 
-sealed class BottomNavigationRoutes(val title: String?, var icon: Int?, val routes: String) {
-    object MovieScreen : BottomNavigationRoutes("Movie", R.drawable.movie, "movie")
-    object FavoriteScreen : BottomNavigationRoutes("Favorite", R.drawable.favorite, "favorites")
-    object AccountScreen : BottomNavigationRoutes("Account", R.drawable.account, "account")
-    object WatchListScreen : BottomNavigationRoutes("WatchList", R.drawable.baseline_bookmarks, "bookmarks")
+sealed class BottomNavigationRoutes(val title: String?, var icon: ImageVector?, val routes: String) {
+    object MovieScreen : BottomNavigationRoutes("Movie", Icons.Default.PlayArrow, "movie")
+    object FavoriteScreen : BottomNavigationRoutes("Favorite", Icons.Default.Favorite, "favorites")
+    object SettingScreen : BottomNavigationRoutes("Account", Icons.Default.Settings, "account")
     object MovieDetails: BottomNavigationRoutes(null, null, "movie_detail")
     object ShowsDetail: BottomNavigationRoutes(null, null, "top_rated")
     object SearchScreen: BottomNavigationRoutes(null, null, "search_screen")

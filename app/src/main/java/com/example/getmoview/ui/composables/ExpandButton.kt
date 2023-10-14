@@ -8,6 +8,7 @@ import androidx.compose.material.icons.outlined.ExpandLess
 import androidx.compose.material.icons.outlined.ExpandMore
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun ExpandButton(
@@ -19,7 +20,7 @@ fun ExpandButton(
         Icon(
             imageVector = if (expanded) Icons.Outlined.ExpandMore else Icons.Outlined.ExpandLess,
             contentDescription = null,
-            tint = MaterialTheme.colors.secondary
+            tint = Color.Black
         )
     }
 }

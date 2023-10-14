@@ -1,6 +1,5 @@
-package com.example.getmoview.domain.use_cases.local_use_case
+package com.example.getmoview.domain.use_cases.local.local_movie_use_case
 
-import android.util.Log
 import com.example.getmoview.common.Resources
 import com.example.getmoview.data.local.MoviesEntity
 import com.example.getmoview.domain.repository.MovieRepository
@@ -14,8 +13,6 @@ class GetFavoriteMoviesUseCase @Inject constructor(
 ) {
     operator fun invoke(): Flow<Resources<List<MoviesEntity>>> = flow {
         try {
-            val x = repository.getLocalMovies()
-            Log.d("===> Usecase", "invoke: ${x.size}")
             emit(Resources.Success(data = repository.getLocalMovies()))
         }catch (e:RedirectResponseException){
             emit(Resources.Error(data = null, message = "An error occurred"))

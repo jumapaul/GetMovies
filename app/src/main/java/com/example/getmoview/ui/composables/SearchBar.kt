@@ -14,18 +14,18 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -39,9 +39,9 @@ fun SearchBar(
     val searchDefaultLabel = "Search"
     val label = remember { mutableStateOf(searchDefaultLabel) }
 
-    val focusRequester = remember {FocusRequester()}
+    val focusRequester = remember { FocusRequester() }
 
-    LaunchedEffect(key1 = Unit){
+    LaunchedEffect(key1 = Unit) {
         focusRequester.requestFocus()
     }
 
@@ -88,11 +88,15 @@ fun SearchBar(
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun StaticSearchBar(
     navController: NavController
 ) {
+
+//    val searchedMovies = searchViewModel.searchState.value
+//    val searchTerm = remember {
+//        mutableStateOf(TextFieldValue(""))
+//    }
     Box(
         modifier = Modifier
             .background(
@@ -106,7 +110,6 @@ fun StaticSearchBar(
     ) {
         Row(modifier = Modifier.padding(10.dp)) {
             Icon(imageVector = Icons.Default.Search, contentDescription = null, tint = Color.Black)
-
             Text(
                 text = "Search Movie",
                 modifier = Modifier.padding(start = 10.dp),

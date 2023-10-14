@@ -20,9 +20,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.getmoview.data.local.MoviesEntity
+import com.example.getmoview.data.local.ShowsEntity
 import com.example.getmoview.ui.composables.CircularProgressBar
 import com.example.getmoview.ui.composables.gradientBackground
 import com.example.getmoview.ui.composables.MovieRequester
@@ -43,50 +43,46 @@ import com.example.getmoview.ui.screens.favorite.FavoriteMoviesViewModel
 import com.example.getmoview.ui.screens.movies_category.MoviesCategoryViewModel
 
 @Composable
-fun MovieDetailScreen(
+fun ShowsDetailScreen(
     navController: NavController,
     viewModel: MovieDetailViewModel = hiltViewModel(),
-    categories: MoviesCategoryViewModel = hiltViewModel(),
-    favorite: FavoriteMoviesViewModel = hiltViewModel()
+    favorite: FavoriteMoviesViewModel = hiltViewModel(),
+    categories: MoviesCategoryViewModel = hiltViewModel()
 ) {
+    val shows = viewModel.showState.value
 
-    val movie = viewModel.moviesState.value
+    shows.shows?.let { showsId ->
 
-    movie.movie?.let { movieId ->
-//        val movieGenre = movieId.genre_ids
-//
-//        Log.d("--------->", "Movie Genres: ${movieId.genre_ids}")
+//        val genres = showsId.genre_ids
 //
 //        val names = remember {
 //            mutableStateOf<List<String>>(emptyList())
 //        }
-//        LaunchedEffect(key1 = movieGenre) {
-//            val genreNames = categories.getGenreNames(movieGenre)
+//        LaunchedEffect(key1 = genres) {
+//            val genreNames = genres.let { categories.getGenreNames(it) }
 //            names.value = genreNames
 //        }
-        DetailScreen(
+        ShowDetailScreen(
             navController = navController,
-            posterPath = movieId.poster_path,
-            percentage = movieId.vote_average,
-            title = movieId.title,
-            releaseDate = movieId.release_date,
-            overview = movieId.overview,
-            moviesEntity = movieId.toMovieEntity(),
-            onClick = { favorite.addFavoriteMovie(movieId.toMovieEntity()) }
-//            genres = names
+            posterPath = showsId.poster_path,
+            percentage = showsId.vote_average,
+            title = showsId.name,
+            releaseDate = showsId.first_air_date,
+            overview = showsId.overview,
+            showsEntity = showsId.toShowEntity(),
+            onClick = { favorite.addShows(showsId.toShowEntity()) }
         )
     }
 }
-
 @Composable
-fun DetailScreen(
+fun ShowDetailScreen(
     navController: NavController,
     posterPath: String,
     percentage: Double,
     title: String,
     releaseDate: String,
     overview: String,
-    moviesEntity: MoviesEntity,
+    showsEntity: ShowsEntity,
     onClick: () -> Unit
 //    genres: MutableState<List<String>>,
 ) {
@@ -162,10 +158,10 @@ fun DetailScreen(
                                     )
                                 }
 
-                                FavoriteStar(
+                                FavoriteShows(
                                     onClick = onClick,
                                     size = 50.dp,
-                                    moviesEntity = moviesEntity
+                                    showsEntity = showsEntity
                                 )
                             }
 
@@ -212,12 +208,11 @@ fun DetailScreen(
     }
 }
 
-
 @Composable
-fun FavoriteStar(
+fun FavoriteShows(
     onClick: () -> Unit,
     size: Dp,
-    moviesEntity: MoviesEntity,
+    showsEntity: ShowsEntity,
     viewModel: FavoriteMoviesViewModel = hiltViewModel()
 ) {
 
@@ -228,7 +223,7 @@ fun FavoriteStar(
     }
 
     LaunchedEffect(key1 = null) {
-        viewModel.isMovieFavorite(moviesEntity.id)
+        viewModel.isMovieFavorite(showsEntity.id)
     }
 
 
@@ -240,7 +235,7 @@ fun FavoriteStar(
     Icon(
         modifier = Modifier
             .clickable {
-                viewModel.addFavoriteMovie(moviesEntity)
+                viewModel.addShows(showsEntity)
             }
             .size(size),
         contentDescription = null,

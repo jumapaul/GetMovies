@@ -7,15 +7,21 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.getmoview.common.utils.GenreIdToName
 import com.example.getmoview.ui.composables.VerticalMoviesItem
+import com.example.getmoview.ui.screens.favorite.FavoriteMoviesViewModel
 import com.example.getmoview.ui.screens.movies_category.MoviesCategoryViewModel
 import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
 
@@ -23,7 +29,8 @@ import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
 
 fun GetTopRatedCategoryShows(
     navController: NavController,
-    viewModel: MoviesCategoryViewModel = hiltViewModel()
+    viewModel: MoviesCategoryViewModel = hiltViewModel(),
+    favoriteMoviesViewModel: FavoriteMoviesViewModel = hiltViewModel()
 ) {
 
     val shows = viewModel.topRatedShowsState.value
@@ -40,6 +47,9 @@ fun GetTopRatedCategoryShows(
                 }
                 GenreIdToName(genres = shows.genre_ids, names)
 
+                var isFavorite by remember {
+                    mutableStateOf(false)
+                }
                 Box(modifier = Modifier.clickable {
                     navController.navigate(BottomNavigationRoutes.ShowsDetail.routes + "/${shows.id}")
                 }){
@@ -48,6 +58,8 @@ fun GetTopRatedCategoryShows(
                         title = shows.name,
                         description = shows.overview,
                         date = shows.first_air_date,
+                        onClick = {favoriteMoviesViewModel.addShows(shows.toShowEntity())},
+                        favorite = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                         genreId = names
                     )
                 }

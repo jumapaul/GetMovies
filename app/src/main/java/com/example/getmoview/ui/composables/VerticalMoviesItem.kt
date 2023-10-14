@@ -1,6 +1,7 @@
 package com.example.getmoview.ui.composables
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,10 +29,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.getmoview.ui.screens.movie_detail.BookMark
-import com.example.getmoview.ui.screens.movie_detail.FavoriteStar
 
 @Composable
 fun VerticalMoviesItem(
@@ -39,6 +39,8 @@ fun VerticalMoviesItem(
     title: String,
     description: String,
     date: String,
+    onClick: () -> Unit,
+    favorite: ImageVector?,
     genreId: MutableState<List<String>>
 ) {
     Row(
@@ -95,6 +97,14 @@ fun VerticalMoviesItem(
                         style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier
                     )
+
+                    if (favorite != null) {
+                        Icon(imageVector = favorite, contentDescription = null,
+                            modifier = Modifier.clickable {
+                                onClick
+                            }
+                        )
+                    }
                 }
 
 //                FavoriteStar(
@@ -102,11 +112,6 @@ fun VerticalMoviesItem(
 //                    size = 25.dp
 //
 //                )
-                BookMark(
-                    onClick = {
-                        //TODO
-                    }
-                )
 
             }
 
@@ -120,7 +125,8 @@ fun VerticalMoviesItem(
                         horizontalArrangement = Arrangement.spacedBy(2.dp)
                     ) {
                         Box(
-                            modifier = Modifier.size(5.dp)
+                            modifier = Modifier
+                                .size(5.dp)
                                 .clip(shape = CircleShape)
                                 .background(color = if (isSystemInDarkTheme()) Color.White else Color.Black)
                         )

@@ -1,6 +1,5 @@
 package com.example.getmoview.ui.screens.movies_category.popular.tab_layout
 
-import androidx.compose.runtime.Composable
 import com.example.getmoview.ui.screens.movie.tab_layout.ComposableFun
 import com.example.getmoview.ui.screens.movies_category.popular.all.GetPopularMoviesCategory
 import com.example.getmoview.ui.screens.movies_category.popular.all.GetPopularShowsCategory

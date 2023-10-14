@@ -8,16 +8,15 @@ import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.getmoview.ui.screens.search.SearchScreen
-import com.example.getmoview.ui.screens.account.AccountScreen
-import com.example.getmoview.ui.screens.favorite.FavoriteScreen
+import com.example.getmoview.ui.screens.setting.SettingScreen
+import com.example.getmoview.ui.screens.favorite.FavoriteMoviesAndShowsScreen
 import com.example.getmoview.ui.screens.movie.MovieScreen
 import com.example.getmoview.ui.screens.movie_detail.MovieDetailScreen
 import com.example.getmoview.ui.screens.movie_detail.ShowsDetailScreen
 import com.example.getmoview.ui.screens.movies_category.popular.all.AllPopularMoviesAndTvShow
 import com.example.getmoview.ui.screens.movies_category.top_rated.AllTopRatedAndTvShows
+import com.example.getmoview.ui.screens.search.SearchScreen
 import com.example.getmoview.ui.screens.upcoming.UpcomingMovies
-import com.example.getmoview.ui.screens.watchlist_screen.WatchListScreen
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -35,15 +34,11 @@ fun BottomNavigationGraph(navHostController: NavHostController, modifier: Modifi
         }
 
         composable(BottomNavigationRoutes.FavoriteScreen.routes) {
-            FavoriteScreen()
+            FavoriteMoviesAndShowsScreen(navHostController)
         }
 
-        composable(BottomNavigationRoutes.AccountScreen.routes) {
-            AccountScreen()
-        }
-
-        composable(BottomNavigationRoutes.WatchListScreen.routes){
-            WatchListScreen()
+        composable(BottomNavigationRoutes.SettingScreen.routes) {
+            SettingScreen()
         }
 
         composable(BottomNavigationRoutes.MovieDetails.routes + "/{movies}") {

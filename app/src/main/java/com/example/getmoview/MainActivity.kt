@@ -1,10 +1,8 @@
 package com.example.getmoview
 
 import android.os.Bundle
-import androidx.compose.ui.graphics.Color
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,7 +15,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
@@ -95,7 +92,7 @@ class MainActivity : ComponentActivity() {
                         navController = navController, bottomBarState
                     )
                 }
-            }, modifier = Modifier.padding(top = 20.dp, bottom = 50.dp)
+            }, modifier = Modifier.padding(top = 20.dp, bottom = 5.dp)
         ) { padding ->
             BottomNavigationGraph(
                 navHostController = navController,

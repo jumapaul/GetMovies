@@ -1,6 +1,7 @@
 package com.example.getmoview.ui.ui_states
 
 import com.example.getmoview.data.local.MoviesEntity
+import com.example.getmoview.data.local.ShowsEntity
 import com.example.getmoview.domain.model.genre.Genre
 import com.example.getmoview.domain.model.MovieDtoItem
 import com.example.getmoview.domain.model.top_shows.TvShowItem
@@ -32,6 +33,12 @@ data class GenreUiState(
 data class FavoriteMoviesUiState(
     val isLoading: Boolean = false,
     val moviesEntity: List<MoviesEntity> = emptyList(),
+    val error: String? = null
+)
+
+data class FavoriteShowsUiState(
+    val isLoading: Boolean = false,
+    val showsEntity: List<ShowsEntity> = emptyList(),
     val error: String? = null
 )
 

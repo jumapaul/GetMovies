@@ -1,6 +1,5 @@
 package com.example.getmoview.domain.use_cases
 
-import android.util.Log
 import com.example.getmoview.common.Resources
 import com.example.getmoview.domain.model.genre.Genre
 import com.example.getmoview.domain.repository.MovieRepository
