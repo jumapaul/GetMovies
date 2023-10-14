@@ -8,10 +8,9 @@ Home Screen             |  Category Screen             | See All CAtegory Screen
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
 ![Home screen image](images/home_screen.png)  |  ![Movies Category screen image](images/movies_category.png)  | ![See all category](images/see_all_category.png) | ![Movie Detail screen](images/movie_detail.png)
 
-Favourite Screen           | Search Screen             |  WatchList Screen             | Setting Screen
+Favourite Screen               |  Search Screen            | Setting Screen        
 :-------------------------:|:-------------------------:|:-------------------------:
-![Favorite screen image](images/favorite.png)  |  ![AddTask screen image](images/search.png)  | ![AddTask screen image](images/setting.png)
-
+![Favorite screen image](images/favorite.png)  |  ![Search screen image](images/search.png)  | ![Setting screen image](images/setting.png)
 
 ### Tools and library
 The following tools and libraries were used to build this app;
