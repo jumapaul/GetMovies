@@ -11,7 +11,7 @@ data class MovieUiState(
     val movies: List<MovieDtoItem> = emptyList(),
     var page: Int = 1,
     val endReached: Boolean = false,
-    val error: String? = null,
+    var error: String = "",
 
     )
 

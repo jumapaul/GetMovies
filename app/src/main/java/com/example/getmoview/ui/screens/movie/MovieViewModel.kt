@@ -1,90 +1,92 @@
 package com.example.getmoview.ui.screens.movie
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.getmoview.domain.paginator.DefaultPaginator
+import com.example.getmoview.common.Resources
 import com.example.getmoview.domain.use_cases.MovieUseCase
 import com.example.getmoview.ui.ui_states.MovieUiState
-import com.example.getmoview.ui.screens.movie_detail.SearchMovieState
-import com.example.getmoview.domain.use_cases.SearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
     private val movieUseCase: MovieUseCase,
-    private val searchUseCase: SearchUseCase,
 ) : ViewModel() {
 
     private val _state = mutableStateOf(MovieUiState())
     val state: State<MovieUiState> = _state
 
-    // Searched
-    private val _searchedMovies = mutableStateOf(SearchMovieState())
-    val searchedMovies: State<SearchMovieState> = _searchedMovies
-
 //    init {
 //        getMovies()
 //    }
 
-    private val paginator = DefaultPaginator(
-        initialKeys = _state.value.page,
-        onLoadUpdate = {
-            _state.value = _state.value.copy(isLoading = it)
-        },
-        onRequest = { nextPage ->
-            movieUseCase(nextPage)
-
-
-        },
-        getNextKey = {
-            _state.value.page + 1
-        },
-        onError = {
-            _state.value.copy(error = it?.localizedMessage)
-        },
-        onSuccess = { movies, newKey ->
-            _state.value = _state.value.copy(
-                movies = _state.value.movies + movies,
-                page = newKey,
-                endReached = movies.isEmpty()
-            )
-        }
-    )
+//    private val paginator = DefaultPaginator(
+//        initialKeys = _state.value.page,
+//        onLoadUpdate = {
+//            _state.value = _state.value.copy(isLoading = it)
+//        },
+//        onRequest = { nextPage ->
+//            movieUseCase(nextPage)
+//
+//
+//        },
+//        getNextKey = {
+//            _state.value.page + 1
+//        },
+//        onError = {
+//            it?.localizedMessage?.let { it1 -> _state.value.copy(error = it1) }
+//        },
+//        onSuccess = { movies, newKey ->
+//            _state.value = _state.value.copy(
+//                movies = _state.value.movies + movies,
+//                page = newKey,
+//                endReached = movies.isEmpty()
+//            )
+//        }
+//    )
 
     init {
-        loadMovies()
+        getMovies(1)
+//        loadMovies()
     }
 
-    fun loadMovies() {
-        viewModelScope.launch {
-            if (!_state.value.endReached) {
-                delay(2000L)
-                paginator.loadNextItem()
-            }
-        }
-    }
-
-//    private fun getMovies() {
-//        movieUseCase(moviesPage).onEach { results ->
-//            when (results) {
-//                is Resources.IsLoading -> {
-//                    _movies.value = UiState(isLoading = true)
-//                }
-//
-//                is Resources.Success -> {
-//                    _movies.value = UiState(movies = results.data ?: emptyList())
-//
-//                }
-//
-//                is Resources.Error -> {
-//                    _movies.value = UiState(error = results.message ?: "Unexpected error occurred")
-//                }
+//    fun loadMovies() {
+//        viewModelScope.launch {
+//            if (!_state.value.endReached) {
+//                delay(2000L)
+//                paginator.loadNextItem()
 //            }
-//        }.launchIn(viewModelScope)
+//        }
 //    }
+
+    fun getMovies(page: Int) {
+        movieUseCase(page).onEach { results ->
+            when (results) {
+
+                is Resources.Success -> {
+                    _state.value = MovieUiState(movies = results.data ?: emptyList())
+
+                }
+
+                is Resources.Error -> {
+                    _state.value =
+                        MovieUiState(error = results.message ?: "Unexpected error occurred")
+                }
+
+                is Resources.IsLoading -> {
+                    _state.value = MovieUiState(isLoading = true)
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
 }

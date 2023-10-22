@@ -18,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.getmoview.ui.composables.VerticalMoviesItem
 import com.example.getmoview.ui.screens.favorite.FavoriteMoviesViewModel
+import com.example.getmoview.ui.screens.favorite.NoFavorite
 import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
 
 @Composable
@@ -31,28 +32,33 @@ fun GetFavoriteShows(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
     ) {
-        LazyColumn(
-            modifier = Modifier,
-            verticalArrangement = Arrangement.spacedBy(3.dp)
-        ) {
-            items(favoriteShows.showsEntity) { shows ->
 
-                val names = remember {
-                    mutableStateOf<List<String>>(emptyList())
-                }
+        if (favoriteShows.showsEntity.isEmpty()){
+            NoFavorite(text = "No favorite shows")
+        }else{
+            LazyColumn(
+                modifier = Modifier,
+                verticalArrangement = Arrangement.spacedBy(3.dp)
+            ) {
+                items(favoriteShows.showsEntity) { shows ->
 
-                Box(modifier = Modifier.clickable {
-                    navController.navigate(BottomNavigationRoutes.ShowsDetail.routes + "/${shows.id}")
-                }) {
-                    VerticalMoviesItem(
-                        posterPath = shows.poster_path,
-                        title = shows.name,
-                        description = shows.overview,
-                        date = shows.first_air_date,
-                        onClick = {viewModel.addShows(shows)},
-                        favorite = null,
-                        genreId = names
-                    )
+                    val names = remember {
+                        mutableStateOf<List<String>>(emptyList())
+                    }
+
+                    Box(modifier = Modifier.clickable {
+                        navController.navigate(BottomNavigationRoutes.ShowsDetail.routes + "/${shows.id}")
+                    }) {
+                        VerticalMoviesItem(
+                            posterPath = shows.poster_path,
+                            title = shows.name,
+                            description = shows.overview,
+                            date = shows.first_air_date,
+                            onClick = {viewModel.addShows(shows)},
+                            favorite = null,
+                            genreId = names
+                        )
+                    }
                 }
             }
         }
