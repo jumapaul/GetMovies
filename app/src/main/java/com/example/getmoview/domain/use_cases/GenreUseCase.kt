@@ -1,7 +1,7 @@
 package com.example.getmoview.domain.use_cases
 
 import com.example.getmoview.common.Resources
-import com.example.getmoview.domain.model.genre.Genre
+import com.example.getmoview.data.local.GenresIdsEntity
 import com.example.getmoview.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -12,16 +12,23 @@ import javax.inject.Inject
 class GenreUseCase @Inject constructor(
     private val repository: MovieRepository
 ) {
-    operator fun invoke(): Flow<Resources<List<Genre>>> = flow {
+    operator fun invoke(): Flow<Resources<List<GenresIdsEntity>>> = flow {
         try {
             emit(Resources.IsLoading())
-            val genre = repository.getGenres()
-            emit(Resources.Success(data = genre.genres))
+            repository.saveGenres()
+
+            emit(Resources.Success(data = repository.getLocalGenres()))
         } catch (e: HttpException) {
-            emit(Resources.Error(e.localizedMessage ?: "An error occurred"))
+            emit(
+                Resources.Error(
+                    data = repository.getLocalGenres(),
+                    message = e.localizedMessage ?: "An error occurred"
+                )
+            )
         } catch (e: IOException) {
             emit(
                 Resources.Error(
+                    data = repository.getLocalGenres(),
                     message = "No internet connection"
                 )
             )

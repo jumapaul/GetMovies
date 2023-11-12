@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.getmoview.common.Resources
-import com.example.getmoview.domain.use_cases.GetShowsUseCase
+import com.example.getmoview.domain.use_cases.shows.ShowsUseCase
 import com.example.getmoview.ui.ui_states.TvShowUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class ShowsViewModel @Inject constructor(
-    private val showsUseCase: GetShowsUseCase
+class ShowsByGenreViewModel @Inject constructor(
+    private val showsUseCase:ShowsUseCase
 ) : ViewModel() {
     private val _tvShows = mutableStateOf(TvShowUiState())
     val tvShows: State<TvShowUiState> = _tvShows
@@ -24,7 +24,7 @@ class ShowsViewModel @Inject constructor(
     }
 
     private fun getShows() {
-        showsUseCase(page = 1).onEach { shows ->
+        showsUseCase().onEach { shows ->
             when (shows) {
                 is Resources.IsLoading -> {
                     _tvShows.value = TvShowUiState(isLoading = true)

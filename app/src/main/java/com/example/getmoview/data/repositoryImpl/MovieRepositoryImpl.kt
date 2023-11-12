@@ -1,129 +1,115 @@
 package com.example.getmoview.data.repositoryImpl
 
+import com.example.getmoview.data.local.CategoryType
+import com.example.getmoview.data.local.GenresIdsEntity
 import com.example.getmoview.data.local.MoviesDao
 import com.example.getmoview.data.local.MoviesEntity
 import com.example.getmoview.data.local.ShowsEntity
 import com.example.getmoview.data.remote.MovieApi
-import com.example.getmoview.domain.model.MovieDtoItem
-import com.example.getmoview.domain.model.genre.GenreDto
 import com.example.getmoview.domain.model.movies.MovieDto
-import com.example.getmoview.domain.model.top_shows.TvShowDto
-import com.example.getmoview.domain.model.top_shows.TvShowItem
-import com.example.getmoview.domain.model.upcoming.UpcomingMoviesDto
 import com.example.getmoview.domain.repository.MovieRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class MovieRepositoryImpl(
     private val api: MovieApi,
     private val dao: MoviesDao
 ) : MovieRepository {
-    // Io dispatchers starts the coroutine tin the IO thread.
+    // Io dispatchers starts the coroutine in the IO thread.
     // It is used to perform all the operations such as networking, reading or writing from the database.
 
-    override suspend fun getPopularMovies(): MovieDto {
-        return api.getPopularMovies()
+    //Movies
+    override suspend fun saveMovieItems(page: Int) {
+        val data = api.getMovies(page)
+
+        dao.addMovies(data.results.map { it.toMovieEntity(CategoryType.MOVIES) })
     }
 
-    override suspend fun getPopularTvShows(): TvShowDto {
-        return api.getPopularTvShows()
+    override suspend fun getLocalMovies(): List<MoviesEntity> {
+        return dao.getAllMovies(CategoryType.MOVIES)
     }
 
-    override suspend fun getTopRatedMovies(): MovieDto {
-        return withContext(Dispatchers.IO) {
-            api.getTopRatedMovies()
-        }
+    //Upcoming
+    override suspend fun saveUpcomingMovies(page: Int) {
+        val data = api.getUpcomingMovies(page)
+
+        dao.addUpcomingMovies(data.results.map { it.toMovieEntity(CategoryType.UPCOMING) })
     }
 
-    override suspend fun getTopRatedTvShows(page: Int): TvShowDto {
-        return withContext(Dispatchers.IO) {
-            api.getTopRatedTvShows(page)
-        }
+    override suspend fun getLocalUpcomingMovies(): List<MoviesEntity> {
+        return dao.getAllUpcomingMovies(CategoryType.UPCOMING)
     }
 
-    override suspend fun getUpcomingMovies(page: Int): UpcomingMoviesDto {
-        return withContext(Dispatchers.IO) {
-            api.getUpcomingMovies(page)
-        }
+    //Top Rated
+    override suspend fun saveTopRatedMovies(page: Int) {
+        val data = api.getTopRatedMovies(page)
+        dao.addTopRatedMovies(data.results.map { it.toMovieEntity(CategoryType.TOP_RATED) })
     }
 
-    override suspend fun search(query: String): MovieDto {
-        return withContext(Dispatchers.IO) {
-            api.searchMovie(query)
-        }
+    override suspend fun getLocalTopRatedMovies(): List<MoviesEntity> {
+        return dao.getAllTopRatedMovies(CategoryType.TOP_RATED)
     }
 
-    override suspend fun getMovieById(id: Int): MovieDtoItem {
-        return withContext(Dispatchers.IO) {
-            api.getMovieById(id)
-        }
+    // Popular Movies
+    override suspend fun savePopularMovies(page: Int) {
+        val data = api.getPopularMovies(page)
+
+        dao.addPopularMovies(data.results.map { it.toMovieEntity(CategoryType.POPULAR) })
     }
 
-    override suspend fun getTvShowsById(id: Int): TvShowItem {
-        return withContext(Dispatchers.IO) {
-            api.getShowsById(id)
-        }
-    }
-
-    override suspend fun getMovies(page: Int): MovieDto {
-        return withContext(Dispatchers.IO) {
-            api.getMovies(page)
-        }
-    }
-
-    override suspend fun getTvShows(page: Int): TvShowDto {
-        return withContext(Dispatchers.IO) {
-            api.getShows(page)
-        }
-    }
-
-    override suspend fun getGenres(): GenreDto {
-        return withContext(Dispatchers.IO) {
-            api.getMoviesGenre()
-        }
-    }
-
-    override fun getLocalMovies(): List<MoviesEntity> {
-        return dao.getAllMovies()
+    override suspend fun getLocalPopularMovies(): List<MoviesEntity> {
+        return dao.getAllPopularMovies(CategoryType.POPULAR)
     }
 
     override suspend fun getLocalMovieById(id: Int): MoviesEntity {
-        return withContext(Dispatchers.IO) {
-            dao.getMovieById(id)
-        }
+        return dao.getMovieById(id)
     }
 
-    override suspend fun insertMovies(moviesEntity: MoviesEntity) {
-        return withContext(Dispatchers.IO) {
-            dao.addMovies(moviesEntity)
-        }
+    override suspend fun search(query: String): MovieDto {
+        return api.searchMovie(query)
     }
 
-    override suspend fun deleteMovie(moviesEntity: MoviesEntity) {
-        return withContext(Dispatchers.IO) {
-            dao.deleteMovie(moviesEntity)
-        }
+    // -----------------Shows-------------
+
+    override suspend fun saveShows(page: Int) {
+        val data = api.getShows(page)
+        dao.addShows(data.results.map { it.toShowEntity(CategoryType.SHOWS) })
     }
 
-    override fun getLocalShows(): List<ShowsEntity> {
-        return dao.getAllShows()
+    override suspend fun getShows(): List<ShowsEntity> {
+        return dao.getShows(CategoryType.SHOWS)
     }
 
-    override suspend fun getLocalShowsById(id: Int): ShowsEntity {
-        return withContext(Dispatchers.IO) {
-            dao.getShowById(id)
-        }
+    //Popular Shows
+    override suspend fun savePopularShows(page: Int) {
+        val data = api.getPopularTvShows(page)
+
+        dao.addPopularShows(data.results.map { it.toShowEntity(CategoryType.POPULAR) })
     }
 
-    override suspend fun insertShows(showsEntity: ShowsEntity) {
-        return withContext(Dispatchers.IO) {
-            dao.addShows(showsEntity)
-        }
+    override suspend fun getLocalPopularShows(): List<ShowsEntity> {
+        return dao.getAllPopularShows(CategoryType.POPULAR)
     }
 
-    override suspend fun deleteShows(showsEntity: ShowsEntity) {
-        return withContext(Dispatchers.IO) {
-            dao.deleteShows(showsEntity)
-        }
+    //TopRatedShows
+    override suspend fun getLocalTopRatedShows(): List<ShowsEntity> {
+        return dao.getAllTopRatedShows(CategoryType.TOP_RATED)
+    }
+
+    override suspend fun saveTopRatedShows(page: Int) {
+        val data = api.getTopRatedTvShows(page)
+
+        dao.addTopRatedShows(data.results.map { it.toShowEntity(CategoryType.TOP_RATED) })
+    }
+
+    override suspend fun getTvShowsById(id: Int): ShowsEntity {
+        return dao.getShowById(id)
+    }
+
+    override suspend fun saveGenres() {
+        val data = api.getMoviesGenre()
+        dao.addGenres(data.genres.map { it.toGenreIdsEntity() })
+    }
+
+    override suspend fun getLocalGenres(): List<GenresIdsEntity> {
+        return dao.getGenres()
     }
 }

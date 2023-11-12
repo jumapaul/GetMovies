@@ -38,9 +38,10 @@ fun GetTopRatedCategoryShows(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center
     ) {
-        LazyColumn(modifier = Modifier,
+        LazyColumn(
+            modifier = Modifier,
             verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
+        ) {
             items(shows.shows) { shows ->
                 val names = remember {
                     mutableStateOf<List<String>>(emptyList())
@@ -52,13 +53,15 @@ fun GetTopRatedCategoryShows(
                 }
                 Box(modifier = Modifier.clickable {
                     navController.navigate(BottomNavigationRoutes.ShowsDetail.routes + "/${shows.id}")
-                }){
+                }) {
                     VerticalMoviesItem(
                         posterPath = shows.poster_path,
                         title = shows.name,
                         description = shows.overview,
                         date = shows.first_air_date,
-                        onClick = {favoriteMoviesViewModel.addShows(shows.toShowEntity())},
+                        onClick = {
+                            TODO()
+                        },
                         favorite = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                         genreId = names
                     )

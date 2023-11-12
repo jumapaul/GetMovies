@@ -5,7 +5,6 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.example.getmoview.R
 
 sealed class BottomNavigationRoutes(val title: String?, var icon: ImageVector?, val routes: String) {
     object MovieScreen : BottomNavigationRoutes("Movie", Icons.Default.PlayArrow, "movie")

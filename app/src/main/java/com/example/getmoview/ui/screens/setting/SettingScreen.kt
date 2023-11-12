@@ -27,7 +27,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.getmoview.R
 import com.example.getmoview.ui.composables.ExpandButton
-import io.ktor.http.content.Version
 
 @Composable
 fun SettingScreen() {

@@ -69,8 +69,8 @@ fun ShowsDetailScreen(
             title = showsId.name,
             releaseDate = showsId.first_air_date,
             overview = showsId.overview,
-            showsEntity = showsId.toShowEntity(),
-            onClick = { favorite.addShows(showsId.toShowEntity()) }
+            showsEntity = showsId,
+            onClick = {  }
         )
     }
 }
@@ -235,7 +235,7 @@ fun FavoriteShows(
     Icon(
         modifier = Modifier
             .clickable {
-                viewModel.addShows(showsEntity)
+//                viewModel.addShows(showsEntity)
             }
             .size(size),
         contentDescription = null,

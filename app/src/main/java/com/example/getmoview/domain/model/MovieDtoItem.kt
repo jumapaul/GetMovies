@@ -1,5 +1,6 @@
 package com.example.getmoview.domain.model
 
+import com.example.getmoview.data.local.CategoryType
 import com.example.getmoview.data.local.MoviesEntity
 import kotlinx.serialization.Serializable
 
@@ -18,25 +19,18 @@ data class MovieDtoItem(
     val title: String,
     val video: Boolean,
     val vote_average: Double,
-    val vote_count: Int
+    val vote_count: Int,
 ) {
-    fun toMovieEntity(): MoviesEntity {
+    fun toMovieEntity(categoryType: CategoryType): MoviesEntity {
         return MoviesEntity(
-            id,
-            adult,
-            backdrop_path,
-//            genre_ids,
-            original_language,
-            original_title,
-            overview,
-            popularity,
-            poster_path,
-            release_date,
-            title,
-            video,
-            vote_average,
-            vote_count
+            id = id,
+            genre_ids = genre_ids,
+            overview = overview,
+            poster_path = poster_path,
+            release_date = release_date,
+            title = title,
+            vote_average = vote_average,
+            categoryType = categoryType
         )
-
     }
 }

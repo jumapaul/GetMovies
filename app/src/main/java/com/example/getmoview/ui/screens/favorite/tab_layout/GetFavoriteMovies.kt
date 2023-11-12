@@ -72,8 +72,11 @@ fun GetFavoriteMovies(
                             title = movies.title,
                             description = movies.overview,
                             date = movies.release_date,
-                            onClick = { viewModel.addFavoriteMovie(movies) },
+//                            onClick = { viewModel.addFavoriteMovie(moviesEntity = ) },
                             favorite = null,
+                            onClick = {
+                                      TODO()
+                            },
                             genreId = names
                         )
                     }

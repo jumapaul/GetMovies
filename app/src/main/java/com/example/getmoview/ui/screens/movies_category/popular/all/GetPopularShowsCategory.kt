@@ -65,7 +65,9 @@ fun GetPopularShowsCategory(
                         title = shows.name,
                         description = shows.overview,
                         date = shows.first_air_date,
-                        onClick = { favoriteMoviesViewModel.addShows(shows.toShowEntity()) },
+                        onClick = {
+                                  TODO()
+                        },
                         favorite = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                         genreId = names
                     )

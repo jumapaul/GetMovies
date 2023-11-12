@@ -44,15 +44,15 @@ class MoviesCategoryViewModel @Inject constructor(
     val popularTvShows: State<TvShowUiState> = _popularTvShows
 
     init {
-        getUpcomingMovies(1)
+        getUpcomingMovies()
         getTopRatedMovies()
-        getTopRatedShows(1)
+        getTopRatedShows()
         getPopularMovies()
         getPopularTvShows()
     }
 
-    private fun getUpcomingMovies(page: Int) {
-        upcomingMoviesUseCase(page).onEach { results ->
+    private fun getUpcomingMovies() {
+        upcomingMoviesUseCase().onEach { results ->
             when (results) {
                 is Resources.IsLoading -> {
                     _upcomingMoviesState.value = MovieUiState(isLoading = true)
@@ -88,8 +88,8 @@ class MoviesCategoryViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun getTopRatedShows(page: Int) {
-        topRatedTvShowsUseCase(page).onEach { results ->
+    private fun getTopRatedShows() {
+        topRatedTvShowsUseCase().onEach { results ->
             when (results) {
                 is Resources.IsLoading -> {
                     _topRatedShowsState.value = TvShowUiState(isLoading = true)
@@ -119,7 +119,7 @@ class MoviesCategoryViewModel @Inject constructor(
                     _popularMovies.value = MovieUiState(movies = results.data?: emptyList())
                 }
                 is Resources.Error -> {
-                    _popularMovies.value = MovieUiState(error= results.message?: "An error occurred")
+                    _popularMovies.value = MovieUiState(error = results.message?: "An error occurred")
                 }
             }
         }.launchIn(viewModelScope)
@@ -143,9 +143,9 @@ class MoviesCategoryViewModel @Inject constructor(
     }
 
     suspend fun getGenreNames(genreIds: List<Int>): List<String> {
-        val response = repository.getGenres()
+        val response = repository.getLocalGenres()
 
-        val genreMap = response.genres.associate { it.id to it.name }
+        val genreMap = response.associate { it.id to it.name }
 
         return genreIds.map { genreMap[it].orEmpty() }
     }

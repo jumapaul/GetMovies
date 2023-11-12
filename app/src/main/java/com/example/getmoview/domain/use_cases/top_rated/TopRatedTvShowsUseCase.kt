@@ -1,7 +1,7 @@
 package com.example.getmoview.domain.use_cases.top_rated
 
 import com.example.getmoview.common.Resources
-import com.example.getmoview.domain.model.top_shows.TvShowItem
+import com.example.getmoview.data.local.ShowsEntity
 import com.example.getmoview.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -13,19 +13,22 @@ class TopRatedTvShowsUseCase @Inject constructor(
     private val repository: MovieRepository
 ) {
 
-    operator fun invoke(page: Int): Flow<Resources<List<TvShowItem>>> = flow {
+    operator fun invoke(): Flow<Resources<List<ShowsEntity>>> = flow {
         try {
             emit(Resources.IsLoading())
-            val apiData = repository.getTopRatedTvShows(page).results
-            emit(Resources.Success(data = apiData))
-
+            repository.saveTopRatedShows(1)
+            emit(Resources.Success(data = repository.getLocalTopRatedShows()))
         } catch (e: HttpException) {
             emit(
-                Resources.Error(e.localizedMessage ?: "An error occurred")
+                Resources.Error(
+                    data = repository.getLocalTopRatedShows(),
+                    message = e.localizedMessage ?: "An error occurred")
             )
 
         } catch (e: IOException) {
-            emit(Resources.Error(message = "No internet connection"))
+            emit(Resources.Error(
+                data = repository.getLocalTopRatedShows(),
+                message = "No internet connection"))
         }
     }
 }

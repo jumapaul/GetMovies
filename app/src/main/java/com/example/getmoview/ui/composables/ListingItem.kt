@@ -10,11 +10,12 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.getmoview.data.local.GenresIdsEntity
 import com.example.getmoview.domain.model.genre.Genre
 
 @Composable
 fun ListingItem(
-    genre: Genre,
+    genre: GenresIdsEntity,
     selectedGenreIds: MutableState<List<Int>>
 ) {
 

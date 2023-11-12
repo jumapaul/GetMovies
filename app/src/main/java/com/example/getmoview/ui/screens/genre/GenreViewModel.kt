@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.getmoview.common.Resources
-import com.example.getmoview.domain.repository.MovieRepository
 import com.example.getmoview.domain.use_cases.GenreUseCase
 import com.example.getmoview.ui.ui_states.GenreUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +15,6 @@ import javax.inject.Inject
 @HiltViewModel
 class GenreViewModel @Inject constructor(
     private val genreUseCase: GenreUseCase,
-    private val repository: MovieRepository
 ) : ViewModel() {
     private val _genre = mutableStateOf(GenreUiState())
     val genre: State<GenreUiState> = _genre
