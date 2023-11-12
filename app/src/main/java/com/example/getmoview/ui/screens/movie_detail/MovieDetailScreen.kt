@@ -19,11 +19,9 @@ import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,11 +32,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.getmoview.data.local.MoviesEntity
 import com.example.getmoview.ui.composables.CircularProgressBar
-import com.example.getmoview.ui.composables.gradientBackground
 import com.example.getmoview.ui.composables.MovieRequester
 import com.example.getmoview.ui.composables.MyTexts
+import com.example.getmoview.ui.composables.gradientBackground
 import com.example.getmoview.ui.screens.favorite.FavoriteMoviesViewModel
 import com.example.getmoview.ui.screens.movies_category.MoviesCategoryViewModel
 
@@ -71,9 +68,9 @@ fun MovieDetailScreen(
             title = movieId.title,
             releaseDate = movieId.release_date,
             overview = movieId.overview,
-            moviesEntity = movieId.toMovieEntity(),
-            onClick = { favorite.addFavoriteMovie(movieId.toMovieEntity()) }
-//            genres = names
+            onClick = {
+                TODO()
+            }
         )
     }
 }
@@ -86,7 +83,7 @@ fun DetailScreen(
     title: String,
     releaseDate: String,
     overview: String,
-    moviesEntity: MoviesEntity,
+//    moviesEntity: MoviesEntity,
     onClick: () -> Unit
 //    genres: MutableState<List<String>>,
 ) {
@@ -163,9 +160,11 @@ fun DetailScreen(
                                 }
 
                                 FavoriteStar(
-                                    onClick = onClick,
+                                    onClick = {
+                                        onClick
+                                    },
                                     size = 50.dp,
-                                    moviesEntity = moviesEntity
+//                                    moviesEntity = moviesEntity
                                 )
                             }
 
@@ -217,30 +216,29 @@ fun DetailScreen(
 fun FavoriteStar(
     onClick: () -> Unit,
     size: Dp,
-    moviesEntity: MoviesEntity,
-    viewModel: FavoriteMoviesViewModel = hiltViewModel()
+//    viewModel: FavoriteMoviesViewModel = hiltViewModel()
 ) {
 
-    val coroutineScope = rememberCoroutineScope()
+//    val coroutineScope = rememberCoroutineScope()
 
     var isFavorite by remember {
         mutableStateOf(false)
     }
 
-    LaunchedEffect(key1 = null) {
-        viewModel.isMovieFavorite(moviesEntity.id)
-    }
+//    LaunchedEffect(key1 = null) {
+//        viewModel.isMovieFavorite(moviesEntity.)
+//    }
 
 
     val favorite: ImageVector =
         if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder
 
-//    isFavorite = !isFavorite
+    isFavorite = !isFavorite
 
     Icon(
         modifier = Modifier
             .clickable {
-                viewModel.addFavoriteMovie(moviesEntity)
+                onClick
             }
             .size(size),
         contentDescription = null,

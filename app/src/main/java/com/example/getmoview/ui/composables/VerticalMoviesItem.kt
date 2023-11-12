@@ -101,7 +101,7 @@ fun VerticalMoviesItem(
                     if (favorite != null) {
                         Icon(imageVector = favorite, contentDescription = null,
                             modifier = Modifier.clickable {
-                                onClick
+//                                onClick
                             }
                         )
                     }

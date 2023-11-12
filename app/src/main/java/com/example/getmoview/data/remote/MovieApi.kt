@@ -1,8 +1,8 @@
 package com.example.getmoview.data.remote
 
+import com.example.getmoview.domain.model.MovieDtoItem
 import com.example.getmoview.domain.model.genre.GenreDto
 import com.example.getmoview.domain.model.movies.MovieDto
-import com.example.getmoview.domain.model.MovieDtoItem
 import com.example.getmoview.domain.model.top_shows.TvShowDto
 import com.example.getmoview.domain.model.top_shows.TvShowItem
 import com.example.getmoview.domain.model.upcoming.UpcomingMoviesDto
@@ -18,13 +18,13 @@ interface MovieApi {
     suspend fun getShows(@Query("page") page: Int): TvShowDto
 
     @GET("movie/popular")
-    suspend fun getPopularMovies(): MovieDto
+    suspend fun getPopularMovies(@Query("page") page: Int): MovieDto
 
     @GET("tv/popular")
-    suspend fun getPopularTvShows(): TvShowDto
+    suspend fun getPopularTvShows(@Query("page") page: Int): TvShowDto
 
     @GET("movie/top_rated")
-    suspend fun getTopRatedMovies(): MovieDto
+    suspend fun getTopRatedMovies(@Query("page") page: Int): MovieDto
 
     @GET("tv/top_rated")
     suspend fun getTopRatedTvShows(@Query("page") page: Int): TvShowDto

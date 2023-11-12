@@ -1,55 +1,57 @@
 package com.example.getmoview.domain.repository
 
+import com.example.getmoview.data.local.GenresIdsEntity
 import com.example.getmoview.data.local.MoviesEntity
 import com.example.getmoview.data.local.ShowsEntity
-import com.example.getmoview.domain.model.genre.GenreDto
 import com.example.getmoview.domain.model.movies.MovieDto
-import com.example.getmoview.domain.model.MovieDtoItem
-import com.example.getmoview.domain.model.top_shows.TvShowDto
-import com.example.getmoview.domain.model.top_shows.TvShowItem
-import com.example.getmoview.domain.model.upcoming.UpcomingMoviesDto
-import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
     // Suspend functions are coroutine that makes it possible for asynchronous programming
     // Suspend indicates that the method can be paused and resumed later without blocking the threads.
     // This allow other tasks to proceed concurrently.
     // Also, by making the function suspend, they can be called fro within coroutine context.
-    suspend fun getPopularMovies(): MovieDto
 
-    suspend fun getPopularTvShows(): TvShowDto
+    // Movies
+    suspend fun saveMovieItems(page: Int)
 
-    suspend fun getTopRatedMovies(): MovieDto
+    suspend fun getLocalMovies(): List<MoviesEntity>
 
-    suspend fun getTopRatedTvShows(page: Int): TvShowDto
+    // Upcoming Movies
+    suspend fun saveUpcomingMovies(page: Int)
+    suspend fun getLocalUpcomingMovies(): List<MoviesEntity>
 
-    suspend fun getUpcomingMovies(page: Int): UpcomingMoviesDto
+    // Top Rated Movies
+    suspend fun saveTopRatedMovies(page: Int)
+    suspend fun getLocalTopRatedMovies(): List<MoviesEntity>
 
-    suspend fun search(query: String): MovieDto
 
-    suspend fun getMovieById(id: Int): MovieDtoItem
-
-    suspend fun getTvShowsById(id: Int): TvShowItem
-
-    suspend fun getMovies(page: Int): MovieDto
-
-    suspend fun getTvShows(page: Int): TvShowDto
-
-    suspend fun getGenres(): GenreDto
-
-    fun getLocalMovies(): List<MoviesEntity>
+    // Popular Movies
+    suspend fun savePopularMovies(page: Int)
+    suspend fun getLocalPopularMovies(): List<MoviesEntity>
 
     suspend fun getLocalMovieById(id: Int): MoviesEntity
 
-    suspend fun insertMovies(moviesEntity: MoviesEntity)
+    suspend fun search(query: String): MovieDto
 
-    suspend fun deleteMovie(moviesEntity: MoviesEntity)
+    //-----------Shows------------------
 
-    fun getLocalShows(): List<ShowsEntity>
+    //Shows
+    suspend fun saveShows(page: Int)
+    suspend fun getShows(): List<ShowsEntity>
 
-    suspend fun getLocalShowsById(id: Int): ShowsEntity
 
-    suspend fun insertShows(showsEntity: ShowsEntity)
+    //Popular Shows
+    suspend fun savePopularShows(page: Int)
+    suspend fun getLocalPopularShows(): List<ShowsEntity>
 
-    suspend fun deleteShows(showsEntity: ShowsEntity)
+    //TopRated shows
+    suspend fun getLocalTopRatedShows(): List<ShowsEntity>
+
+    suspend fun saveTopRatedShows(page: Int)
+
+    suspend fun getTvShowsById(id: Int): ShowsEntity
+
+    // Genres
+    suspend fun saveGenres()
+    suspend fun getLocalGenres(): List<GenresIdsEntity>
 }

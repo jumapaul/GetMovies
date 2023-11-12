@@ -105,7 +105,7 @@ fun MovieScreen(
                     modifier = Modifier.clickable {
                         isRefreshing = true
 
-                        viewModel.getMovies(1)
+//                        viewModel.getMovies(1)
                     },
                     tint = MaterialTheme.colorScheme.error
                 )

@@ -19,17 +19,18 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.getmoview.common.utils.GenreIdToName
-import com.example.getmoview.domain.model.MovieDtoItem
+import com.example.getmoview.data.local.MoviesEntity
 import com.example.getmoview.ui.composables.VerticalMoviesItem
 import com.example.getmoview.ui.screens.favorite.FavoriteMoviesViewModel
 import com.example.getmoview.ui.screens.movie.MovieViewModel
+import com.example.getmoview.ui.screens.movies_category.MoviesCategoryViewModel
 import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
 
 @Composable
 fun GetMoviesByGenre(
     navController: NavController,
     selectedGenreIds: MutableState<List<Int>>,
-//    viewModel: MoviesCategoryViewModel = hiltViewModel(),
+    viewModel: MoviesCategoryViewModel = hiltViewModel(),
     moviesViewModel: MovieViewModel = hiltViewModel(),
     favoriteMoviesViewModel: FavoriteMoviesViewModel = hiltViewModel()
     ){
@@ -62,7 +63,9 @@ fun GetMoviesByGenre(
                     title = movies.title,
                     description = movies.overview,
                     date = movies.release_date,
-                    onClick = {favoriteMoviesViewModel.addFavoriteMovie(movies.toMovieEntity())},
+                    onClick = {
+                              TODO()
+                    },
                     favorite = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                     genreId = names
                 )
@@ -72,9 +75,9 @@ fun GetMoviesByGenre(
 }
 
 fun filterMoviesByGenres(
-    movies: List<MovieDtoItem>,
+    movies: List<MoviesEntity>,
     selectedGenreIds: List<Int>
-): List<MovieDtoItem> {
+): List<MoviesEntity> {
     return movies.filter { movies ->
         selectedGenreIds.all { genreId ->
             movies.genre_ids.contains(genreId)

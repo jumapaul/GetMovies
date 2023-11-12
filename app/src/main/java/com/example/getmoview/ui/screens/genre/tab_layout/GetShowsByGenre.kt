@@ -19,17 +19,18 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.getmoview.common.utils.GenreIdToName
+import com.example.getmoview.data.local.ShowsEntity
 import com.example.getmoview.domain.model.top_shows.TvShowItem
 import com.example.getmoview.ui.composables.VerticalMoviesItem
 import com.example.getmoview.ui.screens.favorite.FavoriteMoviesViewModel
-import com.example.getmoview.ui.screens.genre.ShowsViewModel
+import com.example.getmoview.ui.screens.genre.ShowsByGenreViewModel
 import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
 
 @Composable
 fun GetShowsByGenre(
     navController: NavController,
     selectedGenreIds: MutableState<List<Int>>,
-    viewModel: ShowsViewModel = hiltViewModel(),
+    viewModel: ShowsByGenreViewModel = hiltViewModel(),
     favoriteMoviesViewModel: FavoriteMoviesViewModel = hiltViewModel()
 ) {
 
@@ -61,8 +62,10 @@ fun GetShowsByGenre(
                     title = show.name,
                     description = show.overview,
                     date = show.first_air_date,
-                    onClick = { favoriteMoviesViewModel.addShows(show.toShowEntity()) },
                     favorite = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                    onClick = {
+//                              TODO()
+                    },
                     genreId = names
                 )
             }
@@ -72,12 +75,12 @@ fun GetShowsByGenre(
 
 
 fun filterShowsByGenres(
-    movies: List<TvShowItem>,
+    movies: List<ShowsEntity>,
     selectedGenreIds: List<Int>
-): List<TvShowItem> {
-    return movies.filter { movies ->
+): List<ShowsEntity> {
+    return movies.filter { showsEntity ->
         selectedGenreIds.all { genreId ->
-            movies.genre_ids.contains(genreId)
+            showsEntity.genre_ids.contains(genreId)
         }
     }
 }

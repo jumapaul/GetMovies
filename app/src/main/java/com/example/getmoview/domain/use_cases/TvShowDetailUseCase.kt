@@ -2,7 +2,7 @@ package com.example.getmoview.domain.use_cases
 
 import android.util.Log
 import com.example.getmoview.common.Resources
-import com.example.getmoview.domain.model.top_shows.TvShowItem
+import com.example.getmoview.data.local.ShowsEntity
 import com.example.getmoview.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -14,7 +14,7 @@ class TvShowDetailUseCase @Inject constructor(
     private val repository: MovieRepository
 ) {
 
-    operator fun invoke(showId: Int): Flow<Resources<TvShowItem>> = flow {
+    operator fun invoke(showId: Int): Flow<Resources<ShowsEntity>> = flow {
         try {
             val data = repository.getTvShowsById(showId)
             Log.d(">>>>>>>>", "setting id: $data")

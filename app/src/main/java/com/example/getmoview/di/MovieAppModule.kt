@@ -5,10 +5,9 @@ import androidx.room.Room
 import com.example.getmoview.common.Constants.BASE_URL
 import com.example.getmoview.common.Constants.DATABASE_NAME
 import com.example.getmoview.data.local.MovieDatabase
-import com.example.getmoview.data.local.MoviesDao
-import com.example.getmoview.data.repositoryImpl.MovieRepositoryImpl
 import com.example.getmoview.data.remote.MovieApi
 import com.example.getmoview.data.remote.TokenInterceptor
+import com.example.getmoview.data.repositoryImpl.MovieRepositoryImpl
 import com.example.getmoview.domain.repository.MovieRepository
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

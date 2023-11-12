@@ -1,6 +1,5 @@
 package com.example.getmoview.ui.screens.movie
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -9,12 +8,8 @@ import com.example.getmoview.common.Resources
 import com.example.getmoview.domain.use_cases.MovieUseCase
 import com.example.getmoview.ui.ui_states.MovieUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -68,7 +63,7 @@ class MovieViewModel @Inject constructor(
 //        }
 //    }
 
-    fun getMovies(page: Int) {
+    private fun getMovies(page: Int) {
         movieUseCase(page).onEach { results ->
             when (results) {
 

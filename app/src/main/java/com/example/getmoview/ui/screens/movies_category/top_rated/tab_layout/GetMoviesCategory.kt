@@ -62,7 +62,9 @@ fun GetTopMoviesCategoryMovies(
                         title = movies.title,
                         description = movies.overview,
                         date = movies.release_date,
-                        onClick = {favoriteMoviesViewModel.addFavoriteMovie(movies.toMovieEntity())},
+                        onClick = {
+                                  TODO()
+                        },
                         if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                         genreId = names
                     )

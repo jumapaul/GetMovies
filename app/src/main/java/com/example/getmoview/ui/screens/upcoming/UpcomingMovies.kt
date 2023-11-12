@@ -98,7 +98,9 @@ fun UpcomingMovies(
                         title = item.title,
                         description = item.overview,
                         date = item.release_date,
-                        onClick = {favoriteMoviesViewModel.addFavoriteMovie(item.toMovieEntity())},
+                        onClick = {
+                                  TODO()
+                        },
                         favorite = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                         genreId = names
                     )
