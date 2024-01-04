@@ -2,16 +2,20 @@ package com.example.getmoview.data.repositoryImpl
 
 import com.example.getmoview.data.local.CategoryType
 import com.example.getmoview.data.local.GenresIdsEntity
-import com.example.getmoview.data.local.MoviesDao
 import com.example.getmoview.data.local.MoviesEntity
 import com.example.getmoview.data.local.ShowsEntity
+import com.example.getmoview.data.local.dao.GenreDao
+import com.example.getmoview.data.local.dao.MoviesDao
+import com.example.getmoview.data.local.dao.ShowsDao
 import com.example.getmoview.data.remote.MovieApi
 import com.example.getmoview.domain.model.movies.MovieDto
 import com.example.getmoview.domain.repository.MovieRepository
 
 class MovieRepositoryImpl(
     private val api: MovieApi,
-    private val dao: MoviesDao
+    private val dao: MoviesDao,
+    private val showsDao: ShowsDao,
+    private val genreDao: GenreDao
 ) : MovieRepository {
     // Io dispatchers starts the coroutine in the IO thread.
     // It is used to perform all the operations such as networking, reading or writing from the database.
@@ -20,10 +24,16 @@ class MovieRepositoryImpl(
     override suspend fun saveMovieItems(page: Int) {
         val data = api.getMovies(page)
 
-        dao.addMovies(data.results.map { it.toMovieEntity(CategoryType.MOVIES) })
+        dao.addMovies(data.results.map {
+            it.toMovieEntity(
+                CategoryType.MOVIES,
+                isFavorite = false
+            )
+        })
     }
 
     override suspend fun getLocalMovies(): List<MoviesEntity> {
+
         return dao.getAllMovies(CategoryType.MOVIES)
     }
 
@@ -31,7 +41,12 @@ class MovieRepositoryImpl(
     override suspend fun saveUpcomingMovies(page: Int) {
         val data = api.getUpcomingMovies(page)
 
-        dao.addUpcomingMovies(data.results.map { it.toMovieEntity(CategoryType.UPCOMING) })
+        dao.addUpcomingMovies(data.results.map {
+            it.toMovieEntity(
+                CategoryType.UPCOMING,
+                isFavorite = false
+            )
+        })
     }
 
     override suspend fun getLocalUpcomingMovies(): List<MoviesEntity> {
@@ -41,7 +56,12 @@ class MovieRepositoryImpl(
     //Top Rated
     override suspend fun saveTopRatedMovies(page: Int) {
         val data = api.getTopRatedMovies(page)
-        dao.addTopRatedMovies(data.results.map { it.toMovieEntity(CategoryType.TOP_RATED) })
+        dao.addTopRatedMovies(data.results.map {
+            it.toMovieEntity(
+                CategoryType.TOP_RATED,
+                isFavorite = false
+            )
+        })
     }
 
     override suspend fun getLocalTopRatedMovies(): List<MoviesEntity> {
@@ -52,7 +72,12 @@ class MovieRepositoryImpl(
     override suspend fun savePopularMovies(page: Int) {
         val data = api.getPopularMovies(page)
 
-        dao.addPopularMovies(data.results.map { it.toMovieEntity(CategoryType.POPULAR) })
+        dao.addPopularMovies(data.results.map {
+            it.toMovieEntity(
+                CategoryType.POPULAR,
+                isFavorite = false
+            )
+        })
     }
 
     override suspend fun getLocalPopularMovies(): List<MoviesEntity> {
@@ -67,49 +92,83 @@ class MovieRepositoryImpl(
         return api.searchMovie(query)
     }
 
+    // Get favorite movies
+    override suspend fun getFavoriteMovies(isFavorite: Boolean): List<MoviesEntity> {
+        return dao.getFavoriteMovies(isFavorite)
+    }
+
+    override suspend fun updateMoviesList(movie: MoviesEntity) {
+        dao.updateMoviesList(movie)
+    }
+
     // -----------------Shows-------------
 
     override suspend fun saveShows(page: Int) {
         val data = api.getShows(page)
-        dao.addShows(data.results.map { it.toShowEntity(CategoryType.SHOWS) })
+        showsDao.addShows(data.results.map {
+            it.toShowEntity(
+                CategoryType.SHOWS,
+                isFavorite = false
+            )
+        })
     }
 
-    override suspend fun getShows(): List<ShowsEntity> {
-        return dao.getShows(CategoryType.SHOWS)
+    override suspend fun getLocalShows(): List<ShowsEntity> {
+        return showsDao.getShows(CategoryType.SHOWS)
     }
 
     //Popular Shows
     override suspend fun savePopularShows(page: Int) {
         val data = api.getPopularTvShows(page)
 
-        dao.addPopularShows(data.results.map { it.toShowEntity(CategoryType.POPULAR) })
+        showsDao.addPopularShows(data.results.map {
+            it.toShowEntity(
+                CategoryType.POPULAR,
+                isFavorite = false
+            )
+        })
     }
 
     override suspend fun getLocalPopularShows(): List<ShowsEntity> {
-        return dao.getAllPopularShows(CategoryType.POPULAR)
+        return showsDao.getAllPopularShows(CategoryType.POPULAR)
     }
 
     //TopRatedShows
     override suspend fun getLocalTopRatedShows(): List<ShowsEntity> {
-        return dao.getAllTopRatedShows(CategoryType.TOP_RATED)
+        return showsDao.getAllTopRatedShows(CategoryType.TOP_RATED)
     }
 
     override suspend fun saveTopRatedShows(page: Int) {
         val data = api.getTopRatedTvShows(page)
 
-        dao.addTopRatedShows(data.results.map { it.toShowEntity(CategoryType.TOP_RATED) })
+        showsDao.addTopRatedShows(data.results.map {
+            it.toShowEntity(
+                CategoryType.TOP_RATED,
+                isFavorite = false
+            )
+        })
     }
 
     override suspend fun getTvShowsById(id: Int): ShowsEntity {
-        return dao.getShowById(id)
+        return showsDao.getShowById(id)
     }
 
     override suspend fun saveGenres() {
         val data = api.getMoviesGenre()
-        dao.addGenres(data.genres.map { it.toGenreIdsEntity() })
+        genreDao.addGenres(data.genres.map { it.toGenreIdsEntity() })
     }
 
     override suspend fun getLocalGenres(): List<GenresIdsEntity> {
-        return dao.getGenres()
+        return genreDao.getGenres()
+    }
+
+    // Get favorite shows
+    override suspend fun getFavoriteShows(isFavorite: Boolean): List<ShowsEntity> {
+        return showsDao.getFavoriteShows(isFavorite)
+    }
+
+    // Update favorite shows list
+    override suspend fun updateShowsList(showsEntity: ShowsEntity) {
+        dao.updateShowsList(showsEntity)
     }
 }

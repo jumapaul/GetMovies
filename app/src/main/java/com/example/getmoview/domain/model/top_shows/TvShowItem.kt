@@ -18,7 +18,7 @@ data class TvShowItem(
     val vote_average: Double,
     val vote_count: Int
 ) {
-    fun toShowEntity(categoryType: CategoryType): ShowsEntity {
+    fun toShowEntity(categoryType: CategoryType, isFavorite: Boolean): ShowsEntity {
         return ShowsEntity(
             id = id,
             first_air_date = first_air_date,
@@ -27,7 +27,8 @@ data class TvShowItem(
             overview = overview,
             poster_path = poster_path,
             vote_average = vote_average,
-            categoryType = categoryType
+            categoryType = categoryType,
+            isFavorite = isFavorite
         )
     }
 }

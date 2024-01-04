@@ -9,24 +9,27 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class ShowsUseCase @Inject constructor(
+class UpdateShowsUseCase @Inject constructor(
     private val repository: MovieRepository
 ) {
-    operator fun invoke(): Flow<Resources<List<ShowsEntity>>> = flow {
+
+    operator fun invoke(showsEntity: ShowsEntity): Flow<Resources<List<ShowsEntity>>> = flow {
         try {
             emit(Resources.IsLoading())
-            repository.saveShows(1)
-
+            repository.updateShowsList(showsEntity)
             emit(Resources.Success(data = repository.getLocalShows()))
+
         } catch (e: RedirectResponseException) {
-            Resources.Error(
-                data = repository.getLocalShows(),
-                message = e.localizedMessage ?: "An error occurred"
+            emit(
+                Resources.Error(
+                    message = e.localizedMessage ?: "An error occurred"
+                )
             )
         } catch (e: ClientRequestException) {
-            Resources.Error(
-                data = repository.getLocalShows(),
-                message = "No internet connection"
+            emit(
+                Resources.Error(
+                    message = "No internet connection"
+                )
             )
         }
     }

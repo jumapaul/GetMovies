@@ -17,12 +17,6 @@ data class TvShowsState(
     val error: String = ""
 )
 
-//data class TrendingMovieState(
-//    val isLoading: Boolean = false,
-//    val movie: Results? = null,
-//    val error: String = ""
-//)
-
 data class SearchMovieState(
     val isLoading: Boolean = false,
     val movie: List<MovieDtoItem>? = null,

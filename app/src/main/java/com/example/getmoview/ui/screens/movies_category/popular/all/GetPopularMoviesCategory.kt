@@ -23,8 +23,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.getmoview.common.utils.GenreIdToName
 import com.example.getmoview.ui.composables.VerticalMoviesItem
-import com.example.getmoview.ui.screens.favorite.FavoriteMoviesViewModel
-import com.example.getmoview.ui.screens.movies_category.MoviesCategoryViewModel
+import com.example.getmoview.ui.view_models.FavoriteMoviesViewModel
+import com.example.getmoview.ui.view_models.MoviesCategoryViewModel
 import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
 
 @Composable

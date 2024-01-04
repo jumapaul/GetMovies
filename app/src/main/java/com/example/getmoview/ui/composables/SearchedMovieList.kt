@@ -12,7 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.getmoview.ui.screens.movie_detail.SearchMovieState
 import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
-import com.example.getmoview.ui.screens.movie.SearchViewModel
+import com.example.getmoview.ui.view_models.SearchViewModel
 
 @Composable
 fun SearchedMovieList(

@@ -13,5 +13,6 @@ data class ShowsEntity(
     val overview: String,
     val poster_path: String,
     val vote_average: Double,
-    val categoryType: CategoryType
+    val categoryType: CategoryType,
+    var isFavorite: Boolean
 )

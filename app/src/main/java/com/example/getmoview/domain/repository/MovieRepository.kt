@@ -33,11 +33,16 @@ interface MovieRepository {
 
     suspend fun search(query: String): MovieDto
 
+    //Get favorite movies
+    suspend fun getFavoriteMovies(isFavorite: Boolean): List<MoviesEntity>
+
+    suspend fun updateMoviesList(movie: MoviesEntity)
+
     //-----------Shows------------------
 
     //Shows
     suspend fun saveShows(page: Int)
-    suspend fun getShows(): List<ShowsEntity>
+    suspend fun getLocalShows(): List<ShowsEntity>
 
 
     //Popular Shows
@@ -50,6 +55,12 @@ interface MovieRepository {
     suspend fun saveTopRatedShows(page: Int)
 
     suspend fun getTvShowsById(id: Int): ShowsEntity
+
+    //Get favorite Tv Shows
+    suspend fun getFavoriteShows(isFavorite: Boolean): List<ShowsEntity>
+
+    // Update the favorite shows
+    suspend fun updateShowsList(showsEntity: ShowsEntity)
 
     // Genres
     suspend fun saveGenres()

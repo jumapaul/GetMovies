@@ -36,31 +36,24 @@ import com.example.getmoview.ui.composables.CircularProgressBar
 import com.example.getmoview.ui.composables.MovieRequester
 import com.example.getmoview.ui.composables.MyTexts
 import com.example.getmoview.ui.composables.gradientBackground
-import com.example.getmoview.ui.screens.favorite.FavoriteMoviesViewModel
-import com.example.getmoview.ui.screens.movies_category.MoviesCategoryViewModel
+import com.example.getmoview.ui.view_models.MovieDetailViewModel
+import com.example.getmoview.ui.view_models.MovieViewModel
 
 @Composable
 fun MovieDetailScreen(
     navController: NavController,
     viewModel: MovieDetailViewModel = hiltViewModel(),
-    categories: MoviesCategoryViewModel = hiltViewModel(),
-    favorite: FavoriteMoviesViewModel = hiltViewModel()
+    movieViewModel: MovieViewModel = hiltViewModel()
 ) {
 
     val movie = viewModel.moviesState.value
 
+    var isFavorite by remember {
+        mutableStateOf(false)
+    }
+
+    isFavorite = movie.movie?.isFavorite ?: false
     movie.movie?.let { movieId ->
-//        val movieGenre = movieId.genre_ids
-//
-//        Log.d("--------->", "Movie Genres: ${movieId.genre_ids}")
-//
-//        val names = remember {
-//            mutableStateOf<List<String>>(emptyList())
-//        }
-//        LaunchedEffect(key1 = movieGenre) {
-//            val genreNames = categories.getGenreNames(movieGenre)
-//            names.value = genreNames
-//        }
         DetailScreen(
             navController = navController,
             posterPath = movieId.poster_path,
@@ -69,8 +62,14 @@ fun MovieDetailScreen(
             releaseDate = movieId.release_date,
             overview = movieId.overview,
             onClick = {
-                TODO()
-            }
+                var movieItem = movie.movie
+                movieItem.isFavorite = !isFavorite
+                isFavorite = movieItem.isFavorite
+//                val isFavorite = movieId.isFavorite
+
+                movieViewModel.updateMoviesList(movieItem)
+            },
+            isFavorite = isFavorite
         )
     }
 }
@@ -83,11 +82,9 @@ fun DetailScreen(
     title: String,
     releaseDate: String,
     overview: String,
-//    moviesEntity: MoviesEntity,
-    onClick: () -> Unit
-//    genres: MutableState<List<String>>,
+    onClick: () -> Unit,
+    isFavorite: Boolean
 ) {
-
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -161,10 +158,10 @@ fun DetailScreen(
 
                                 FavoriteStar(
                                     onClick = {
-                                        onClick
+                                        onClick()
                                     },
                                     size = 50.dp,
-//                                    moviesEntity = moviesEntity
+                                    isFavorite = isFavorite
                                 )
                             }
 
@@ -179,21 +176,6 @@ fun DetailScreen(
                                 style = MaterialTheme.typography.bodySmall,
                                 modifier = Modifier.padding(top = 5.dp)
                             )
-
-
-//                            LazyRow(
-//                                modifier = Modifier
-//                                    .fillMaxWidth()
-//                                    .padding(top = 10.dp),
-//                                verticalAlignment = Alignment.CenterVertically,
-//                                horizontalArrangement = Arrangement.SpaceBetween
-//                            ) {
-//
-//                                items(genres.value) { genres ->
-//                                    Cards(text = genres)
-//                                }
-//
-//                            }
 
                             Text(
                                 text = overview,
@@ -216,29 +198,15 @@ fun DetailScreen(
 fun FavoriteStar(
     onClick: () -> Unit,
     size: Dp,
-//    viewModel: FavoriteMoviesViewModel = hiltViewModel()
+    isFavorite: Boolean
 ) {
-
-//    val coroutineScope = rememberCoroutineScope()
-
-    var isFavorite by remember {
-        mutableStateOf(false)
-    }
-
-//    LaunchedEffect(key1 = null) {
-//        viewModel.isMovieFavorite(moviesEntity.)
-//    }
-
 
     val favorite: ImageVector =
         if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder
-
-    isFavorite = !isFavorite
-
     Icon(
         modifier = Modifier
             .clickable {
-                onClick
+                onClick()
             }
             .size(size),
         contentDescription = null,

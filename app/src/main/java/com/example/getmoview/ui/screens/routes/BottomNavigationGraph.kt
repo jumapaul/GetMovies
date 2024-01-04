@@ -24,7 +24,7 @@ fun BottomNavigationGraph(navHostController: NavHostController, modifier: Modifi
     NavHost(
         navController = navHostController,
         startDestination = BottomNavigationRoutes.MovieScreen.routes,
-        modifier = Modifier.semantics {
+        modifier = modifier.semantics {
             testTagsAsResourceId = true // This allow us to use test tags to find our elements
         }
     ) {

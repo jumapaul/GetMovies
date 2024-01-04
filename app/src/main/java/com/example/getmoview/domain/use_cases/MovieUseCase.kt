@@ -1,5 +1,6 @@
 package com.example.getmoview.domain.use_cases
 
+import android.util.Log
 import com.example.getmoview.common.Resources
 import com.example.getmoview.data.local.MoviesEntity
 import com.example.getmoview.domain.repository.MovieRepository
@@ -17,6 +18,7 @@ class MovieUseCase @Inject constructor(
         try {
             emit(Resources.IsLoading())
             repository.saveMovieItems(page)
+            Log.d("+++++", "invoke: ${repository.getLocalMovies().size}")
             emit(Resources.Success(data = repository.getLocalMovies()))
         } catch (e: RedirectResponseException) {
             emit(Resources.Error(

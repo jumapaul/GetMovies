@@ -1,5 +1,6 @@
 package com.example.getmoview.ui.screens.movie
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -36,6 +37,7 @@ import com.example.getmoview.ui.screens.movie.tab_layout.CategoryTabScreens
 import com.example.getmoview.ui.screens.movie.tab_layout.TabContent
 import com.example.getmoview.ui.screens.movie.tab_layout.Tabs
 import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
+import com.example.getmoview.ui.view_models.MovieViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
 

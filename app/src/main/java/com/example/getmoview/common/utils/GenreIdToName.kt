@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.getmoview.ui.screens.movies_category.MoviesCategoryViewModel
+import com.example.getmoview.ui.view_models.MoviesCategoryViewModel
 
 @Composable
 fun GenreIdToName(

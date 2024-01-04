@@ -7,8 +7,6 @@ import com.example.getmoview.data.local.ShowsEntity
 data class MovieUiState(
     val isLoading: Boolean = false,
     val movies: List<MoviesEntity> = emptyList(),
-    var page: Int = 1,
-    val endReached: Boolean = false,
     var error: String = "",
 
     )
