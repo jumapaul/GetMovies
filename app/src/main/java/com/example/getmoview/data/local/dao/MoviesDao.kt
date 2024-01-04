@@ -1,10 +1,14 @@
-package com.example.getmoview.data.local
+package com.example.getmoview.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
+import com.example.getmoview.data.local.CategoryType
+import com.example.getmoview.data.local.MoviesEntity
+import com.example.getmoview.data.local.ShowsEntity
 
 @Dao
 interface MoviesDao {
@@ -43,38 +47,14 @@ interface MoviesDao {
     @Delete
     suspend fun deleteMovie(moviesEntity: MoviesEntity)
 
-    // ---------------------Shows--------------
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addShows(showsEntity: List<ShowsEntity>)
 
-    @Query("SELECT * FROM shows WHERE categoryType =:categoryType")
-    suspend fun getShows(categoryType: CategoryType): List<ShowsEntity>
+    //Get favorite Movies
+    @Query("SELECT * FROM movies WHERE isFavorite =:isFavorite")
+    suspend fun getFavoriteMovies(isFavorite: Boolean): List<MoviesEntity>
 
-    //Top Rated
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addTopRatedShows(showsEntity: List<ShowsEntity>)
+    @Update
+    fun updateMoviesList(movie: MoviesEntity)
 
-    @Query("SELECT * FROM shows WHERE categoryType =:categoryType")
-    fun getAllTopRatedShows(categoryType: CategoryType): List<ShowsEntity>
-
-    //Popular shows
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addPopularShows(showsEntity: List<ShowsEntity>)
-
-    @Query("SELECT * FROM shows WHERE categoryType =:categoryType")
-    fun getAllPopularShows(categoryType: CategoryType): List<ShowsEntity>
-
-    @Query("SELECT * FROM shows WHERE id=:id")
-    suspend fun getShowById(id: Int): ShowsEntity
-
-    @Delete
-    suspend fun deleteShows(showsEntity: ShowsEntity)
-
-
-    //Genres
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addGenres(genresIdsEntity: List<GenresIdsEntity>)
-
-    @Query("SELECT * FROM Genres")
-    suspend fun getGenres(): List<GenresIdsEntity>
+    @Update
+    fun updateShowsList(showsEntity: ShowsEntity)
 }

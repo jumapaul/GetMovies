@@ -1,4 +1,4 @@
-package com.example.getmoview.ui.screens.movie
+package com.example.getmoview.ui.view_models
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf

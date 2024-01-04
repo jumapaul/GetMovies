@@ -29,6 +29,7 @@ import com.example.getmoview.ui.composables.MovieItemsWithoutRating
 import com.example.getmoview.ui.composables.MyTexts
 import com.example.getmoview.ui.composables.OtherMoviesItem
 import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
+import com.example.getmoview.ui.view_models.MoviesCategoryViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 
 @OptIn(ExperimentalPagerApi::class)

@@ -1,4 +1,4 @@
-package com.example.getmoview.ui.screens.movie_detail
+package com.example.getmoview.ui.view_models
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -11,6 +11,8 @@ import com.example.getmoview.common.Resources
 import com.example.getmoview.domain.use_cases.MovieDetailUseCase
 import com.example.getmoview.domain.use_cases.TvShowDetailUseCase
 import com.example.getmoview.domain.use_cases.SearchUseCase
+import com.example.getmoview.ui.screens.movie_detail.MoviesState
+import com.example.getmoview.ui.screens.movie_detail.TvShowsState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -38,7 +40,7 @@ class MovieDetailViewModel @Inject constructor(
             getPopularAndTopRatedId(movieId.toInt())
         }
 
-        savedStateHandle.get<String>(SHOWS_ID)?.let { showsId->
+        savedStateHandle.get<String>(SHOWS_ID)?.let { showsId ->
             getTvShowId(showsId.toInt())
         }
 //        savedStateHandle.get<String>(TRENDING_ID)?.let { movieId ->
@@ -88,48 +90,5 @@ class MovieDetailViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
-
-//    private fun getTrendingMovieId(movieId: Int) {
-//        trendingMovieDetailUseCase(movieId).onEach { result ->
-//            when (result) {
-//                is Resources.IsLoading -> {
-//                    _trendingMovieState.value = TrendingMovieState(isLoading = true)
-//                }
-//
-//                is Resources.Success -> {
-//                    _trendingMovieState.value = TrendingMovieState(movie = result.data)
-//                }
-//
-//                is Resources.Error -> {
-//                    _trendingMovieState.value =
-//                        TrendingMovieState(error = result.message ?: "Unexpected error occurred")
-//                }
-//
-//            }
-//        }.launchIn(viewModelScope)
-//    }
-
-//    private suspend fun getSearchedMovieId(searchQuery:String) {
-//        searchUseCase(searchQuery).onEach { result ->
-//            when (result) {
-//                is Resources.IsLoading -> {
-//                    _searchMovieState.value =
-//                        SearchMovieState(isLoading = true)
-//                }
-//
-//                is Resources.Success -> {
-//                    _searchMovieState.value =
-//                        SearchMovieState(movie = result.data)
-//                }
-//
-//                is Resources.Error -> {
-//                    _popularAndTopRatedMovieState.value =
-//                        PopularAndTopRatedMovieState(
-//                            error = result.message ?: "Unexpected error occurred"
-//                        )
-//                }
-//            }
-//        }.launchIn(viewModelScope)
-//    }
 
 }

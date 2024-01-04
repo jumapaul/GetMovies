@@ -19,7 +19,6 @@ import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,29 +38,24 @@ import com.example.getmoview.ui.composables.CircularProgressBar
 import com.example.getmoview.ui.composables.gradientBackground
 import com.example.getmoview.ui.composables.MovieRequester
 import com.example.getmoview.ui.composables.MyTexts
-import com.example.getmoview.ui.screens.favorite.FavoriteMoviesViewModel
-import com.example.getmoview.ui.screens.movies_category.MoviesCategoryViewModel
+import com.example.getmoview.ui.view_models.FavoriteMoviesViewModel
+import com.example.getmoview.ui.view_models.MovieDetailViewModel
+import com.example.getmoview.ui.view_models.MoviesCategoryViewModel
+import com.example.getmoview.ui.view_models.ShowsByGenreViewModel
 
 @Composable
 fun ShowsDetailScreen(
     navController: NavController,
     viewModel: MovieDetailViewModel = hiltViewModel(),
-    favorite: FavoriteMoviesViewModel = hiltViewModel(),
-    categories: MoviesCategoryViewModel = hiltViewModel()
+    showsByGenreViewModel: ShowsByGenreViewModel = hiltViewModel()
 ) {
     val shows = viewModel.showState.value
 
-    shows.shows?.let { showsId ->
+    var isFavorite by remember {
+        mutableStateOf(false)
+    }
 
-//        val genres = showsId.genre_ids
-//
-//        val names = remember {
-//            mutableStateOf<List<String>>(emptyList())
-//        }
-//        LaunchedEffect(key1 = genres) {
-//            val genreNames = genres.let { categories.getGenreNames(it) }
-//            names.value = genreNames
-//        }
+    shows.shows?.let { showsId ->
         ShowDetailScreen(
             navController = navController,
             posterPath = showsId.poster_path,
@@ -70,10 +64,18 @@ fun ShowsDetailScreen(
             releaseDate = showsId.first_air_date,
             overview = showsId.overview,
             showsEntity = showsId,
-            onClick = {  }
+            onClick = {
+                var showsItem = shows.shows
+                showsItem.isFavorite = !isFavorite
+                isFavorite = showsItem.isFavorite
+
+                showsByGenreViewModel.updateShowsList(showsItem)
+            },
+            isFavorite = isFavorite
         )
     }
 }
+
 @Composable
 fun ShowDetailScreen(
     navController: NavController,
@@ -83,8 +85,8 @@ fun ShowDetailScreen(
     releaseDate: String,
     overview: String,
     showsEntity: ShowsEntity,
-    onClick: () -> Unit
-//    genres: MutableState<List<String>>,
+    onClick: () -> Unit,
+    isFavorite: Boolean
 ) {
 
     Box(
@@ -159,9 +161,11 @@ fun ShowDetailScreen(
                                 }
 
                                 FavoriteShows(
-                                    onClick = onClick,
+                                    onClick = {
+                                        onClick()
+                                    },
                                     size = 50.dp,
-                                    showsEntity = showsEntity
+                                    isFavorite = isFavorite
                                 )
                             }
 
@@ -212,30 +216,15 @@ fun ShowDetailScreen(
 fun FavoriteShows(
     onClick: () -> Unit,
     size: Dp,
-    showsEntity: ShowsEntity,
-    viewModel: FavoriteMoviesViewModel = hiltViewModel()
+    isFavorite: Boolean
 ) {
-
-    val coroutineScope = rememberCoroutineScope()
-
-    var isFavorite by remember {
-        mutableStateOf(false)
-    }
-
-    LaunchedEffect(key1 = null) {
-        viewModel.isMovieFavorite(showsEntity.id)
-    }
-
-
     val favorite: ImageVector =
         if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder
-
-//    isFavorite = !isFavorite
 
     Icon(
         modifier = Modifier
             .clickable {
-//                viewModel.addShows(showsEntity)
+                onClick
             }
             .size(size),
         contentDescription = null,

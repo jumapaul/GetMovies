@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.getmoview.ui.composables.VerticalMoviesItem
-import com.example.getmoview.ui.screens.favorite.FavoriteMoviesViewModel
+import com.example.getmoview.ui.view_models.FavoriteMoviesViewModel
 import com.example.getmoview.ui.screens.favorite.NoFavorite
 import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
 

@@ -21,7 +21,7 @@ data class MovieDtoItem(
     val vote_average: Double,
     val vote_count: Int,
 ) {
-    fun toMovieEntity(categoryType: CategoryType): MoviesEntity {
+    fun toMovieEntity(categoryType: CategoryType, isFavorite: Boolean): MoviesEntity {
         return MoviesEntity(
             id = id,
             genre_ids = genre_ids,
@@ -30,7 +30,8 @@ data class MovieDtoItem(
             release_date = release_date,
             title = title,
             vote_average = vote_average,
-            categoryType = categoryType
+            categoryType = categoryType,
+            isFavorite = isFavorite
         )
     }
 }

@@ -28,6 +28,7 @@ import com.example.getmoview.ui.composables.ListingItem
 import com.example.getmoview.ui.screens.genre.tab_layout.GenreContent
 import com.example.getmoview.ui.screens.genre.tab_layout.GenreScreens
 import com.example.getmoview.ui.screens.genre.tab_layout.GenreTab
+import com.example.getmoview.ui.view_models.GenreViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
 
