@@ -54,6 +54,8 @@ fun GetPopularMoviesCategory(
                 var isFavorite by remember {
                     mutableStateOf(false)
                 }
+
+                if (movies.isFavorite) isFavorite = true
                 Box(modifier = Modifier.clickable {
                     navController.navigate(
                         BottomNavigationRoutes.MovieDetails.routes + "/${movies.id}"
@@ -65,7 +67,7 @@ fun GetPopularMoviesCategory(
                         description = movies.overview,
                         date = movies.release_date,
                         onClick = {
-                                  TODO()
+                            TODO()
                         },
                         isFavorite = isFavorite,
                         genreId = names

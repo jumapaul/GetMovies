@@ -90,6 +90,8 @@ fun UpcomingMovies(
                 var isFavorite by remember {
                     mutableStateOf(false)
                 }
+
+                if (item.isFavorite) isFavorite = true
                 Box(modifier = Modifier.clickable {
                     navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${item.id}")
                 }) {

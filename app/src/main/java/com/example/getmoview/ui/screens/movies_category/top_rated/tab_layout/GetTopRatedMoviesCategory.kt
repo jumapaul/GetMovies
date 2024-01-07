@@ -1,6 +1,5 @@
 package com.example.getmoview.ui.screens.movies_category.top_rated.tab_layout
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,7 +20,6 @@ import androidx.navigation.NavController
 import com.example.getmoview.common.utils.GenreIdToName
 import com.example.getmoview.ui.composables.VerticalMoviesItem
 import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
-import com.example.getmoview.ui.view_models.FavoriteMoviesViewModel
 import com.example.getmoview.ui.view_models.MoviesCategoryViewModel
 
 @Composable
@@ -42,6 +40,7 @@ fun GetTopRatedMoviesCategoryMovies(
         ) {
             items(movies.movies) { movies ->
 
+
                 val names = remember {
                     mutableStateOf<List<String>>(emptyList())
                 }
@@ -50,6 +49,8 @@ fun GetTopRatedMoviesCategoryMovies(
                 var isFavorite by remember {
                     mutableStateOf(false)
                 }
+
+                if (movies.isFavorite) isFavorite = true
 
                 Box(modifier = Modifier.clickable {
                     navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${movies.id}")
