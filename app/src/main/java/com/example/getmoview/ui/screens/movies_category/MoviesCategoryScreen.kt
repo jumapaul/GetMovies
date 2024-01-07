@@ -29,6 +29,7 @@ import com.example.getmoview.ui.composables.MovieItemsWithoutRating
 import com.example.getmoview.ui.composables.MyTexts
 import com.example.getmoview.ui.composables.OtherMoviesItem
 import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
+import com.example.getmoview.ui.view_models.FavoriteMoviesViewModel
 import com.example.getmoview.ui.view_models.MoviesCategoryViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 
@@ -36,7 +37,8 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 @Composable
 fun MoviesCategoryScreen(
     navController: NavController,
-    viewModel: MoviesCategoryViewModel = hiltViewModel()
+    viewModel: MoviesCategoryViewModel = hiltViewModel(),
+    favoriteMoviesViewModel: FavoriteMoviesViewModel = hiltViewModel()
 ) {
     val upcomingMoviesState = viewModel.upcomingMoviesState.value
     val topRatedMoviesState = viewModel.topRatedMoviesState.value
@@ -45,6 +47,8 @@ fun MoviesCategoryScreen(
     val popularTvShows = viewModel.popularTvShows.value
 
     val scrollState = rememberScrollState()
+
+    val favoriteMovies = favoriteMoviesViewModel.allLocalMovies
 
     Column(
         modifier = Modifier
@@ -65,6 +69,8 @@ fun MoviesCategoryScreen(
                 itemsCount = upcomingMoviesState.movies.size
             ) { index ->
                 val items = upcomingMoviesState.movies[index]
+
+                items.isFavorite = favoriteMovies.value.moviesEntity.contains(items)
 
                 Box(modifier = Modifier.clickable {
 

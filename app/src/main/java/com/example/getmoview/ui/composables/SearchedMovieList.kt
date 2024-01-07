@@ -1,6 +1,5 @@
 package com.example.getmoview.ui.composables
 
-import android.util.Log
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -24,7 +23,7 @@ fun SearchedMovieList(
     if (state.movie?.isNotEmpty() == true) {
         LazyVerticalGrid(columns = GridCells.Fixed(2), content = {
             items(state.movie) { item ->
-                item?.poster_path?.let {
+                item.poster_path.let {
                     SearchedMovieItem(
                         posterPath = it.ifEmpty { "https://image.tmdb.org/t/p/w500/gPbM0MK8CP8A174rmUwGsADNYKD.jpg" },
                         title = item.title,
@@ -33,7 +32,6 @@ fun SearchedMovieList(
                         fontSize = 15.sp,
                         onItemClick = {
                             navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${item.id}")
-                            Log.d("---------->", "SearchedMovieList: $item")
                         },
                         searchedItem = item,
                         radius = 20.dp,

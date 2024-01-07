@@ -19,6 +19,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarToday
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -40,7 +42,7 @@ fun VerticalMoviesItem(
     description: String,
     date: String,
     onClick: () -> Unit,
-    favorite: ImageVector?,
+    isFavorite: Boolean,
     genreId: MutableState<List<String>>
 ) {
     Row(
@@ -75,6 +77,9 @@ fun VerticalMoviesItem(
                 overflow = TextOverflow.Ellipsis
             )
 
+            val favorite: ImageVector =
+                if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder
+
             Row(
                 modifier = Modifier
                     .padding(top = 5.dp)
@@ -98,13 +103,12 @@ fun VerticalMoviesItem(
                         modifier = Modifier
                     )
 
-                    if (favorite != null) {
-                        Icon(imageVector = favorite, contentDescription = null,
-                            modifier = Modifier.clickable {
-                                onClick
-                            }
-                        )
-                    }
+                    Icon(imageVector = favorite, contentDescription = null,
+                        modifier = Modifier.clickable {
+                            onClick()
+                        }
+                    )
+
                 }
 
 //                FavoriteStar(

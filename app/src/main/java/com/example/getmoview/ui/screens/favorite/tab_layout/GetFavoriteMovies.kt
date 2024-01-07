@@ -58,10 +58,9 @@ fun GetFavoriteMovies(
                             title = movies.title,
                             description = movies.overview,
                             date = movies.release_date,
-//                            onClick = { viewModel.addFavoriteMovie(moviesEntity = ) },
-                            favorite = null,
+                            isFavorite = true,
                             onClick = {
-                                      TODO()
+                                navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${movies.id}")
                             },
                             genreId = names
                         )

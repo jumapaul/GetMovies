@@ -61,7 +61,7 @@ fun GetShowsByGenre(
                     title = show.name,
                     description = show.overview,
                     date = show.first_air_date,
-                    favorite = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                    isFavorite = isFavorite,
                     onClick = {
 //                              TODO()
                     },

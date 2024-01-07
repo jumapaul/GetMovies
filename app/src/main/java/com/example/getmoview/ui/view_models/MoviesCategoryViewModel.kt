@@ -2,6 +2,7 @@ package com.example.getmoview.ui.view_models
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.getmoview.common.Resources
@@ -25,7 +26,7 @@ class MoviesCategoryViewModel @Inject constructor(
     private val topRatedTvShowsUseCase: TopRatedTvShowsUseCase,
     private val popularMoviesUseCase: PopularMoviesUseCase,
     private val popularTvShowsUseCase: PopularTvShowsUseCase,
-    private val repository: MovieRepository
+    private val repository: MovieRepository,
 ) : ViewModel() {
 
     private val _upcomingMoviesState = mutableStateOf(MovieUiState())
