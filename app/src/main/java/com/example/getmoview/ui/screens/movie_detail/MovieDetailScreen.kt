@@ -62,10 +62,9 @@ fun MovieDetailScreen(
             releaseDate = movieId.release_date,
             overview = movieId.overview,
             onClick = {
-                var movieItem = movie.movie
+                val movieItem = movie.movie
                 movieItem.isFavorite = !isFavorite
                 isFavorite = movieItem.isFavorite
-//                val isFavorite = movieId.isFavorite
 
                 movieViewModel.updateMoviesList(movieItem)
             },

@@ -52,7 +52,7 @@ fun GetFavoriteShows(
                             title = shows.name,
                             description = shows.overview,
                             date = shows.first_air_date,
-                            favorite = null,
+                            isFavorite = true,
                             onClick = {
                                       TODO()
                             },

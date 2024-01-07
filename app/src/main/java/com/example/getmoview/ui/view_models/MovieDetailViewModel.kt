@@ -32,9 +32,6 @@ class MovieDetailViewModel @Inject constructor(
     private val _showState = mutableStateOf(TvShowsState())
     val showState: State<TvShowsState> = _showState
 
-//    private val _trendingMovieState = mutableStateOf(TrendingMovieState())
-//    val trendingMovieState: State<TrendingMovieState> = _trendingMovieState
-
     init {
         savedStateHandle.get<String>(MOVIES_ID)?.let { movieId ->
             getPopularAndTopRatedId(movieId.toInt())
@@ -43,10 +40,6 @@ class MovieDetailViewModel @Inject constructor(
         savedStateHandle.get<String>(SHOWS_ID)?.let { showsId ->
             getTvShowId(showsId.toInt())
         }
-//        savedStateHandle.get<String>(TRENDING_ID)?.let { movieId ->
-////            getTrendingMovieId(movieId.toInt() )
-//        }
-
     }
 
     private fun getPopularAndTopRatedId(movieId: Int) {

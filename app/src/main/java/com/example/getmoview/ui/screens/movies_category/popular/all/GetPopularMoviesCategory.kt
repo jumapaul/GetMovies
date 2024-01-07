@@ -67,7 +67,7 @@ fun GetPopularMoviesCategory(
                         onClick = {
                                   TODO()
                         },
-                        favorite = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        isFavorite = isFavorite,
                         genreId = names
                     )
                 }

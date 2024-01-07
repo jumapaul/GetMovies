@@ -12,7 +12,7 @@ import androidx.navigation.NavController
 import com.example.getmoview.ui.screens.movies_category.common_composables.MoviesAndShowsTitle
 import com.example.getmoview.ui.screens.movies_category.top_rated.tab_layout.MovieShowContent
 import com.example.getmoview.ui.screens.movies_category.top_rated.tab_layout.MoviesShowsTab
-import com.example.getmoview.ui.screens.movies_category.top_rated.tab_layout.MoviesShowsTabScreens
+import com.example.getmoview.ui.screens.movies_category.top_rated.tab_layout.TopRatedMoviesAndShowsTabScreens
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
 
@@ -31,8 +31,8 @@ fun AllTopRatedAndTvShows(navController: NavController) {
         val pagerState = rememberPagerState(initialPage = 0)
 
         val tabs = listOf(
-            MoviesShowsTabScreens.TopMovies,
-            MoviesShowsTabScreens.TopShows
+            TopRatedMoviesAndShowsTabScreens.TopRatedMovies,
+            TopRatedMoviesAndShowsTabScreens.TopRatedShows
         )
 
         MoviesShowsTab(tabs = tabs, pagerState = pagerState)

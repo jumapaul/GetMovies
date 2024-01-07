@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun MoviesShowsTab(tabs: List<MoviesShowsTabScreens>, pagerState: PagerState) {
+fun MoviesShowsTab(tabs: List<TopRatedMoviesAndShowsTabScreens>, pagerState: PagerState) {
     val scope = rememberCoroutineScope()
 
     TabRow(
@@ -50,7 +50,7 @@ fun MoviesShowsTab(tabs: List<MoviesShowsTabScreens>, pagerState: PagerState) {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun MovieShowContent(
-    tabs: List<MoviesShowsTabScreens>,
+    tabs: List<TopRatedMoviesAndShowsTabScreens>,
     pagerState: PagerState,
     navController: NavController
 ) {

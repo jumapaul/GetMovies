@@ -14,13 +14,13 @@ import com.example.getmoview.data.local.ShowsEntity
 interface MoviesDao {
 
     //Movies
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addMovies(moviesEntity: List<MoviesEntity>)
     @Query("SELECT * FROM movies where categoryType = :categoryType")
     fun getAllMovies(categoryType: CategoryType): List<MoviesEntity>
 
     //Upcoming Movies
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addUpcomingMovies(moviesEntity: List<MoviesEntity>)
 
     @Query("SELECT * FROM movies WHERE categoryType = :categoryType")
@@ -28,14 +28,14 @@ interface MoviesDao {
 
 
     // Popular
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addPopularMovies(moviesEntity: List<MoviesEntity>)
 
     @Query("SELECT * FROM movies WHERE categoryType = :categoryType")
     fun getAllPopularMovies(categoryType: CategoryType): List<MoviesEntity>
 
     //TopRated
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addTopRatedMovies(moviesEntity: List<MoviesEntity>)
 
     @Query("SELECT * FROM movies WHERE categoryType = :categoryType")

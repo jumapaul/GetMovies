@@ -16,6 +16,7 @@ class FavoriteMoviesUseCase @Inject constructor(
         try {
             emit(Resources.IsLoading())
 
+
             emit(Resources.Success(data = repository.getFavoriteMovies(isFavorite)))
 
         }catch (e: IOException){

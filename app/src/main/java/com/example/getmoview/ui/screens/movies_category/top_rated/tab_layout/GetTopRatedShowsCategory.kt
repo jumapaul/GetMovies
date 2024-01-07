@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -27,49 +26,48 @@ import com.example.getmoview.ui.view_models.MoviesCategoryViewModel
 import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
 
 @Composable
-fun GetTopMoviesCategoryMovies(
+
+fun GetTopRatedShowsCategory(
     navController: NavController,
     viewModel: MoviesCategoryViewModel = hiltViewModel(),
     favoriteMoviesViewModel: FavoriteMoviesViewModel = hiltViewModel()
-
 ) {
-    val movies = viewModel.topRatedMoviesState.value
 
+    val shows = viewModel.topRatedShowsState.value
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(5.dp),
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center
     ) {
         LazyColumn(
             modifier = Modifier,
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(movies.movies) { movies ->
-
+            items(shows.shows) { shows ->
                 val names = remember {
                     mutableStateOf<List<String>>(emptyList())
                 }
-                GenreIdToName(genres = movies.genre_ids, names)
+                GenreIdToName(genres = shows.genre_ids, names)
 
                 var isFavorite by remember {
                     mutableStateOf(false)
                 }
                 Box(modifier = Modifier.clickable {
-                    navController.navigate(BottomNavigationRoutes.MovieDetails.routes + "/${movies.id}")
-                }){
+                    navController.navigate(BottomNavigationRoutes.ShowsDetail.routes + "/${shows.id}")
+                }) {
                     VerticalMoviesItem(
-                        posterPath = movies.poster_path,
-                        title = movies.title,
-                        description = movies.overview,
-                        date = movies.release_date,
+                        posterPath = shows.poster_path,
+                        title = shows.name,
+                        description = shows.overview,
+                        date = shows.first_air_date,
                         onClick = {
-                                  TODO()
+                            TODO()
                         },
-                        if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        isFavorite = isFavorite,
                         genreId = names
                     )
                 }
             }
         }
     }
+
 }

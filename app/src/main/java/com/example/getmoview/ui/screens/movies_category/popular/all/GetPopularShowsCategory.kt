@@ -8,14 +8,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -23,9 +19,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.getmoview.common.utils.GenreIdToName
 import com.example.getmoview.ui.composables.VerticalMoviesItem
+import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
 import com.example.getmoview.ui.view_models.FavoriteMoviesViewModel
 import com.example.getmoview.ui.view_models.MoviesCategoryViewModel
-import com.example.getmoview.ui.screens.routes.BottomNavigationRoutes
 
 @Composable
 fun GetPopularShowsCategory(
@@ -52,7 +48,7 @@ fun GetPopularShowsCategory(
                 }
                 GenreIdToName(genres = shows.genre_ids, names)
 
-                var isFavorite by remember {
+                val isFavorite by remember {
                     mutableStateOf(false)
                 }
                 Box(modifier = Modifier.clickable {
@@ -68,7 +64,7 @@ fun GetPopularShowsCategory(
                         onClick = {
                                   TODO()
                         },
-                        favorite = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        isFavorite = isFavorite,
                         genreId = names
                     )
                 }
