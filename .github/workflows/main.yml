@@ -28,6 +28,9 @@ jobs:
         #update java version
       - name: Set Up JDK 17
         uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '17'
       
       #Runs a single command using the runner shell
       #- name: Run a one-line script
