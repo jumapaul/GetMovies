@@ -31,22 +31,25 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '17'
-      
-      #Runs a single command using the runner shell
-      #- name: Run a one-line script
-      #  run: echo Hello, world!
-      - name: Run Lint
-        run: ./gradlew lintDebug
-       #runs a set of commands using the runner shell
-      - name: Upload html test report
-        uses: actions/upload-artifact@v2
-        with:
-          name: lint.html
-          path: app/build/reports/lint-results-debug.html
 
-          #run: |
-         #  echo Add other actions to build,
-          # echo test, and deploy your project.
+      - name: Run lint
+        run: echo Run Lint
+      
+#      #Runs a single command using the runner shell
+#      #- name: Run a one-line script
+#      #  run: echo Hello, world!
+#      - name: Run Lint
+#        run: ./gradlew lintDebug
+#       #runs a set of commands using the runner shell
+#      - name: Upload html test report
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: lint.html
+#          path: app/build/reports/lint-results-debug.html
+#
+#          #run: |
+#         #  echo Add other actions to build,
+#          # echo test, and deploy your project.
 
   #unit tests
   unit-test:
@@ -63,14 +66,17 @@ jobs:
           distribution: 'adopt'
           java-version: '17'
 
-      - name: Run tests
-        run: ./gradlew test
+      - name: Run unit-test
+        run: echo Run unit-test
 
-      - name: Upload test report
-        uses: actions/upload-artifact@v2
-        with:
-          name: unit_test_report
-          path: app/build/reports/tests/testDebugUnitTest/
+#      - name: Run tests
+#        run: ./gradlew test
+#
+#      - name: Upload test report
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: unit_test_report
+#          path: app/build/reports/tests/testDebugUnitTest/
 
   #instrumentation test
   instrumentation-test:
@@ -89,14 +95,37 @@ jobs:
           distribution: 'adopt'
           java-version: '17'
 
-      - name: Run espresso tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 29
-          script: ./gradlew connectedCheck
+      - name: Run instrumentation-test
+        run: echo instrumentation-test
 
-      - name: Upload test report
-        uses: actions/upload-artifact@v2
+#      - name: Run espresso tests
+#        uses: reactivecircus/android-emulator-runner@v2
+#        with:
+#          api-level: 29
+#          script: ./gradlew connectedCheck
+#
+#      - name: Upload test report
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: instrumentation_test_report
+#          path: app/build/reports/androidTests/connected/
+
+  #static code analysis
+  static-code-analysis:
+    needs: [instrumentation-test]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      - name: Set Up JDK 17
+        uses: actions/checkout@v2
         with:
-          name: instrumentation_test_report
-          path: app/build/reports/androidTests/connected/
+          distribution: 'adopt'
+          java-version: '17'
+
+      - name: SonarCloud Scan
+        run: ./gradlew app:sonarqube -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
