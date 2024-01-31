@@ -35,7 +35,7 @@ class ExampleStartupBenchmark {
     fun startup(): Unit = benchmarkRule.measureRepeated(
         packageName = "com.example.getmoview",
         metrics = listOf(StartupTimingMetric()),
-        iterations = 5,
+        iterations = 1,
         startupMode = StartupMode.COLD
     ) {
         pressHome()
