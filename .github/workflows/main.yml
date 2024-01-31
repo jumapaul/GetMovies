@@ -75,6 +75,8 @@ jobs:
   #instrumentation test
   instrumentation-test:
     needs: [unit-test]
+    # we run on mac since it require an emulator and emulators on mac are quick
+
     runs-on: macos-latest
     steps:
       - name: Checkout the code

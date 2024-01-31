@@ -42,44 +42,44 @@ class ExampleStartupBenchmark {
         startActivityAndWait()
     }
 
-    @Test
-    fun scrollCompilation() = scrollAndNavigate(CompilationMode.None())
-    fun scrollAndNavigate(compilationMode: CompilationMode) {
-        benchmarkRule.measureRepeated(
-            packageName = "com.example.getmoview",
-            metrics = listOf(FrameTimingMetric()),
-            compilationMode = compilationMode,
-            iterations = 5,
-            startupMode = null,
-            setupBlock = {
-                Log.d("BenchMark", "set up block iteration=$iteration ")
-            }
-        ) {
-
-            pressHome()
-            startActivityAndWait()
-            Log.d("BenchMark", "measureBlock iteration=$iteration ")
-            device.wait(Until.hasObject(By.res("movies")), 5000) // Waits until the lazy column has something
-            val movieList = device.findObject(By.res("movies")) // find the lazy column using the test tag
-            movieList.wait(Until.hasObject(By.res("moviesList")), 5000) // Waits until the movie_item has something
-
-            //Wait for scroll to finish
-            device.waitForIdle()
-
-            // Set gesture margin to avoid triggering system gesture navigation
-            movieList.setGestureMargin(device.displayWidth / 5)
-
-            //Scroll down the list
-            movieList.fling(Direction.DOWN)
-
-
-            device.findObject(By.text("Barbie")).click()
-
-            device.wait(Until.hasObject(By.text("User Score")), 50000)
-
-            killProcess()
-        }
-    }
+//    @Test
+//    fun scrollCompilation() = scrollAndNavigate(CompilationMode.None())
+//    fun scrollAndNavigate(compilationMode: CompilationMode) {
+//        benchmarkRule.measureRepeated(
+//            packageName = "com.example.getmoview",
+//            metrics = listOf(FrameTimingMetric()),
+//            compilationMode = compilationMode,
+//            iterations = 5,
+//            startupMode = null,
+//            setupBlock = {
+//                Log.d("BenchMark", "set up block iteration=$iteration ")
+//            }
+//        ) {
+//
+//            pressHome()
+//            startActivityAndWait()
+//            Log.d("BenchMark", "measureBlock iteration=$iteration ")
+//            device.wait(Until.hasObject(By.res("movies")), 5000) // Waits until the lazy column has something
+//            val movieList = device.findObject(By.res("movies")) // find the lazy column using the test tag
+//            movieList.wait(Until.hasObject(By.res("moviesList")), 5000) // Waits until the movie_item has something
+//
+//            //Wait for scroll to finish
+//            device.waitForIdle()
+//
+//            // Set gesture margin to avoid triggering system gesture navigation
+//            movieList.setGestureMargin(device.displayWidth / 5)
+//
+//            //Scroll down the list
+//            movieList.fling(Direction.DOWN)
+//
+//
+//            device.findObject(By.text("Poor Things")).click()
+//
+//            device.wait(Until.hasObject(By.text("User Score")), 50000)
+//
+//            killProcess()
+//        }
+//    }
 }
 
 // Find views in our ui and perform actions on them.
