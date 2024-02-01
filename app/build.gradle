@@ -10,6 +10,13 @@ plugins {
 }
 
 
+sonarqube {
+    properties {
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.organization", "pauljuma"
+        property "sonar.login", "181eeda4ac691e0b7f89c54d39750ff1a3bc8a5c"
+    }
+}
 android {
 
     namespace 'com.example.getmoview'
